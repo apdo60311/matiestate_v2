@@ -1,0 +1,32 @@
+import express from "express";
+import * as ReportController from "../controllers/report.controller";
+const router = express.Router();
+
+router.get("/balance-sheet-report", ReportController.balanceSheetReport);
+router.get("/bill-details-report", ReportController.billDetailsReport);
+router.get("/bill-profit-report", ReportController.billProfitReport);
+router.get("/ending-inventory-report", ReportController.endingInventoryReport);
+router.get("/general-ledger-report", ReportController.generalLedgerReport);
+router.get("/inventory-report", ReportController.inventoryReport);
+router.get("/item-activity-report", ReportController.itemActivityReport);
+router.get("/journal-ledger-report", ReportController.journalLedgerReport);
+router.get("/profit-and-loss-report", ReportController.profitAndLossReport);
+router.get("/sales-report", ReportController.salesReport);
+router.get("/trial-balance-report", ReportController.trialBalanceReport);
+router.post("/contract", ReportController.contractReport);
+router.post("/unit-leased-report", ReportController.unitLeasedReport);
+router.post("/land-leased-report", ReportController.landLeasedReport);
+router.post("/parking-leased-report", ReportController.parkingLeasedReport);
+router.post("/villa-leased-report", ReportController.villaLeasedReport);
+router.post("/unit-sold-report", ReportController.unitSoldReport);
+router.post("/land-sold-report", ReportController.landSoldReport);
+router.post("/villa-sold-report", ReportController.villaSoldReport);
+router.post("/units-vacated-report", ReportController.unitsVacatedReport);
+router.post("/units-reserved-report", ReportController.unitsReservedReport);
+router.post("/leased-property-report", ReportController.leasedPropertyReport);
+router.post("/changes-flats-rent-pricing", ReportController.changesFlatsRentPricing);
+router.post("/contracts/contracts-deposit-report", ReportController.contractsDepositReport);
+router.post("/contracts/near-to-expire-contract", ReportController.contractNearToExpireReport);
+router.post("/contracts/expired-contract", ReportController.contractExpiredReport);
+
+export default router;
