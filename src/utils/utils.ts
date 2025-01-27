@@ -126,3 +126,47 @@ export const addDays = (date: Date, days: number): Date => {
   result.setUTCDate(result.getUTCDate() + days);
   return result;
 };
+
+/**
+ * Slugify a string by converting it to lowercase, replacing spaces with underscores,
+ * replacing hyphens with underscores, removing non-word characters except underscores,
+ * and trimming leading and trailing underscores.
+ *
+ * @param {string} input - The input string to slugify.
+ * @returns {string} - The slugified string.
+ */
+export function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/\s+/g, '_')
+    .replace(/-/g, '_')
+    .replace(/[^\w_]+/g, '')
+    .replace(/^_+|_+$/g, '');
+}
+
+
+/**
+ * Determines the JSON schema type based on the provided database column type.
+ * @param {string} type - The database column type.
+ * @returns {JsonSchemaType | null} - The corresponding JSON schema type.
+ */
+export function getType(type: string): JsonSchemaType | null {
+  const lowercasedType = type.toLowerCase();
+
+  const typeMappings: { [key: string]: JsonSchemaType } = {
+    character: { type: 'string' },
+    text: { type: 'string' },
+    integer: { type: 'integer' },
+    numeric: { type: 'integer' },
+    timestamp: { type: 'string', format: 'date-time' },
+    uuid: { type: 'string', format: 'uuid' },
+  };
+
+  for (const [dbType, schemaType] of Object.entries(typeMappings)) {
+    if (lowercasedType.includes(dbType)) {
+      return schemaType;
+    }
+  }
+
+  return null;
+}
