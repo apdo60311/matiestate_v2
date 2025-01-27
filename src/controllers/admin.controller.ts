@@ -6,14 +6,14 @@ export class CompanyController {
   static create: RequestHandler<
   unknown,
   ResponseModel<Record<string, any>>,
-  any,
+  ICreateCompanyBody,
   unknown,
   any
 > = async (
   req: CustomRequest<
     unknown,
     ResponseModel<Record<string, any>>,
-    any,
+    ICreateCompanyBody,
     unknown,
     any
   >,
@@ -29,16 +29,16 @@ export class CompanyController {
   }
 
   static update: RequestHandler<
-  unknown,
+  ICompanyRequestParam,
   ResponseModel<Record<string, any>>,
-  any,
+  IUpdateCompanyBody,
   unknown,
   any
 > = async (
   req: CustomRequest<
-    unknown,
+    ICompanyRequestParam,
     ResponseModel<Record<string, any>>,
-    any,
+    IUpdateCompanyBody,
     unknown,
     any
   >,
@@ -53,14 +53,14 @@ export class CompanyController {
   }
 
   static delete: RequestHandler<
-  unknown,
+  ICompanyRequestParam,
   ResponseModel<Record<string, any>>,
   any,
   unknown,
   any
 > = async (
   req: CustomRequest<
-    unknown,
+    ICompanyRequestParam,
     ResponseModel<Record<string, any>>,
     any,
     unknown,
@@ -102,14 +102,14 @@ export class CompanyController {
 
   static getOne
   : RequestHandler<
-  unknown,
+  ICompanyRequestParam,
   ResponseModel<Record<string, any>>,
   any,
   unknown,
   any
 > = async (
   req: CustomRequest<
-    unknown,
+    ICompanyRequestParam,
     ResponseModel<Record<string, any>>,
     any,
     unknown,
@@ -130,14 +130,14 @@ export class PackageController {
   static create: RequestHandler<
   unknown,
   ResponseModel<Record<string, any>>,
-  any,
+  ICreatePackageBody,
   unknown,
   any
 > = async (
   req: CustomRequest<
     unknown,
     ResponseModel<Record<string, any>>,
-    any,
+    ICreatePackageBody,
     unknown,
     any
   >,
@@ -152,16 +152,16 @@ export class PackageController {
   }
 
   static update: RequestHandler<
-  unknown,
+  IPackageRequestParam,
   ResponseModel<Record<string, any>>,
-  any,
+  IUpdatePackageBody,
   unknown,
   any
 > = async (
   req: CustomRequest<
-    unknown,
+    IPackageRequestParam,
     ResponseModel<Record<string, any>>,
-    any,
+    IUpdatePackageBody,
     unknown,
     any
   >,
@@ -176,14 +176,14 @@ export class PackageController {
   }
 
   static delete: RequestHandler<
-  unknown,
+  IPackageRequestParam,
   ResponseModel<Record<string, any>>,
   any,
   unknown,
   any
 > = async (
   req: CustomRequest<
-    unknown,
+    IPackageRequestParam,
     ResponseModel<Record<string, any>>,
     any,
     unknown,
@@ -224,14 +224,14 @@ export class PackageController {
   }
 
   static getOne: RequestHandler<
-  unknown,
+  IPackageRequestParam,
   ResponseModel<Record<string, any>>,
   any,
   unknown,
   any
 > = async (
   req: CustomRequest<
-    unknown,
+    IPackageRequestParam,
     ResponseModel<Record<string, any>>,
     any,
     unknown,
@@ -252,14 +252,14 @@ export class TenantController {
     static create: RequestHandler<
     unknown,
     ResponseModel<Record<string, any>>,
-    any,
+    ICreateTenantBody,
     unknown,
     any
   > = async (
     req: CustomRequest<
       unknown,
       ResponseModel<Record<string, any>>,
-      any,
+      ICreateTenantBody,
       unknown,
       any
     >,
@@ -274,16 +274,16 @@ export class TenantController {
     }
   
     static update: RequestHandler<
-    unknown,
+    ITenantRequestParam,
     ResponseModel<Record<string, any>>,
-    any,
+    IUpdateTenantBody,
     unknown,
     any
   > = async (
     req: CustomRequest<
-      unknown,
+      ITenantRequestParam,
       ResponseModel<Record<string, any>>,
-      any,
+      IUpdateTenantBody,
       unknown,
       any
     >,
@@ -298,14 +298,14 @@ export class TenantController {
     }
   
     static delete: RequestHandler<
-    unknown,
+    ITenantRequestParam,
     ResponseModel<Record<string, any>>,
     any,
     unknown,
     any
   > = async (
     req: CustomRequest<
-      unknown,
+      ITenantRequestParam,
       ResponseModel<Record<string, any>>,
       any,
       unknown,
@@ -346,14 +346,14 @@ export class TenantController {
     }
   
     static getOne: RequestHandler<
-    unknown,
+    ITenantRequestParam,
     ResponseModel<Record<string, any>>,
     any,
     unknown,
     any
   > = async (
     req: CustomRequest<
-      unknown,
+      ITenantRequestParam,
       ResponseModel<Record<string, any>>,
       any,
       unknown,
@@ -370,16 +370,16 @@ export class TenantController {
     }
   
     static renewal: RequestHandler<
-    unknown,
+    ITenantRequestParam,
     ResponseModel<Record<string, any>>,
-    any,
+    ITenantRenewalBody,
     unknown,
     any
   > = async (
     req: CustomRequest<
-      unknown,
+      ITenantRequestParam,
       ResponseModel<Record<string, any>>,
-      any,
+      ITenantRenewalBody,
       unknown,
       any
     >,
@@ -422,14 +422,14 @@ export class ManagerController {
     static create: RequestHandler<
     unknown,
     ResponseModel<Record<string, any>>,
-    any,
+    ICreateManagerBody,
     unknown,
     any
   > = async (
     req: CustomRequest<
       unknown,
       ResponseModel<Record<string, any>>,
-      any,
+      ICreateManagerBody,
       unknown,
       any
     >,
@@ -444,16 +444,16 @@ export class ManagerController {
     }
   
     static update: RequestHandler<
-    unknown,
+    IManagerRequestParam,
     ResponseModel<Record<string, any>>,
-    any,
+    IUpdateManagerBody,
     unknown,
     any
   > = async (
     req: CustomRequest<
-      unknown,
+      IManagerRequestParam,
       ResponseModel<Record<string, any>>,
-      any,
+      IUpdateManagerBody,
       unknown,
       any
     >,
@@ -468,14 +468,14 @@ export class ManagerController {
     }
   
     static delete: RequestHandler<
-    unknown,
+    IManagerRequestParam,
     ResponseModel<Record<string, any>>,
     any,
     unknown,
     any
   > = async (
     req: CustomRequest<
-      unknown,
+      IManagerRequestParam,
       ResponseModel<Record<string, any>>,
       any,
       unknown,
@@ -516,14 +516,14 @@ export class ManagerController {
     }
   
     static getOne: RequestHandler<
-    unknown,
+    IManagerRequestParam,
     ResponseModel<Record<string, any>>,
     any,
     unknown,
     any
   > = async (
     req: CustomRequest<
-      unknown,
+      IManagerRequestParam,
       ResponseModel<Record<string, any>>,
       any,
       unknown,
