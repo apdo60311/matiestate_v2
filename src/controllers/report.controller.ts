@@ -617,3 +617,133 @@ export const contractExpiredReport: RequestHandler<
     res.status(500).send({ success: false, message: e?.message });
   }
 };
+
+export const reportsComplaintsReportController: RequestHandler<
+  unknown,
+  ResponseModel<Record<string, any>>,
+  IReportRequestBody,
+  unknown,
+  any
+> = async (
+  req: CustomRequest<
+    unknown,
+    ResponseModel<Record<string, any>>,
+    IReportRequestBody,
+    unknown,
+    any
+  >,
+  res: Response<ResponseModel<Record<string, any>>>,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    return res.status(200).send({
+      success: true,
+      message: "Reports complaints returned successfully",
+      data: {
+        report_complaints: [],
+      },
+    });
+  } catch (e: any) {
+    return res.status(500).send({
+      success: false,
+      message: e?.message,
+    });
+  }
+};
+export const reportsWareHouseReportController: RequestHandler<
+  unknown,
+  ResponseModel<Record<string, any>>,
+  IReportRequestBody,
+  unknown,
+  any
+> = async (
+  req: CustomRequest<
+    unknown,
+    ResponseModel<Record<string, any>>,
+    IReportRequestBody,
+    unknown,
+    any
+  >,
+  res: Response<ResponseModel<Record<string, any>>>,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    return res.status(200).json({
+      success: true,
+      message: "Report warehouses returned successfully",
+      data: {
+        report_warehouse: {},
+      },
+    });
+  } catch (e: any) {
+    return res.status(500).json({
+      success: false,
+      message: e?.message,
+    });
+  }
+};
+export const reportsWorkerReportController: RequestHandler<
+  unknown,
+  ResponseModel<Record<string, any>>,
+  IReportRequestBody,
+  unknown,
+  any
+> = async (
+  req: CustomRequest<
+    unknown,
+    ResponseModel<Record<string, any>>,
+    IReportRequestBody,
+    unknown,
+    any
+  >,
+  res: Response<ResponseModel<Record<string, any>>>,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    return res.status(200).json({
+      success: true,
+      message: "Worker reports returned sucessfully.",
+      data: {
+        reports: [],
+      },
+    });
+  } catch (e: any) {
+    return res.status(500).json({
+      success: false,
+      message: e?.message,
+    });
+  }
+};
+export const reportsOwnerExpensesReportController: RequestHandler<
+  unknown,
+  ResponseModel<Record<string, any>>,
+  IReportRequestBody,
+  unknown,
+  any
+> = async (
+  req: CustomRequest<
+    unknown,
+    ResponseModel<Record<string, any>>,
+    IReportRequestBody,
+    unknown,
+    any
+  >,
+  res: Response<ResponseModel<Record<string, any>>>,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    return res.status(200).json({
+      success: true,
+      message: "Owner expenses report returned successfully",
+      data: {
+        report: {},
+      },
+    });
+  } catch (e: any) {
+    return res.status(500).json({
+      success: false,
+      message: e?.message,
+    });
+  }
+};
+

@@ -2,13 +2,16 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
-import {validateRequest} from './src/middlewares/validation.middleware';
-import config from './src/config/env';
-import {ApiResponse} from './src/interfaces/response.interface';
 import reportRoutes from "./src/routes/report.routes";
 import userRoutes from "./src/routes/user.routes";
 import bookingRoutes from "./src/routes/booking.routes";
 import otherRoutes from "./src/routes/other.routes";
+import customerRoutes from "./src/routes/customer.routes";
+import ownerRoutes from "./src/routes/owner.routes";
+import supervisorRoutes from "./src/routes/supervisor.routes";
+import servicesRoutes from "./src/routes/services.routes";
+import workerRoutes from "./src/routes/worker.routes";
+
 
 const app = express();
 
@@ -24,6 +27,11 @@ const v1Router = express.Router();
 v1Router.use('/reports', reportRoutes);
 v1Router.use('/users', userRoutes);
 v1Router.use('/bookings', bookingRoutes);
+v1Router.use('/customer', customerRoutes);
+v1Router.use('/owner', ownerRoutes);
+v1Router.use('/supervisor', supervisorRoutes);
+v1Router.use('/services', servicesRoutes);
+v1Router.use('/worker', workerRoutes);
 v1Router.use('/other', otherRoutes);
 
 app.use('/api/v1', v1Router);
