@@ -1,6 +1,23 @@
 import { CustomRequest } from '@/types/request.types';
 import ResponseModel from '@/types/response.types';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
+import {
+  IAdmin,
+  ICompanyRequestParam,
+  ICreateCompanyBody,
+  ICreateManagerBody,
+  ICreatePackageBody,
+  ICreateTenantBody,
+  IManagerRequestParam,
+  IPackageRequestParam,
+  ITenant,
+  ITenantRenewalBody,
+  ITenantRequestParam,
+  IUpdateCompanyBody,
+  IUpdateManagerBody,
+  IUpdatePackageBody,
+  IUpdateTenantBody,
+} from "@/types/admin.types";
 
 export class CompanyController {
   static create: RequestHandler<

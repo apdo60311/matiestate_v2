@@ -1,7 +1,18 @@
 import { NextFunction, RequestHandler, Response } from "express";
 import { CustomRequest } from "@/types/request.types";
 import ResponseModel from "@/types/response.types";
-
+import {
+  IAddPropertyPreparingBody,
+  ISupervisorGetAssetsBody,
+  IWorkerStartingAndEndServiceBody,
+  ISupervisorAcceptMaterialsBody,
+  IAddNewProblemBody,
+  IRemoveProblemBody,
+  IChangeServiceStatusBody,
+  IGetTechnicansBody,
+  IGetServiceWorkerDetailsBody
+} from '@/types/supervisor.types';
+import { IGetPaginatedQuery } from "@/types/other.types";
 
 export const supervisorGetServiceProblems: RequestHandler<
   unknown,

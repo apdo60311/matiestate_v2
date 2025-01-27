@@ -1,5 +1,5 @@
 import express from "express";
-import * as BookingController from "@/controllers/booking.controller";
+import * as BookingController from "../controllers/booking.controller";
 import {
     createUserSelectorMiddleware as auth,
 } from "../middlewares/auth";

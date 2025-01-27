@@ -1,6 +1,7 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { CustomRequest } from "../types/request.types";
 import ResponseModel from "@/types/response.types";
+import { ICreateRecordBody, ICreateRecordParams, IDeleteRecordsBody, IDeleteRecordsParams, IGetCategoryProblemBody, IGetContractDetailsBody, IGetMaterialsParams, IGetPaginatedQuery, IGetUnitBuildingBody, IReadRecordsBody, IReadRecordsParams, IUpdateRecordsBody, IUpdateRecordsParams, IUploadBody, IUploadParams } from "@/types/other.types";
 
 export const getCategoriesController: RequestHandler<
   unknown,

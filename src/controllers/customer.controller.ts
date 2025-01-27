@@ -1,6 +1,8 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { CustomRequest } from "../types/request.types";
 import ResponseModel from "@/types/response.types";
+import {IGetCustomerItemBody, IGetCustomerPaymentBody, IGetContractDetailsBody, IGetUnitContractBody, IRateWorkerBody, IAddRequestEvacuationBody, IUpdateRequestEvacuationStatusBody, ICustomerBookServiceRequestBody, ICustomerUpdateServiceDateBody} from "@/types/customer.types";
+import { IGetPaginatedQuery } from "@/types/other.types";
 
 export const getCustomerUnitsController: RequestHandler<
   unknown,

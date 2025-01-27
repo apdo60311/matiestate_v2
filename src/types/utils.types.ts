@@ -1,20 +1,20 @@
-interface DatabaseColumn {
+export interface DatabaseColumn {
     type: string;
     nullable: boolean;
 }
 
-interface DatabaseSchema {
+export interface DatabaseSchema {
     columns: {
       [key: string]: DatabaseColumn;
     };
   }
   
-  interface JsonSchemaType {
+  export interface JsonSchemaType {
     type: string;
     format?: string;
   }
   
-  interface TokenData {
+  export interface TokenData {
     [key: string]: any;
   }
   

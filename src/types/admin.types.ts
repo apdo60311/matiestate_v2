@@ -1,4 +1,4 @@
-interface ICreateCompanyBody {
+export interface ICreateCompanyBody {
     id: string;
     customer_phone: string;
     customer_name: string;
@@ -8,11 +8,11 @@ interface ICreateCompanyBody {
     status?: number;
   }
 
-  interface ICompanyRequestParam {
+  export interface ICompanyRequestParam {
     id: string;
   }  
 
-  interface IUpdateCompanyBody {
+  export interface IUpdateCompanyBody {
     customer_phone?: string;
     customer_name?: string;
     company_name?: string;
@@ -21,7 +21,7 @@ interface ICreateCompanyBody {
     status?: number;
   }
 
-  interface ICreatePackageBody {
+  export interface ICreatePackageBody {
     id: string;
     total_units_count: number;
     unit_price: number;
@@ -30,11 +30,11 @@ interface ICreateCompanyBody {
     package_name: string;
   }
 
-  interface IPackageRequestParam {
+  export interface IPackageRequestParam {
     id: string;
   }
 
-  interface IUpdatePackageBody {
+  export interface IUpdatePackageBody {
     total_units_count?: number;
     unit_price?: number;
     package?: number;
@@ -43,7 +43,7 @@ interface ICreateCompanyBody {
   }
 
   
-  interface ITenant {
+  export interface ITenant {
     id: string;
     emirate: string;
     address: string;
@@ -57,20 +57,20 @@ interface ICreateCompanyBody {
   }
   
 
-interface IAdmin {
+export interface IAdmin {
   name: string;
   email: string;
   phone: string;
   password: string;
 }  
 
-interface ICreateTenantBody {
+export interface ICreateTenantBody {
   tenant: ITenant;
   admin: IAdmin;
 }
 
 
-interface ITenantRenewalBody {
+export interface ITenantRenewalBody {
   tenant_id: string;
   license_start: string;
   license_expired: string;
@@ -79,11 +79,11 @@ interface ITenantRenewalBody {
   package_id: string;
 }
 
-interface ITenantRequestParam {
+export interface ITenantRequestParam {
   id: string;
 }
 
-interface IUpdateTenantBody {
+export interface IUpdateTenantBody {
   emirate?: string;
   address?: string;
   license_start?: string;
@@ -95,7 +95,7 @@ interface IUpdateTenantBody {
   package_id?: string;
 }
 
-interface ICreateManagerBody {
+export interface ICreateManagerBody {
     id: string;
     name: string;
     email: string;
@@ -103,10 +103,10 @@ interface ICreateManagerBody {
     password: string;
     role: number;
 }
-interface IManagerRequestParam {
+export interface IManagerRequestParam {
     id: string;
 }
-interface IUpdateManagerBody {
+export interface IUpdateManagerBody {
     name?: string;
     email?: string;
     phone?: string;

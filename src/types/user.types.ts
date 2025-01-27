@@ -1,31 +1,23 @@
-interface ISendSmsBody {
+export interface ISendSmsBody {
     phone_number: string;
 }
 
-interface IVerifyTokenBody {
+export interface IVerifyTokenBody {
     phone_number: string;
     token: string;
 }
-interface ISignUpBody {
+export interface ISignUpBody {
     password: string;
     fcm_token: string;
 }
 
-interface ILoginBody {
+export interface ILoginBody {
   phone_number: string;
   password: string; 
   fcm_token: string;
 }
 
-interface IForgetPasswordBody {
+export interface IForgetPasswordBody {
     oldPassword: string;
     newPassword: string;
-}
-
-export {
-    ISendSmsBody,
-    IVerifyTokenBody,
-    ISignUpBody,
-    ILoginBody,
-    IForgetPasswordBody
 }

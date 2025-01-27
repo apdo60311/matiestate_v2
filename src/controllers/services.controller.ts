@@ -1,6 +1,7 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { CustomRequest } from "../types/request.types";
 import ResponseModel from "@/types/response.types";
+import { IGetServiceByIdBody, IGetServicesStatisticsBody, IGetWorkerByServiceParam } from '@/types/service.types';
 
 export const getServicesStatisticsController: RequestHandler<
   unknown,

@@ -1,3 +1,4 @@
+import { IBalanceSheetReportBody, IBillDetailsReportQuerystring, IBillProfitReportQuerystring, IChangesFlatsRentPricingBody, IContractLeasedReportBody, IContractReportBody, IContractSoldReportBody, IGeneralLedgerReportQuerystring, IInventoryReportQuerystring, IItemActivityReportQuerystring, IJournalLedgerReportQuerystring, ILeasedPropertyReportBody, IProfitAndLossReportQuerystring, IReportRequestBody, ITrialBalanceReportQuerystring, IUnitReversedReportBody, IUnitVacatedReportBody } from "@/types/report.types";
 import { CustomRequest } from "@/types/request.types";
 import ResponseModel from "@/types/response.types";
 import { NextFunction, Request, RequestHandler, Response } from "express";

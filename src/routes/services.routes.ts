@@ -1,5 +1,5 @@
 import express from "express";
-import * as ServicesController from "@/controllers/services.controller";
+import * as ServicesController from "../controllers/services.controller";
 import {
     createUserSelectorMiddleware as auth,
 } from "../middlewares/auth";

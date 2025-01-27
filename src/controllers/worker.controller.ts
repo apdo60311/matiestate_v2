@@ -2,6 +2,12 @@ import { NextFunction, RequestHandler, Response, Request } from "express";
 import { CustomRequest } from "@/types/request.types";
 import ResponseModel from "@/types/response.types";
 
+import {
+  IWorkerStartingAndEndServiceBody,
+  IWorkerCrashesServiceBody,
+  IWorkerRequestMaterialsBody,
+} from "@/types/worker.types";
+
 export const workerStartingService: RequestHandler<
   unknown,
   ResponseModel<Record<string, any>>,

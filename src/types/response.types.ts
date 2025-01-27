@@ -1,4 +1,4 @@
-interface BaseResponse<T> {
+export interface BaseResponse<T> {
   success: boolean;
   message?: string;
   data?: T | null;
@@ -6,13 +6,13 @@ interface BaseResponse<T> {
   statusCode?: number;
 }
 
-interface PaginatedResponse<T> extends BaseResponse<T> {
+export interface PaginatedResponse<T> extends BaseResponse<T> {
   page?: number;
   limit?: number;
   total?: number;
 }
 
-interface AuthResponse
+export interface AuthResponse
   extends BaseResponse<{
     access_token: string;
     user: any;

@@ -1,7 +1,11 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { CustomRequest } from "../types/request.types";
 import ResponseModel from "@/types/response.types";
+import {
+IGetAllOwnerCashBody,IGetOwnerFinancialDetailsBody,IGetOwnerItemBody,
 
+} from "@/types/owner.types";
+import { IGetPaginatedQuery } from "@/types/other.types";
 
 export const getAllOwnerCashController: RequestHandler<
   unknown,

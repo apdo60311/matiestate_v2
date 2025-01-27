@@ -1,5 +1,5 @@
 
-interface IBalanceSheetReportBody {
+export interface IBalanceSheetReportBody {
   account_id?: string;
   observe_account_id?: string; 
   cost_center_id?: string;
@@ -9,7 +9,7 @@ interface IBalanceSheetReportBody {
   level?: number;
 }
 
-interface IBillDetailsReportQuerystring {
+export interface IBillDetailsReportQuerystring {
   account_id?: string;
   customer_id?: string;
   currency_id?: string;
@@ -19,7 +19,7 @@ interface IBillDetailsReportQuerystring {
   bill_kind?: number[];
 }
 
-interface IBillProfitReportQuerystring {
+export interface IBillProfitReportQuerystring {
   account_id?: string;
   bill_id?: string;
   client_id?: string;
@@ -30,7 +30,7 @@ interface IBillProfitReportQuerystring {
   currency_id?: string;
 }
 
-interface ITrialBalanceReportQuerystring {
+export interface ITrialBalanceReportQuerystring {
   account_id: string;
   observe_account_id: string;
   cost_center_id: string;
@@ -40,7 +40,7 @@ interface ITrialBalanceReportQuerystring {
   level: number;
 }
 
-interface IProfitAndLossReportQuerystring {
+export interface IProfitAndLossReportQuerystring {
   account_id?: string;
   observe_account_id?: string;
   cost_center_id?: string;
@@ -51,7 +51,7 @@ interface IProfitAndLossReportQuerystring {
 }
 
 
-interface IGeneralLedgerReportQuerystring {
+export interface IGeneralLedgerReportQuerystring {
   account_id?: string;
   cost_center_id?: string;
   currency_id?: string;
@@ -64,7 +64,7 @@ interface IGeneralLedgerReportQuerystring {
   show_debit?: boolean;
 }
 
-interface IInventoryReportQuerystring {
+export interface IInventoryReportQuerystring {
   item_id?: string;
   class_id?: string;
   store_id?: string;
@@ -76,7 +76,7 @@ interface IInventoryReportQuerystring {
   end_date?: string;
 }
 
-interface IJournalLedgerReportQuerystring {
+export interface IJournalLedgerReportQuerystring {
   account_id?: string;
   cost_center_id?: string;
   currency_id?: string;
@@ -97,13 +97,13 @@ interface IJournalLedgerReportQuerystring {
   operations?: number;
 }
 
-interface IItemActivityReportQuerystring {
+export interface IItemActivityReportQuerystring {
   item?: string;
   class?: string;
   store?: string;
 }
 
-interface IContractReportBody {
+export interface IContractReportBody {
   buildings?: any[];
   columns?: any[];
   contracts?: any[];
@@ -111,40 +111,45 @@ interface IContractReportBody {
 }
 
 
-interface IContractLeasedReportBody {
+export interface IContractLeasedReportBody {
     buildings?: any[];
     columns?: any[];
     filters?: Record<string, any>;  
 }
 
-interface IContractSoldReportBody {
+export interface IContractSoldReportBody {
     buildings?: any[];
     columns?: any[];
     filters?: Record<string, any>;
 }
 
 
-interface IUnitVacatedReportBody {
+export interface IUnitVacatedReportBody {
     contract: any;
     buildings?: any[];
     columns?: any[];
     filters?: Record<string, any>;
 }
 
-interface IUnitReversedReportBody {
+export interface IUnitReversedReportBody {
     contract: any;
     buildings?: any[];
     columns?: any[];
 }
 
 
-interface ILeasedPropertyReportBody {
+export interface ILeasedPropertyReportBody {
     columns?: any[];
     filters?: Record<string, any>;
     property?: any;
 }
 
-interface IChangesFlatsRentPricingBody {
+export interface IChangesFlatsRentPricingBody {
     buildings?: any[];
     filters?: Record<string, any>;
+}
+
+export interface IReportRequestBody {
+  columns: Record<string, any>;
+  filter: Record<string, any>;
 }
