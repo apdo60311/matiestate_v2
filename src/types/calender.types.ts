@@ -1,9 +1,9 @@
 
-interface IGetCalenderParams {
+export interface IGetCalenderParams {
   categoryId: string;
   buildingId: string;
 }
 
-interface IGetCalenderQuery {
+export interface IGetCalenderQuery {
   categoryProblemId: string;
 }
