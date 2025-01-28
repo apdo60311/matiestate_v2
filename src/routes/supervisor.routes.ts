@@ -79,8 +79,12 @@ const otherRoutes : IRoute[] = [
         path: '/statistics',
         method: 'get',
         handler: SupervisorController.supervisorGetStatisticsController
+    },
+    {
+        path: '/workers/search/:id',
+        method: 'get',
+        handler: SupervisorController.supervisorSearchWorkersController
     }
-
 ];
 
 otherRoutes.forEach(route => mainRouter[route.method](route.path, auth, isSupervisorPreHandler, route.handler));

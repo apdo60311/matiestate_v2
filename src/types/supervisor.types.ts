@@ -53,3 +53,11 @@ export interface IGetTechnicansBody {
 export interface IGetServiceWorkerDetailsBody {
   service_worker_id: string;
 }
+
+export interface ISupervisorSearchWorkerParams {
+    categoryProblemId: string;
+}
+
+export interface ISupervisorSearchWorkerQuery {
+    date: string;
+}

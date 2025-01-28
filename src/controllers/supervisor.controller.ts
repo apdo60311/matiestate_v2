@@ -10,7 +10,9 @@ import {
   IRemoveProblemBody,
   IChangeServiceStatusBody,
   IGetTechnicansBody,
-  IGetServiceWorkerDetailsBody
+  IGetServiceWorkerDetailsBody,
+  ISupervisorSearchWorkerParams,
+  ISupervisorSearchWorkerQuery
 } from '@/types/supervisor.types';
 import { IGetPaginatedQuery } from "@/types/other.types";
 
@@ -362,3 +364,34 @@ export const supervisorGetStatisticsController: RequestHandler<
   }
 };
 
+
+export const supervisorSearchWorkersController: RequestHandler<
+  ISupervisorSearchWorkerParams,
+  ResponseModel<Record<string, any>>,
+  unknown,
+  ISupervisorSearchWorkerQuery,
+  any
+> = async (
+  req: CustomRequest<
+    ISupervisorSearchWorkerParams,
+    ResponseModel<Record<string, any>>,
+    unknown,
+    ISupervisorSearchWorkerQuery,
+    any
+  >,
+  res: Response<ResponseModel<Record<string, any>>>,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    return res.status(200).json({
+      success: true,
+      message: "Worker returned successfully",
+      data: {},
+    });
+  } catch (e: any) {
+    return res.status(500).json({
+      success: false,
+      message: e?.message,
+    });
+  }
+};
