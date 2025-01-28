@@ -46,6 +46,7 @@ const otherRoutes :IRoute[] = [
   { path: '/worker', method: 'post', handler: ReportController.reportsWorkerReportController },
   { path: '/owner-expenses', method: 'post', handler: ReportController.reportsOwnerExpensesReportController },
   { path: '/worker/service-report', method: 'get', handler: ReportController.reportsWorkerServiceReportController },
+  { path: '/customer/reports', method: 'get', handler: ReportController.getCustomerReportsContoller}
 ];
 otherRoutes.forEach(route => mainRouter[route.method](route.path, route.handler));
 

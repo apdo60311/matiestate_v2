@@ -160,3 +160,9 @@ export interface IGetWorkerServiceReportQuery {
   worker_status?: string;
   category_id?: string;
 }
+
+export interface IGetCustomerReportsQuery {
+  status?: string;
+  category_id?: string;
+  unit_id?: string;
+}
