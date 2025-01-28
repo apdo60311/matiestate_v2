@@ -153,3 +153,10 @@ export interface IReportRequestBody {
   columns: Record<string, any>;
   filter: Record<string, any>;
 }
+
+export interface IGetWorkerServiceReportQuery {
+  building_id?: string;
+  status?: string;
+  worker_status?: string;
+  category_id?: string;
+}

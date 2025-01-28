@@ -1,4 +1,4 @@
-import { IBalanceSheetReportBody, IBillDetailsReportQuerystring, IBillProfitReportQuerystring, IChangesFlatsRentPricingBody, IContractLeasedReportBody, IContractReportBody, IContractSoldReportBody, IGeneralLedgerReportQuerystring, IInventoryReportQuerystring, IItemActivityReportQuerystring, IJournalLedgerReportQuerystring, ILeasedPropertyReportBody, IProfitAndLossReportQuerystring, IReportRequestBody, ITrialBalanceReportQuerystring, IUnitReversedReportBody, IUnitVacatedReportBody } from "@/types/report.types";
+import { IBalanceSheetReportBody, IBillDetailsReportQuerystring, IBillProfitReportQuerystring, IChangesFlatsRentPricingBody, IContractLeasedReportBody, IContractReportBody, IContractSoldReportBody, IGeneralLedgerReportQuerystring, IGetWorkerServiceReportQuery, IInventoryReportQuerystring, IItemActivityReportQuerystring, IJournalLedgerReportQuerystring, ILeasedPropertyReportBody, IProfitAndLossReportQuerystring, IReportRequestBody, ITrialBalanceReportQuerystring, IUnitReversedReportBody, IUnitVacatedReportBody } from "@/types/report.types";
 import { CustomRequest } from "@/types/request.types";
 import ResponseModel from "@/types/response.types";
 import { NextFunction, Request, RequestHandler, Response } from "express";
@@ -747,4 +747,39 @@ export const reportsOwnerExpensesReportController: RequestHandler<
     });
   }
 };
+
+
+export const reportsWorkerServiceReportController: RequestHandler<
+  unknown,
+  ResponseModel<Record<string, any>>,
+  unknown,
+  IGetWorkerServiceReportQuery,
+  any
+> = async (
+  req: CustomRequest<
+    unknown,
+    ResponseModel<Record<string, any>>,
+    unknown,
+    IGetWorkerServiceReportQuery,
+    any
+  >,
+  res: Response<ResponseModel<Record<string, any>>>,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    return res.status(200).json({
+      success: true,
+      message: "Worker Service report returned successfully",
+      data: {
+        report: {},
+      },
+    });
+  } catch (e: any) {
+    return res.status(500).json({
+      success: false,
+      message: e?.message,
+    });
+  }
+};
+
 
