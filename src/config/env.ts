@@ -13,13 +13,14 @@ const envSchema = z.object({
     required_error: "JWT_SECRET is required",
   }),
   JWT_EXPIRATION: z.number().default(60*60*24),
+  DB_TYPE: z.enum(['postgres', 'mysql']).default('postgres'),
   DB_CLIENT: z.string().default('pg'),
   DB_HOST: z.string().default('localhost'),
   DB_USER: z.string().default('postgres'),
   DB_PASSWORD: z.string().default('pass'),
   DB_DATABASE: z.string().default('postgres'),
   DB_PORT: z.coerce.number().default(5432),
-
+  DB_ALLOW_LOGGING: z.boolean().default(true),
   SMS_KEY: z.string().optional()
 });
 

@@ -2,15 +2,15 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
-import reportRoutes from "./src/routes/report.routes";
-import userRoutes from "./src/routes/user.routes";
-import bookingRoutes from "./src/routes/booking.routes";
-import otherRoutes from "./src/routes/other.routes";
-import customerRoutes from "./src/routes/customer.routes";
-import ownerRoutes from "./src/routes/owner.routes";
-import supervisorRoutes from "./src/routes/supervisor.routes";
-import servicesRoutes from "./src/routes/services.routes";
-import workerRoutes from "./src/routes/worker.routes";
+import reportRoutes from "./routes/report.routes";
+import userRoutes from "./routes/user.routes";
+import bookingRoutes from "./routes/booking.routes";
+import otherRoutes from "./routes/other.routes";
+import customerRoutes from "./routes/customer.routes";
+import ownerRoutes from "./routes/owner.routes";
+import supervisorRoutes from "./routes/supervisor.routes";
+import servicesRoutes from "./routes/services.routes";
+import workerRoutes from "./routes/worker.routes";
 
 
 const app = express();
