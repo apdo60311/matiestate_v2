@@ -5,9 +5,9 @@ services:
     image: postgres:alpine
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Hec378Pd
-      POSTGRES_DB: matiestate
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
     expose:
       - 5432
     volumes:

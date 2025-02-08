@@ -11,6 +11,8 @@ import ownerRoutes from "./routes/owner.routes";
 import supervisorRoutes from "./routes/supervisor.routes";
 import servicesRoutes from "./routes/services.routes";
 import workerRoutes from "./routes/worker.routes";
+import { AppDataSource } from './config/db';
+import { logger } from './utils/logger';
 
 
 const app = express();
@@ -23,6 +25,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const v1Router = express.Router();
+
+AppDataSource.initialize()
+  .then(() => {
+    logger.info('Data Source has been initialized!')
+  })
+  .catch((err) => {
+    logger.error(`Error during Data Source initialization: ${err}`)
+  });
+
 
 v1Router.use('/reports', reportRoutes);
 v1Router.use('/users', userRoutes);

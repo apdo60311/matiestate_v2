@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import config from "@/config/env";
+import config from "./env";
 
 
 
@@ -14,11 +14,3 @@ export const AppDataSource = new DataSource({
   logging: config.DB_ALLOW_LOGGING,
   synchronize: config.NODE_ENV !== 'production',
 });
-
-AppDataSource.initialize()
-  .then(() => {
-    console.log("Data Source has been initialized!");
-  })
-  .catch((err) => {
-    console.error("Error during Data Source initialization", err);
-  });
