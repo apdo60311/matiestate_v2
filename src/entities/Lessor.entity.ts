@@ -1,13 +1,17 @@
 import {
   Column,
   CreateDateColumn,
+  Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { v4 as uuidv4 } from "uuid";
 import { Tenant } from "./Tenant.entity";
+import { Building } from "./Building.entity";
 
+@Entity("lessor")
 export class Lessor {
   @PrimaryGeneratedColumn("uuid")
   id: string = uuidv4().toString();
@@ -54,7 +58,7 @@ export class Lessor {
   @Column({ type: "text", nullable: true })
   role?: string;
 
-  @Column({ type: "numeric", generated: "identity" })
+  @Column({ type: "bigint", generated: "identity" })
   number!: number;
 
   @Column({ type: "text", nullable: true })
@@ -66,4 +70,7 @@ export class Lessor {
   @OneToOne(() => Tenant)
   @JoinColumn({ name: "tenant_id" })
   tenant?: Tenant;
+
+  @OneToMany(() => Building, (building) => building.lessor)
+  buildings?: Building[];
 }

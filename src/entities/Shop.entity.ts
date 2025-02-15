@@ -46,7 +46,7 @@ export class Shop {
   @Column("text", { nullable: true })
   area_unit?: string;
 
-  @Column({ name: "view", nullable: true })
+  @Column({type:"varchar", length: 200, name: "view", nullable: true })
   view?: string;
 
   @Column("text", { nullable: true })

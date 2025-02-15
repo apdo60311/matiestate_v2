@@ -1,28 +1,31 @@
-import { Request, Response, NextFunction } from 'express';
-import { ZodSchema } from 'zod';
-import { BadRequestException } from '@/exceptions/http.exception';
-import { asyncHandler } from '@/utils/handlers';
+import ResponseModel from "@/types/response.types";
+import { plainToInstance } from "class-transformer";
+import { validate } from "class-validator";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 
-export const validateRequest = (schema: ZodSchema) => {
-  return asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const result = await schema.safeParseAsync({
-        body: req.body,
-        query: req.query,
-        params: req.params,
+export const validateDto = (dtoClass: any): (
+  (req: Request, res: Response<ResponseModel<Record<string, any>>>, next: NextFunction) => any) => {
+  return async (
+    req: Request,
+    res: Response<ResponseModel<Record<string, any>>>,
+    next: NextFunction
+  ) => {
+    const dtoInstance = plainToInstance(dtoClass, req.body);
+
+    const errors = await validate(dtoInstance);
+
+    if (errors.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors: errors.map((error) => ({
+          field: error.property,
+          constraints: error.constraints,
+        })),
       });
-
-      if (!result.success) {
-        throw new BadRequestException('Validation failed', result.error.format());
-      }
-
-      req.body = result.data.body ?? {};
-      req.query = result.data.query ?? {};
-      req.params = result.data.params ?? {};
-
-      next();
-    } catch (error) {
-      next(error);
     }
-  });
+
+    req.body = dtoInstance;
+    next();
+  };
 };

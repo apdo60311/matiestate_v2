@@ -43,7 +43,7 @@ export class Parking {
   @Column("text", { nullable: true })
   description?: string;
 
-  @Column({ name: "view", nullable: true })
+  @Column({type:'varchar', length:200, name: "view", nullable: true })
   view?: string;
 
   @ManyToOne(() => Account, { nullable: true })

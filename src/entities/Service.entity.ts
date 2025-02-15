@@ -42,7 +42,7 @@ export class Service {
   @PrimaryGeneratedColumn("uuid")
   id: string = uuidv4().toString();
 
-  @Column("serial")
+  @Column({ type: "bigint", generated: "identity", unique: true })
   number!: number;
 
   @CreateDateColumn({ type: "timestamp" })

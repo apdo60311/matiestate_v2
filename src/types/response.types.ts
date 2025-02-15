@@ -3,6 +3,7 @@ export interface BaseResponse<T> {
   message?: string;
   data?: T | null;
   error?: any;
+  errors?: Array<any>;
   statusCode?: number;
 }
 

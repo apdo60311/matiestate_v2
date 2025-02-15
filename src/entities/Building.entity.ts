@@ -179,7 +179,7 @@ export class Building {
   @Column({ type: "text", nullable: true })
   statement?: string;
 
-  @ManyToOne(() => Lessor)
+  @ManyToOne(() => Lessor, (lessor: Lessor) => lessor.buildings)
   @JoinColumn({ name: "lessor_id" })
   lessor?: Lessor;
 

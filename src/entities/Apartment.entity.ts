@@ -39,7 +39,7 @@ export class Apartment {
   @Column("varchar", { default: "" })
   area_unit?: string;
 
-  @Column({ name: "view", nullable: true })
+  @Column({ type:'varchar', length:255, name: "view", nullable: true })
   view?: string;
 
   @Column("bigint", { nullable: true })

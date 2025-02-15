@@ -63,7 +63,7 @@ export class Installment {
   beneficiary_name?: string;
 
   @Unique(["contract"])
-  @Column()
+  @Column({type: "varchar", length: 255})
   contract_unique!: string;
 
   @ManyToOne(() => Tenant, { onDelete: "CASCADE", nullable: true })

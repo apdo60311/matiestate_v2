@@ -36,6 +36,6 @@ export class WorkerBuilding {
   tenant!: Tenant;
 
   @Unique(["user", "building"])
-  @Column()
+  @Column({type: "varchar", length: 255})
   user_building_unique!: string;
 }

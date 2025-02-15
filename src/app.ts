@@ -11,8 +11,7 @@ import ownerRoutes from "./routes/owner.routes";
 import supervisorRoutes from "./routes/supervisor.routes";
 import servicesRoutes from "./routes/services.routes";
 import workerRoutes from "./routes/worker.routes";
-import { AppDataSource } from './config/db';
-import { logger } from './utils/logger';
+import buildingsRoutes from "./routes/buildings.routes";
 
 
 const app = express();
@@ -26,15 +25,6 @@ app.use(express.urlencoded({ extended: true }));
 
 const v1Router = express.Router();
 
-AppDataSource.initialize()
-  .then(() => {
-    logger.info('Data Source has been initialized!')
-  })
-  .catch((err) => {
-    logger.error(`Error during Data Source initialization: ${err}`)
-  });
-
-
 v1Router.use('/reports', reportRoutes);
 v1Router.use('/users', userRoutes);
 v1Router.use('/bookings', bookingRoutes);
@@ -44,6 +34,11 @@ v1Router.use('/supervisor', supervisorRoutes);
 v1Router.use('/services', servicesRoutes);
 v1Router.use('/worker', workerRoutes);
 v1Router.use('/other', otherRoutes);
+
+const v1ClientRouter = express.Router();
+v1ClientRouter.use('/buildings', buildingsRoutes);
+
+v1Router.use('/client', v1ClientRouter);
 
 app.use('/api/v1', v1Router);
 
