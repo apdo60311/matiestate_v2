@@ -4,6 +4,8 @@ export const DI_TYPES = {
     BuildingsRepository: Symbol.for("BuildingsRepository"),
     BuildingsService: Symbol.for("BuildingsService"),
     BuildingsController: Symbol.for("BuildingsController"),
+    CostCenterRepository: Symbol.for("CostCenterRepository"),
+    AccountRepository: Symbol.for('AccountRepository'),
 };
   
   

@@ -98,13 +98,13 @@ res: Response<ResponseModel<Record<string, any>>>,
 next: NextFunction
 ): Promise<any> => {
 try {
-  let buildings = await this.buildingsService.getBuildings();    
+
+  const result = await this.buildingsService.createBuilding(req.body);
   
   return res.status(200).send({
     success: true,
-    data: {
-      buildings,
-    },
+    message:'Building successfully created',
+    data: result,
   });
 } catch (e: any) {
   return res.status(500).send({
@@ -116,14 +116,14 @@ try {
 
 
 public update: RequestHandler<
-unknown,
+{id: string},
 ResponseModel<Record<string, any>>,
 IBuildingsBody,
 unknown,
 any
 > = async (
 req: CustomRequest<
-  unknown,
+  {id:string},
   ResponseModel<Record<string, any>>,
   any,
   unknown,
@@ -133,13 +133,12 @@ res: Response<ResponseModel<Record<string, any>>>,
 next: NextFunction
 ): Promise<any> => {
 try {
-  let buildings = await this.buildingsService.getBuildings();    
+  const result = await this.buildingsService.updateBuilding(req.params.id, req.body)
   
   return res.status(200).send({
     success: true,
-    data: {
-      buildings,
-    },
+    message: 'Building updated successfully',
+    data: result,
   });
 } catch (e: any) {
   return res.status(500).send({
