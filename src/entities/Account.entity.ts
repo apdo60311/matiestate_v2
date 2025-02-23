@@ -29,13 +29,13 @@ export class Account {
   @Column({ type: "text", nullable: true })
   note?: string;
 
-  @Column({ type: "bigint", generated: "identity", unique: true })
+  @Column({ type: "bigint", generated: "increment", unique: true })
   number?: number;
 
   @Column({ type: "varchar", unique: true, nullable: false })
   name!: string;
 
-  @Column({ type: "bigint", unique: true })
+  @Column({ type: "bigint"})
   code!: number;
 
   @Column({ type: "int", nullable: true })
