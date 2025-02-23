@@ -8,14 +8,14 @@ import {
 } from "typeorm";
 import { Tenant } from "./Tenant.entity";
 import { Currency } from "./Currency.entity";
-
+import { v4 as uuidv4 } from "uuid";
 @Entity("account")
 export class Account {
   @PrimaryGeneratedColumn("uuid")
-  id!: string;
+  id: string = uuidv4().toString();
 
   @CreateDateColumn({ type: "timestamptz" })
-  created_at!: Date;
+  created_at: Date = new Date(new Date().getTime());
 
   @Column({ type: "int", default: 1 })
   type: number = 1;
@@ -30,7 +30,7 @@ export class Account {
   note?: string;
 
   @Column({ type: "bigint", generated: "identity", unique: true })
-  number!: number;
+  number?: number;
 
   @Column({ type: "varchar", unique: true, nullable: false })
   name!: string;

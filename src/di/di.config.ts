@@ -12,7 +12,14 @@ export const container = new Container({ autoBindInjectable: true });
 
 // DataSource 
 container.bind<DataSource>(DI_TYPES.DataSource).toDynamicValue(async () => {
-  const dataSource = await DatabaseConfig.getInstance().getDataSource();
+  const dbConfig = DatabaseConfig.getInstance();
+  const dataSource = await dbConfig.getDataSource();
+  
+  // Initialize if not already initialized
+  if (!dataSource.isInitialized) {
+    await dataSource.initialize();
+  }
+  
   return dataSource;
 }).inSingletonScope();
 
@@ -20,6 +27,10 @@ container.bind<DataSource>(DI_TYPES.DataSource).toDynamicValue(async () => {
 container.bind<BuildingsRepository>(DI_TYPES.BuildingsRepository)
   .toDynamicValue(async (context) => {
     const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+    if (!dataSource.isInitialized) {
+      await dataSource.initialize();
+    }
+
     return new BuildingsRepository(dataSource);
   })
   .inSingletonScope();
@@ -27,6 +38,10 @@ container.bind<BuildingsRepository>(DI_TYPES.BuildingsRepository)
   container.bind<CostCenterRepository>(DI_TYPES.CostCenterRepository)
   .toDynamicValue(async (context) => {
     const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+    if (!dataSource.isInitialized) {
+      await dataSource.initialize();
+    }
+
     return new CostCenterRepository(dataSource);
   })
   .inSingletonScope();
@@ -34,6 +49,10 @@ container.bind<BuildingsRepository>(DI_TYPES.BuildingsRepository)
 container.bind<AccountRepository>(DI_TYPES.AccountRepository)
 .toDynamicValue(async (context) => {
   const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+  if (!dataSource.isInitialized) {
+    await dataSource.initialize();
+  }
+
   return new AccountRepository(dataSource);
 })
 .inSingletonScope();

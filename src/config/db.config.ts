@@ -37,6 +37,7 @@ export class DatabaseConfig {
   private createDataSourceOptions = async (): Promise<DataSourceOptions> =>{
     const entityPaths = await this.getEntityPaths();
     logger.info(`Found ${entityPaths.length} entities`);
+    logger.info(`Entities: ${JSON.stringify(entityPaths)}`);
 
     return {
         type: config.DB_TYPE || "postgres",

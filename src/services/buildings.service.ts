@@ -7,6 +7,7 @@ import { AccountRepository } from "../repositories/account.repository";
 import { Account } from "../entities/Account.entity";
 import { CostCenterRepository } from "../repositories/cost-center.repository";
 import { ICreateBuildingReturnData } from "../interfaces/buildings-service.interfaces";
+import { logger } from "../utils/logger";
 
 @injectable()
 export class BuildingsService {
@@ -33,11 +34,16 @@ export class BuildingsService {
                         name: buildingData.name,
                     }
 
-                    let buildingAccountToInsert: Partial<Account> =
-                      this.removeIdFromEntityAndUpdate(
-                        buildingAccountData,
-                        updates
-                      );
+                    const buildingAccountToInsert: Partial<Account> = {
+                        name: buildingData.name,
+                        code: buildingAccountData?.code || 123,
+                    };
+
+                    // let buildingAccountToInsert: Partial<Account> =
+                    //   this.removeIdFromEntityAndUpdate(
+                    //     buildingAccountData,
+                    //     updates
+                    //   );
                     createdAccountId =
                       await this.accountRepository.createAccount(
                         buildingAccountToInsert
@@ -105,6 +111,7 @@ export class BuildingsService {
                 ...updates
             };
             delete updatedEntity.id;
+            logger.info(`updatedEntity: ${JSON.stringify(updatedEntity)}`);
             return updatedEntity;
         } catch (error:any) {
             throw new Error(`Failed to update entity: ${error.message}`);

@@ -333,4 +333,129 @@ export class Building {
 
   @Column({ type: "text", nullable: true })
   ltnname?: string;
+
+  @Column({ type: "uuid", name: "building_account_id", nullable: true })
+  buildingAccountId?: string;
+
+  @Column({ type: "uuid", name: "main_cost_center_id", nullable: true })
+  mainCostCenterId?: string;
+
+  @Column({ type: "uuid", name: "purchase_currency_id", nullable: true })
+  purchaseCurrencyId?: string;
+
+  @Column({ type: "uuid", name: "investment_currency_id", nullable: true })
+  investmentCurrencyId?: string;
+
+  @Column({ type: "uuid", name: "received_currency_id", nullable: true })
+  receivedCurrencyId?: string;
+
+  @Column({ type: "uuid", name: "building_currency_id", nullable: true })
+  buildingCurrencyId?: string;
+
+  @Column({ type: "uuid", name: "supplier_account_id", nullable: true })
+  supplierAccountId?: string;
+
+  @Column({ type: "uuid", name: "investment_owner_account_id", nullable: true })
+  investmentOwnerAccountId?: string;
+
+  @Column({ type: "uuid", name: "renters_insurance", nullable: true })
+  rentersInsuranceId?: string;
+
+  @Column({ type: "uuid", name: "received_account_id", nullable: true })
+  receivedAccountId?: string;
+
+  @Column({ type: "uuid", name: "owner_account_id", nullable: true })
+  ownerAccountId?: string;
+
+  @Column({ type: "uuid", name: "revenue_id", nullable: true })
+  revenueId?: string;
+
+  @Column({ type: "uuid", name: "entry_vat_account_id", nullable: true })
+  entryVatAccountId?: string;
+
+  @Column({ type: "uuid", name: "entry_landlord_account_id", nullable: true })
+  entryLandlordAccountId?: string;
+
+  @Column({
+    type: "uuid",
+    name: "entry_commission_from_owner_account_id",
+    nullable: true,
+  })
+  entryCommissionFromOwnerAccountId?: string;
+
+  @Column({ type: "uuid", name: "entry_revenue_account_id", nullable: true })
+  entryRevenueAccountId?: string;
+
+  @Column({ type: "uuid", name: "create_into_account_id", nullable: true })
+  createIntoAccountId?: string;
+
+  @Column({ type: "uuid", name: "create_into_cost_center_id", nullable: true })
+  createIntoCostCenterId?: string;
+
+  @Column({ type: "uuid", name: "building_bank_account_id", nullable: true })
+  buildingBankAccountId?: string;
+
+  @Column({ type: "uuid", name: "building_cash_account_id", nullable: true })
+  buildingCashAccountId?: string;
+
+  @Column({ type: "uuid", name: "building_deposit_account_id", nullable: true })
+  buildingDepositAccountId?: string;
+
+  @Column({ type: "uuid", name: "building_cheque_account_id", nullable: true })
+  buildingChequeAccountId?: string;
+
+  @Column({ type: "uuid", name: "vat_account_id", nullable: true })
+  vatAccountId?: string;
+
+  @Column({ type: "uuid", name: "deferred_vat_account_id", nullable: true })
+  deferredVatAccountId?: string;
+
+  @Column({ type: "uuid", name: "owner_balance", nullable: true })
+  ownerBalanceId?: string;
+
+  @Column({ type: "uuid", name: "owner_tax_account_id", nullable: true })
+  ownerTaxAccountId?: string;
+
+  @Column({
+    type: "uuid",
+    name: "commission_expense_account_id",
+    nullable: true,
+  })
+  commissionExpenseAccountId?: string;
+
+  @Column({
+    type: "uuid",
+    name: "realestate_company_account_id",
+    nullable: true,
+  })
+  realestateCompanyAccountId?: string;
+
+  @Column({ type: "uuid", name: "customers_main_account_id", nullable: true })
+  customersMainAccountId?: string;
+
+  @Column({
+    type: "uuid",
+    name: "building_insurance_account_id",
+    nullable: true,
+  })
+  buildingInsuranceAccountId?: string;
+
+  @Column({
+    type: "uuid",
+    name: "building_discount_account_id",
+    nullable: true,
+  })
+  buildingDiscountAccountId?: string;
+
+  @Column({ type: "uuid", name: "tenant_id", nullable: true })
+  tenantId?: string;
+
+  @Column({ type: "uuid", name: "owner_id", nullable: true })
+  ownerId?: string;
+
+  @Column({ type: "uuid", name: "lessor_id", nullable: true })
+  lessorId?: string;
+
+  @Column({ type: "uuid", name: "bank_id", nullable: true })
+  bankId?: string;
 }
