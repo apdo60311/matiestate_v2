@@ -90,6 +90,14 @@ export class BuildingsService {
         }
     }
 
+    getBuilding(id: string): Promise<Building | null> {
+        try {
+            return this.buildingRepository.findOneBy({ id });
+        } catch (error: any) {
+            throw new Error(`Failed to get building: ${error.message}`);
+        }
+    }
+
     /**
      * Get all buildings
      */

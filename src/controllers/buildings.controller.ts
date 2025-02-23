@@ -31,8 +31,16 @@ export class BuildingsController {
     try {
       let buildings = await this.buildingsService.getBuildings();
       
+      if(!buildings || buildings.length === 0) {
+        return res.status(200).send({
+          success: true,
+          message: 'No buildings found!',
+        });
+      }
+
       return res.status(200).send({
         success: true,
+        message: 'Buildings successfully retrieved',
         data: {
           buildings,
         },
@@ -54,7 +62,7 @@ export class BuildingsController {
   any
 > = async (
   req: CustomRequest<
-    unknown,
+    {id:string},
     ResponseModel<Record<string, any>>,
     any,
     unknown,
@@ -64,12 +72,19 @@ export class BuildingsController {
   next: NextFunction
 ): Promise<any> => {
   try {
-    let buildings = await this.buildingsService.getBuildings();    
+    let building = await this.buildingsService.getBuilding(req.params.id);    
     
+    if(!building) {
+      return res.status(200).send({
+        success: true,
+        message: 'No such building!',
+      });
+    }
+
     return res.status(200).send({
       success: true,
       data: {
-        buildings,
+        building,
       },
     });
   } catch (e: any) {
