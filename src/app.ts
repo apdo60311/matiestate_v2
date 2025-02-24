@@ -12,7 +12,8 @@ import supervisorRoutes from "./routes/supervisor.routes";
 import servicesRoutes from "./routes/services.routes";
 import workerRoutes from "./routes/worker.routes";
 import buildingsRoutes from "./routes/buildings.routes";
-
+import swaggerUI from 'swagger-ui-express';
+import swaggerSpec from "./config/swagger.config"
 
 const app = express();
 
@@ -41,6 +42,7 @@ v1ClientRouter.use('/buildings', buildingsRoutes);
 v1Router.use('/client', v1ClientRouter);
 
 app.use('/api/v1', v1Router);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
 app.get('/health',(req, res) => {
     res.send('OK');

@@ -12,9 +12,9 @@ export class AccountRepository extends Repository<Account> {
 
     async createAccount(account: Partial<Account>): Promise<string | null> {
         try {
-            const result = await this.save(account);
-            logger.info(`Account Created successfully with id: ${result.id}`);
-            return result.id;
+            const result = await this.insert(account);
+            logger.info(`Account Created successfully with id: ${result.identifiers[0].id}`);
+            return result.identifiers[0].id;
         } catch (error) {
             logger.error(`Error while creating Account. ${error}`);
             return null;
