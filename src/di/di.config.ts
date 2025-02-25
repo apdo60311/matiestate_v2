@@ -7,6 +7,9 @@ import { BuildingsService } from "../services/buildings.service";
 import { BuildingsController } from "../controllers/buildings.controller";
 import { CostCenterRepository } from "../repositories/cost-center.repository";
 import { AccountRepository } from "../repositories/account.repository";
+import { ReservationPropertyService } from "../services/reservation-property.service";
+import { ReservationPropertyController } from "../controllers/reservation-property.controller";
+import { ReservationPropertyRepository } from "../repositories/reservation-property.repository";
 
 export const container = new Container({ autoBindInjectable: true });
 
@@ -75,3 +78,31 @@ container.bind<BuildingsController>(DI_TYPES.BuildingsController)
     return new BuildingsController(service);
   })
   .inSingletonScope();
+
+  container.bind<ReservationPropertyRepository>(DI_TYPES.ReservationPropertyRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        if (!dataSource.isInitialized) {
+            await dataSource.initialize();
+        }
+        return new ReservationPropertyRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ReservationPropertyService>(DI_TYPES.ReservationPropertyService)
+    .toDynamicValue(async (context) => {
+        const repository = await context.container.getAsync<ReservationPropertyRepository>(
+            DI_TYPES.ReservationPropertyRepository
+        );
+        return new ReservationPropertyService(repository);
+    })
+    .inSingletonScope();
+
+container.bind<ReservationPropertyController>(DI_TYPES.ReservationPropertyController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<ReservationPropertyService>(
+            DI_TYPES.ReservationPropertyService
+        );
+        return new ReservationPropertyController(service);
+    })
+    .inSingletonScope();

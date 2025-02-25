@@ -21,7 +21,7 @@ export class ReservationProperty {
   property_id!: string;
 
   @Column('date')
-  book_date!: Date;
+  book_date?: Date = new Date(new Date().getTime());
 
   @Column('date', { nullable: true })
   end_book_date?: Date;
