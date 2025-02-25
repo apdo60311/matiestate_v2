@@ -31,6 +31,9 @@ export class ShopFixedAssets {
   @JoinColumn({ name: "shop_id" })
   shop!: Shop;
 
+  @Column("uuid", { nullable: true })
+  shop_id?: string;
+
   @ManyToOne(() => Tenant, { onDelete: "CASCADE", nullable: true })
   @JoinColumn({ name: "tenant_id" })
   tenant?: Tenant;

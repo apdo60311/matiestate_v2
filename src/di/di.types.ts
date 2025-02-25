@@ -17,4 +17,13 @@ export const DI_TYPES = {
     "ApartmentSellingPriceRepository"
   ),
   ApartmentAccumulateRepository: Symbol.for("ApartmentAccumulateRepository"),
+  ShopRepository: Symbol.for('ShopRepository'),
+  ShopService: Symbol.for('ShopService'),
+  ShopController: Symbol.for('ShopController'),
+  ShopPicturesRepository: Symbol.for('ShopPicturesRepository'),
+  ShopRentalPriceRepository: Symbol.for('ShopRentalPriceRepository'),
+  ShopSellingPriceRepository: Symbol.for('ShopSellingPriceRepository'),
+  ShopAccumulateRepository: Symbol.for('ShopAccumulateRepository'),
+  ShopFixedAssetsRepository: Symbol.for('ShopFixedAssetsRepository')
+
 };

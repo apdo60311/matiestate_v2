@@ -1,6 +1,6 @@
-import { logger } from "../utils/logger";
-import { DI_TYPES } from "../di/di.types";
-import { ApartmentAccumulate } from "../entities/ApartmentAccumulate.entity";
+import { logger } from "../../utils/logger";
+import { DI_TYPES } from "../../di/di.types";
+import { ApartmentAccumulate } from "../../entities/ApartmentAccumulate.entity";
 import { inject, injectable } from "inversify";
 import { DataSource, Repository } from "typeorm";
 

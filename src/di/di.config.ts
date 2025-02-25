@@ -12,11 +12,19 @@ import { ReservationPropertyController } from "../controllers/reservation-proper
 import { ReservationPropertyRepository } from "../repositories/reservation-property.repository";
 import { ApartmentController } from "../controllers/apartment.controller";
 import { ApartmentService } from "../services/apartment.service";
-import { ApartmentRepository } from "../repositories/apartment.repository";
-import { ApartmentAccumulateRepository } from "../repositories/apartment-accumulate.repository";
-import { ApartmentSellingPriceRepository } from "../repositories/apartment-selling-price.repository";
-import { ApartmentRentalPriceRepository } from "../repositories/apartment-rental-price.repository";
-import { ApartmentPicturesRepository } from "../repositories/apartment-picture.repository";
+import { ApartmentRepository } from "../repositories/apartment/apartment.repository";
+import { ApartmentAccumulateRepository } from "../repositories/apartment/apartment-accumulate.repository";
+import { ApartmentSellingPriceRepository } from "../repositories/apartment/apartment-selling-price.repository";
+import { ApartmentRentalPriceRepository } from "../repositories/apartment/apartment-rental-price.repository";
+import { ApartmentPicturesRepository } from "../repositories/apartment/apartment-picture.repository";
+import { ShopRepository } from "../repositories/shop/shop.repository";
+import { ShopService } from "../services/shop.service";
+import { ShopPicturesRepository } from "../repositories/shop/shop-pictures.repository";
+import { ShopRentalPriceRepository } from "../repositories/shop/shop-rental-price.repository";
+import { ShopSellingPriceRepository } from "../repositories/shop/shop-selling-price.repository";
+import { ShopAccumulateRepository } from "../repositories/shop/shop-accumulate.repository";
+import { ShopFixedAssetsRepository } from "../repositories/shop/shop-fixed-assets.repository";
+import { ShopController } from "../controllers/shop.controller";
 
 export const container = new Container({ autoBindInjectable: true });
 
@@ -95,6 +103,52 @@ container.bind<ApartmentAccumulateRepository>(DI_TYPES.ApartmentAccumulateReposi
     })
     .inSingletonScope();
 
+container.bind<ShopRepository>(DI_TYPES.ShopRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ShopRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ShopPicturesRepository>(DI_TYPES.ShopPicturesRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ShopPicturesRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ShopRentalPriceRepository>(DI_TYPES.ShopRentalPriceRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ShopRentalPriceRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ShopSellingPriceRepository>(DI_TYPES.ShopSellingPriceRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ShopSellingPriceRepository(dataSource);
+    }
+    )
+    .inSingletonScope();
+
+container.bind<ShopAccumulateRepository>(DI_TYPES.ShopAccumulateRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ShopAccumulateRepository(dataSource);
+    }
+    )
+    .inSingletonScope();
+
+container.bind<ShopFixedAssetsRepository>(DI_TYPES.ShopFixedAssetsRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ShopFixedAssetsRepository(dataSource);
+    }
+    )
+    .inSingletonScope();
+
+
 // Bind Services
 container.bind<BuildingsService>(DI_TYPES.BuildingsService)
   .toDynamicValue(async (context) => {
@@ -103,6 +157,26 @@ container.bind<BuildingsService>(DI_TYPES.BuildingsService)
     const costCenterRepository = await context.container.getAsync<CostCenterRepository>(DI_TYPES.CostCenterRepository);
     
     return new BuildingsService(buildingsRepository,accountRepository,costCenterRepository);
+  })
+  .inSingletonScope();
+
+  container.bind<ShopService>(DI_TYPES.ShopService)
+  .toDynamicValue(async (context) => {
+      const shopRepository = await context.container.getAsync<ShopRepository>(DI_TYPES.ShopRepository);
+      const shopPicturesRepository = await context.container.getAsync<ShopPicturesRepository>(DI_TYPES.ShopPicturesRepository);
+      const shopRentalPriceRepository = await context.container.getAsync<ShopRentalPriceRepository>(DI_TYPES.ShopRentalPriceRepository);
+      const shopSellingPriceRepository = await context.container.getAsync<ShopSellingPriceRepository>(DI_TYPES.ShopSellingPriceRepository);
+      const shopAccumulateRepository = await context.container.getAsync<ShopAccumulateRepository>(DI_TYPES.ShopAccumulateRepository);
+      const shopFixedAssetsRepository = await context.container.getAsync<ShopFixedAssetsRepository>(DI_TYPES.ShopFixedAssetsRepository);
+
+      return new ShopService(
+          shopRepository,
+          shopPicturesRepository,
+          shopRentalPriceRepository,
+          shopSellingPriceRepository,
+          shopAccumulateRepository,
+          shopFixedAssetsRepository
+      );
   })
   .inSingletonScope();
 
@@ -193,3 +267,10 @@ container.bind<ApartmentController>(DI_TYPES.ApartmentController)
     return new ApartmentController(service);
 })
 .inSingletonScope();
+
+container.bind<ShopController>(DI_TYPES.ShopController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<ShopService>(DI_TYPES.ShopService);
+        return new ShopController(service);
+    })
+    .inSingletonScope();

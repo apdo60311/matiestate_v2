@@ -1,10 +1,10 @@
-import { logger } from "../utils/logger";
-import { DI_TYPES } from "../di/di.types";
-import { Apartment } from "../entities/Apartment.entity";
-import { ApartmentAccumulate } from "../entities/ApartmentAccumulate.entity";
-import { ApartmentPictures } from "../entities/ApartmentPictures.entity";
-import { ApartmentRentalPrice } from "../entities/ApartmentRentalPrice.entity";
-import { ApartmentSellingPrice } from "../entities/ApartmentSellingPrice.entity";
+import { logger } from "../../utils/logger";
+import { DI_TYPES } from "../../di/di.types";
+import { Apartment } from "../../entities/Apartment.entity";
+import { ApartmentAccumulate } from "../../entities/ApartmentAccumulate.entity";
+import { ApartmentPictures } from "../../entities/ApartmentPictures.entity";
+import { ApartmentRentalPrice } from "../../entities/ApartmentRentalPrice.entity";
+import { ApartmentSellingPrice } from "../../entities/ApartmentSellingPrice.entity";
 import { inject, injectable } from "inversify";
 import { DataSource, Repository } from "typeorm";
 

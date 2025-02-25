@@ -1,15 +1,15 @@
 import { inject, injectable } from "inversify";
 import { DI_TYPES } from "../di/di.types";
-import { ApartmentRepository } from "../repositories/apartment.repository";
+import { ApartmentRepository } from "../repositories/apartment/apartment.repository";
 import { Apartment } from "../entities/Apartment.entity";
 import { ApartmentPictures } from "../entities/ApartmentPictures.entity";
 import { ApartmentRentalPrice } from "../entities/ApartmentRentalPrice.entity";
 import { ApartmentSellingPrice } from "../entities/ApartmentSellingPrice.entity";
 import { ApartmentAccumulate } from "../entities/ApartmentAccumulate.entity";
-import { ApartmentPicturesRepository } from "../repositories/apartment-picture.repository";
-import { ApartmentAccumulateRepository } from "../repositories/apartment-accumulate.repository";
-import { ApartmentRentalPriceRepository } from "../repositories/apartment-rental-price.repository";
-import { ApartmentSellingPriceRepository } from "../repositories/apartment-selling-price.repository";
+import { ApartmentPicturesRepository } from "../repositories/apartment/apartment-picture.repository";
+import { ApartmentAccumulateRepository } from "../repositories/apartment/apartment-accumulate.repository";
+import { ApartmentRentalPriceRepository } from "../repositories/apartment/apartment-rental-price.repository";
+import { ApartmentSellingPriceRepository } from "../repositories/apartment/apartment-selling-price.repository";
 import { IApartmentAccumulate, IApartmentBody, IApartmentPicture, IApartmentRentalPrice, IApartmentSellingPrice } from "../types/apartment.types";
 import { logger } from "../utils/logger";
 
