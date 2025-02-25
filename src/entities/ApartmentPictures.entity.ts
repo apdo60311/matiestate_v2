@@ -19,10 +19,16 @@ export class ApartmentPictures {
   @JoinColumn({ name: 'apartment_id' })
   apartment?: Apartment;
 
+  @Column({type:'uuid', nullable: false })
+  apartment_id!: string
+
   @Column('bytea', { nullable: true })
   picture?: Buffer;
 
   @ManyToOne(() => Tenant, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'tenant_id' })
   tenant?: Tenant;
+
+  @Column({type:'uuid', nullable: false })
+  tenant_id!: string
 }

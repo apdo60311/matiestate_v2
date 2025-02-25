@@ -15,6 +15,7 @@ import buildingsRoutes from "./routes/buildings.routes";
 import swaggerUI from 'swagger-ui-express';
 import swaggerSpec from "./config/swagger.config"
 import reservationPropertyRoutes from './routes/reservation-property.routes';
+import apartmentRoutes from './routes/apartment.routes';
 
 const app = express();
 
@@ -40,6 +41,7 @@ v1Router.use('/other', otherRoutes);
 const v1ClientRouter = express.Router();
 v1ClientRouter.use('/buildings', buildingsRoutes);
 v1ClientRouter.use('/reservation-properties', reservationPropertyRoutes)
+v1ClientRouter.use('/apartments', apartmentRoutes);
 
 v1Router.use('/client', v1ClientRouter);
 

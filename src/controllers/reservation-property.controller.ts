@@ -1,4 +1,3 @@
-// src/controllers/reservation-property.controller.ts
 import { NextFunction, RequestHandler, Response } from "express";
 import { inject, injectable } from "inversify";
 import { DI_TYPES } from "../di/di.types";

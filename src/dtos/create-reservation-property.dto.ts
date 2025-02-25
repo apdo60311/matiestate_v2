@@ -1,4 +1,3 @@
-// src/dtos/create-reservation-property.dto.ts
 import { IsString, IsNumber, IsDate, IsBoolean, IsOptional, IsUUID } from 'class-validator';
 import { Type } from 'class-transformer';
 

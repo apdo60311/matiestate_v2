@@ -1,4 +1,3 @@
-// src/routes/reservation-property.routes.ts
 import express from "express";
 import { container } from "../di/di.config";
 import { DI_TYPES } from "../di/di.types";
