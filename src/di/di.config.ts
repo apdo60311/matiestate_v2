@@ -33,6 +33,13 @@ import { ParkingSellingPriceRepository } from "../repositories/parking/parking-s
 import { ParkingAccumulateRepository } from "../repositories/parking/parking-accumulate.repository";
 import { ParkingWalletRepository } from "../repositories/parking/parking-wallet.repository";
 import { ParkingController } from "../controllers/parking.controller";
+import { LandController } from "../controllers/land.controller";
+import { LandService } from "../services/land.service";
+import { LandRepository } from "../repositories/land/land.repository";
+import { LandRentalPriceRepository } from "../repositories/land/land-rental-price.repository";
+import { LandSellingPriceRepository } from "../repositories/land/land-selling-price.repository";
+import { LandAccumulateRepository } from "../repositories/land/land-accumulate.repository";
+import { LandWalletRepository } from "../repositories/land/land-wallet.repository";
 
 export const container = new Container({ autoBindInjectable: true });
 
@@ -198,6 +205,42 @@ container.bind<ParkingWalletRepository>(DI_TYPES.ParkingWalletRepository)
     })
     .inSingletonScope();
 
+container.bind<LandRepository>(DI_TYPES.LandRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new LandRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<LandRentalPriceRepository>(DI_TYPES.LandRentalPriceRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new LandRentalPriceRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<LandSellingPriceRepository>(DI_TYPES.LandSellingPriceRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new LandSellingPriceRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<LandAccumulateRepository>(DI_TYPES.LandAccumulateRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new LandAccumulateRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<LandWalletRepository>(DI_TYPES.LandWalletRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new LandWalletRepository(dataSource);
+    })
+    .inSingletonScope();
+
+
 // Bind Services
 container.bind<BuildingsService>(DI_TYPES.BuildingsService)
   .toDynamicValue(async (context) => {
@@ -335,6 +378,24 @@ container.bind<ApartmentService>(DI_TYPES.ApartmentService)
 })
 .inSingletonScope();
 
+container.bind<LandService>(DI_TYPES.LandService)
+    .toDynamicValue(async (context) => {
+        const landRepository = await context.container.getAsync<LandRepository>(DI_TYPES.LandRepository);
+        const landRentalPriceRepository = await context.container.getAsync<LandRentalPriceRepository>(DI_TYPES.LandRentalPriceRepository);
+        const landSellingPriceRepository = await context.container.getAsync<LandSellingPriceRepository>(DI_TYPES.LandSellingPriceRepository);
+        const landAccumulateRepository = await context.container.getAsync<LandAccumulateRepository>(DI_TYPES.LandAccumulateRepository);
+        const landWalletRepository = await context.container.getAsync<LandWalletRepository>(DI_TYPES.LandWalletRepository);
+
+        return new LandService(
+            landRepository,
+            landRentalPriceRepository,
+            landSellingPriceRepository, 
+            landAccumulateRepository,
+            landWalletRepository
+        );
+    })
+    .inSingletonScope();
+
 container.bind<ApartmentController>(DI_TYPES.ApartmentController)
 .toDynamicValue(async (context) => {
     const service = await context.container.getAsync<ApartmentService>(
@@ -348,5 +409,12 @@ container.bind<ShopController>(DI_TYPES.ShopController)
     .toDynamicValue(async (context) => {
         const service = await context.container.getAsync<ShopService>(DI_TYPES.ShopService);
         return new ShopController(service);
+    })
+    .inSingletonScope();
+
+container.bind<LandController>(DI_TYPES.LandController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<LandService>(DI_TYPES.LandService);
+        return new LandController(service);
     })
     .inSingletonScope();

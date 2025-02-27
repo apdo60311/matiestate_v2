@@ -37,4 +37,12 @@ export const DI_TYPES = {
   ParkingWalletRepository: Symbol.for('ParkingWalletRepository'),
   ParkingService: Symbol.for('ParkingService'),
   ParkingController: Symbol.for('ParkingController'),
+
+  LandRepository: Symbol.for('LandRepository'),
+  LandRentalPriceRepository: Symbol.for('LandRentalPriceRepository'),
+  LandSellingPriceRepository: Symbol.for('LandSellingPriceRepository'),
+  LandAccumulateRepository: Symbol.for('LandAccumulateRepository'),
+  LandWalletRepository: Symbol.for('LandWalletRepository'),
+  LandService: Symbol.for('LandService'),
+  LandController: Symbol.for('LandController'),
 };
