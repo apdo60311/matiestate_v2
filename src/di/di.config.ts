@@ -40,6 +40,11 @@ import { LandRentalPriceRepository } from "../repositories/land/land-rental-pric
 import { LandSellingPriceRepository } from "../repositories/land/land-selling-price.repository";
 import { LandAccumulateRepository } from "../repositories/land/land-accumulate.repository";
 import { LandWalletRepository } from "../repositories/land/land-wallet.repository";
+import { VillaRepository } from "../repositories/villa/villa.repository";
+import { VillaRentalPriceRepository } from "../repositories/villa/villa-rental-price.repository";
+import { VillaSellingPriceRepository } from "../repositories/villa/villa-selling-price.repository";
+import { VillaService } from "../services/villa.service";
+import { VillaController } from "../controllers/villa.controller";
 
 export const container = new Container({ autoBindInjectable: true });
 
@@ -241,6 +246,28 @@ container.bind<LandWalletRepository>(DI_TYPES.LandWalletRepository)
     .inSingletonScope();
 
 
+container.bind<VillaRepository>(DI_TYPES.VillaRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new VillaRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<VillaRentalPriceRepository>(DI_TYPES.VillaRentalPriceRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new VillaRentalPriceRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<VillaSellingPriceRepository>(DI_TYPES.VillaSellingPriceRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new VillaSellingPriceRepository(dataSource);
+    })
+    .inSingletonScope();
+
+
 // Bind Services
 container.bind<BuildingsService>(DI_TYPES.BuildingsService)
   .toDynamicValue(async (context) => {
@@ -288,6 +315,20 @@ container.bind<BuildingsService>(DI_TYPES.BuildingsService)
             parkingSellingPriceRepository,
             parkingAccumulateRepository,
             parkingWalletRepository
+        );
+    })
+    .inSingletonScope();
+
+container.bind<VillaService>(DI_TYPES.VillaService)
+    .toDynamicValue(async (context) => {
+        const villaRepository = await context.container.getAsync<VillaRepository>(DI_TYPES.VillaRepository);
+        const villaRentalPriceRepository = await context.container.getAsync<VillaRentalPriceRepository>(DI_TYPES.VillaRentalPriceRepository);
+        const villaSellingPriceRepository = await context.container.getAsync<VillaSellingPriceRepository>(DI_TYPES.VillaSellingPriceRepository);
+
+        return new VillaService(
+            villaRepository,
+            villaRentalPriceRepository,
+            villaSellingPriceRepository
         );
     })
     .inSingletonScope();
@@ -416,5 +457,12 @@ container.bind<LandController>(DI_TYPES.LandController)
     .toDynamicValue(async (context) => {
         const service = await context.container.getAsync<LandService>(DI_TYPES.LandService);
         return new LandController(service);
+    })
+    .inSingletonScope();
+
+    container.bind<VillaController>(DI_TYPES.VillaController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<VillaService>(DI_TYPES.VillaService);
+        return new VillaController(service);
     })
     .inSingletonScope();

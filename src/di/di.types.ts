@@ -45,4 +45,10 @@ export const DI_TYPES = {
   LandWalletRepository: Symbol.for('LandWalletRepository'),
   LandService: Symbol.for('LandService'),
   LandController: Symbol.for('LandController'),
+
+  VillaRepository: Symbol.for('VillaRepository'),
+  VillaRentalPriceRepository: Symbol.for('VillaRentalPriceRepository'), 
+  VillaSellingPriceRepository: Symbol.for('VillaSellingPriceRepository'),
+  VillaService: Symbol.for('VillaService'),
+  VillaController: Symbol.for('VillaController'),
 };

@@ -7,7 +7,7 @@ import { ShopRentalPriceRepository } from "../repositories/shop/shop-rental-pric
 import { ShopSellingPriceRepository } from "../repositories/shop/shop-selling-price.repository";
 import { ShopAccumulateRepository } from "../repositories/shop/shop-accumulate.repository";
 import { ShopFixedAssetsRepository } from "../repositories/shop/shop-fixed-assets.repository";
-import { IShopAccumulate, IShopBody, IShopFixedAssets, IShopPicture, IShopRentalPrice, IShopSellingPrice } from "@/types/shop.types";
+import { IShopAccumulate, IShopBody, IShopFixedAssets, IShopPicture, IShopRentalPrice, IShopSellingPrice } from "../types/shop.types";
 import { logger } from "../utils/logger";
 import { ShopSellingPrice } from "../entities/ShopSellingPrice.entity";
 import { ShopFixedAssets } from "../entities/ShopFixedAssets.entity";
