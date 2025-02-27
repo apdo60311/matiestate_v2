@@ -17,6 +17,7 @@ import swaggerSpec from "./config/swagger.config"
 import reservationPropertyRoutes from './routes/reservation-property.routes';
 import apartmentRoutes from './routes/apartment.routes';
 import shopRoutes from './routes/shop.routes';
+import parkingRoutes from './routes/parking.routes';
 
 const app = express();
 
@@ -44,6 +45,7 @@ v1ClientRouter.use('/buildings', buildingsRoutes);
 v1ClientRouter.use('/reservation-properties', reservationPropertyRoutes)
 v1ClientRouter.use('/apartments', apartmentRoutes);
 v1ClientRouter.use('/shops', shopRoutes);
+v1ClientRouter.use('/parkings', parkingRoutes);
 
 v1Router.use('/client', v1ClientRouter);
 

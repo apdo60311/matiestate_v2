@@ -5,9 +5,11 @@ export const DI_TYPES = {
   BuildingsController: Symbol.for("BuildingsController"),
   CostCenterRepository: Symbol.for("CostCenterRepository"),
   AccountRepository: Symbol.for("AccountRepository"),
+  
   ReservationPropertyRepository: Symbol.for("ReservationPropertyRepository"),
   ReservationPropertyService: Symbol.for("ReservationPropertyService"),
   ReservationPropertyController: Symbol.for("ReservationPropertyController"),
+  
   ApartmentRepository: Symbol.for("ApartmentRepository"),
   ApartmentService: Symbol.for("ApartmentService"),
   ApartmentController: Symbol.for("ApartmentController"),
@@ -17,6 +19,7 @@ export const DI_TYPES = {
     "ApartmentSellingPriceRepository"
   ),
   ApartmentAccumulateRepository: Symbol.for("ApartmentAccumulateRepository"),
+  
   ShopRepository: Symbol.for('ShopRepository'),
   ShopService: Symbol.for('ShopService'),
   ShopController: Symbol.for('ShopController'),
@@ -24,6 +27,14 @@ export const DI_TYPES = {
   ShopRentalPriceRepository: Symbol.for('ShopRentalPriceRepository'),
   ShopSellingPriceRepository: Symbol.for('ShopSellingPriceRepository'),
   ShopAccumulateRepository: Symbol.for('ShopAccumulateRepository'),
-  ShopFixedAssetsRepository: Symbol.for('ShopFixedAssetsRepository')
+  ShopFixedAssetsRepository: Symbol.for('ShopFixedAssetsRepository'),
 
+  ParkingRepository: Symbol.for('ParkingRepository'),
+  ParkingPicturesRepository: Symbol.for('ParkingPicturesRepository'),
+  ParkingAccumulateRepository: Symbol.for('ParkingAccumulateRepository'),
+  ParkingRentalPriceRepository: Symbol.for('ParkingRentalPriceRepository'),
+  ParkingSellingPriceRepository: Symbol.for('ParkingSellingPriceRepository'),
+  ParkingWalletRepository: Symbol.for('ParkingWalletRepository'),
+  ParkingService: Symbol.for('ParkingService'),
+  ParkingController: Symbol.for('ParkingController'),
 };

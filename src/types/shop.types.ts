@@ -81,10 +81,6 @@ export interface IShopBody {
     customer_owner_id?: string;
     property_values_id?: string;
     tenant_id?: string;
-    building?: Building;
-    cost_center?: CostCenter;
-    property_values?: PropertyValues;
-    tenant?: Tenant;
     pictures?: IShopPicture[];
     rental_price?: IShopRentalPrice;
     selling_price?: IShopSellingPrice;

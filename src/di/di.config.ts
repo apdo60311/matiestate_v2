@@ -25,6 +25,14 @@ import { ShopSellingPriceRepository } from "../repositories/shop/shop-selling-pr
 import { ShopAccumulateRepository } from "../repositories/shop/shop-accumulate.repository";
 import { ShopFixedAssetsRepository } from "../repositories/shop/shop-fixed-assets.repository";
 import { ShopController } from "../controllers/shop.controller";
+import { ParkingService } from "../services/parking.service";
+import { ParkingRepository } from "../repositories/parking/parking.repository";
+import { ParkingPicturesRepository } from "../repositories/parking/parking-pictures.repository";
+import { ParkingRentalPriceRepository } from "../repositories/parking/parking-rental-price.repository";
+import { ParkingSellingPriceRepository } from "../repositories/parking/parking-selling-price.repositroy";
+import { ParkingAccumulateRepository } from "../repositories/parking/parking-accumulate.repository";
+import { ParkingWalletRepository } from "../repositories/parking/parking-wallet.repository";
+import { ParkingController } from "../controllers/parking.controller";
 
 export const container = new Container({ autoBindInjectable: true });
 
@@ -148,6 +156,47 @@ container.bind<ShopFixedAssetsRepository>(DI_TYPES.ShopFixedAssetsRepository)
     )
     .inSingletonScope();
 
+    container.bind<ParkingRepository>(DI_TYPES.ParkingRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ParkingRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ParkingPicturesRepository>(DI_TYPES.ParkingPicturesRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ParkingPicturesRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ParkingRentalPriceRepository>(DI_TYPES.ParkingRentalPriceRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ParkingRentalPriceRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ParkingSellingPriceRepository>(DI_TYPES.ParkingSellingPriceRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ParkingSellingPriceRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ParkingAccumulateRepository>(DI_TYPES.ParkingAccumulateRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ParkingAccumulateRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ParkingWalletRepository>(DI_TYPES.ParkingWalletRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ParkingWalletRepository(dataSource);
+    })
+    .inSingletonScope();
 
 // Bind Services
 container.bind<BuildingsService>(DI_TYPES.BuildingsService)
@@ -179,6 +228,26 @@ container.bind<BuildingsService>(DI_TYPES.BuildingsService)
       );
   })
   .inSingletonScope();
+
+  container.bind<ParkingService>(DI_TYPES.ParkingService)
+    .toDynamicValue(async (context) => {
+        const parkingRepository = await context.container.getAsync<ParkingRepository>(DI_TYPES.ParkingRepository);
+        const parkingPicturesRepository = await context.container.getAsync<ParkingPicturesRepository>(DI_TYPES.ParkingPicturesRepository);
+        const parkingRentalPriceRepository = await context.container.getAsync<ParkingRentalPriceRepository>(DI_TYPES.ParkingRentalPriceRepository);
+        const parkingSellingPriceRepository = await context.container.getAsync<ParkingSellingPriceRepository>(DI_TYPES.ParkingSellingPriceRepository);
+        const parkingAccumulateRepository = await context.container.getAsync<ParkingAccumulateRepository>(DI_TYPES.ParkingAccumulateRepository);
+        const parkingWalletRepository = await context.container.getAsync<ParkingWalletRepository>(DI_TYPES.ParkingWalletRepository);
+
+        return new ParkingService(
+            parkingRepository,
+            parkingPicturesRepository, 
+            parkingRentalPriceRepository,
+            parkingSellingPriceRepository,
+            parkingAccumulateRepository,
+            parkingWalletRepository
+        );
+    })
+    .inSingletonScope();
 
 // Bind Controllers
 container.bind<BuildingsController>(DI_TYPES.BuildingsController)
@@ -213,6 +282,13 @@ container.bind<ReservationPropertyController>(DI_TYPES.ReservationPropertyContro
             DI_TYPES.ReservationPropertyService
         );
         return new ReservationPropertyController(service);
+    })
+    .inSingletonScope();
+
+container.bind<ParkingController>(DI_TYPES.ParkingController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<ParkingService>(DI_TYPES.ParkingService);
+        return new ParkingController(service);
     })
     .inSingletonScope();
 
