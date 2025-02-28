@@ -45,6 +45,12 @@ import { VillaRentalPriceRepository } from "../repositories/villa/villa-rental-p
 import { VillaSellingPriceRepository } from "../repositories/villa/villa-selling-price.repository";
 import { VillaService } from "../services/villa.service";
 import { VillaController } from "../controllers/villa.controller";
+import { OwnerExpensesTypesRepository } from "../repositories/owner/owner-expenses-types.repository";
+import { OwnerExpensesDetailsRepository } from "../repositories/owner/owner-expenses-details.repository";
+import { OwnerExpensesRepository } from "../repositories/owner/owner-expenses.repository";
+import { OwnerRepository } from "../repositories/owner/owner.repository";
+import { OwnerService } from "../services/owner.service";
+import { OwnerController } from "../controllers/owner.controller";
 
 export const container = new Container({ autoBindInjectable: true });
 
@@ -268,6 +274,34 @@ container.bind<VillaSellingPriceRepository>(DI_TYPES.VillaSellingPriceRepository
     .inSingletonScope();
 
 
+container.bind<OwnerRepository>(DI_TYPES.OwnerRepository)
+  .toDynamicValue(async (context) => {
+    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+    return new OwnerRepository(dataSource);
+  })
+  .inSingletonScope();
+
+container.bind<OwnerExpensesRepository>(DI_TYPES.OwnerExpensesRepository)
+  .toDynamicValue(async (context) => {
+    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+    return new OwnerExpensesRepository(dataSource);
+  })
+  .inSingletonScope();
+
+container.bind<OwnerExpensesDetailsRepository>(DI_TYPES.OwnerExpensesDetailsRepository)
+  .toDynamicValue(async (context) => {
+    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+    return new OwnerExpensesDetailsRepository(dataSource);
+  })
+  .inSingletonScope();
+
+container.bind<OwnerExpensesTypesRepository>(DI_TYPES.OwnerExpensesTypesRepository)
+  .toDynamicValue(async (context) => {
+    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+    return new OwnerExpensesTypesRepository(dataSource);
+  })
+  .inSingletonScope();
+
 // Bind Services
 container.bind<BuildingsService>(DI_TYPES.BuildingsService)
   .toDynamicValue(async (context) => {
@@ -330,6 +364,22 @@ container.bind<VillaService>(DI_TYPES.VillaService)
             villaRentalPriceRepository,
             villaSellingPriceRepository
         );
+    })
+    .inSingletonScope();
+
+container.bind<OwnerService>(DI_TYPES.OwnerService)
+    .toDynamicValue(async (context) => {
+      const ownerRepository = await context.container.getAsync<OwnerRepository>(DI_TYPES.OwnerRepository);
+      const ownerExpensesRepository = await context.container.getAsync<OwnerExpensesRepository>(DI_TYPES.OwnerExpensesRepository);
+      const ownerExpensesDetailsRepository = await context.container.getAsync<OwnerExpensesDetailsRepository>(DI_TYPES.OwnerExpensesDetailsRepository);
+      const ownerExpensesTypesRepository = await context.container.getAsync<OwnerExpensesTypesRepository>(DI_TYPES.OwnerExpensesTypesRepository);
+  
+      return new OwnerService(
+        ownerRepository,
+        ownerExpensesRepository,
+        ownerExpensesDetailsRepository,
+        ownerExpensesTypesRepository
+      );
     })
     .inSingletonScope();
 
@@ -466,3 +516,10 @@ container.bind<LandController>(DI_TYPES.LandController)
         return new VillaController(service);
     })
     .inSingletonScope();
+
+container.bind<OwnerController>(DI_TYPES.OwnerController)
+.toDynamicValue(async (context) => {
+    const service = await context.container.getAsync<OwnerService>(DI_TYPES.OwnerService);
+    return new OwnerController(service);
+})
+.inSingletonScope();

@@ -26,6 +26,9 @@ export class OwnerExpenses {
   @JoinColumn({ name: 'owner_id' })
   owner!: Owner;
 
+  @Column('uuid', {nullable: false})
+  owner_id!: string;
+
   @Column('text', { nullable: true })
   note?: string;
 

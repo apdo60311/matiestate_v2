@@ -51,4 +51,11 @@ export const DI_TYPES = {
   VillaSellingPriceRepository: Symbol.for('VillaSellingPriceRepository'),
   VillaService: Symbol.for('VillaService'),
   VillaController: Symbol.for('VillaController'),
+
+  OwnerRepository: Symbol.for('OwnerRepository'),
+  OwnerExpensesRepository: Symbol.for('OwnerExpensesRepository'),
+  OwnerExpensesDetailsRepository: Symbol.for('OwnerExpensesDetailsRepository'), 
+  OwnerExpensesTypesRepository: Symbol.for('OwnerExpensesTypesRepository'),
+  OwnerService: Symbol.for('OwnerService'),
+  OwnerController: Symbol.for('OwnerController')
 };
