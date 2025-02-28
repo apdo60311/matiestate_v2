@@ -35,7 +35,6 @@ v1Router.use('/reports', reportRoutes);
 v1Router.use('/users', userRoutes);
 v1Router.use('/bookings', bookingRoutes);
 v1Router.use('/customer', customerRoutes);
-v1Router.use('/owner', ownerRoutes);
 v1Router.use('/supervisor', supervisorRoutes);
 v1Router.use('/services', servicesRoutes);
 v1Router.use('/worker', workerRoutes);
@@ -48,6 +47,7 @@ v1ClientRouter.use('/apartments', apartmentRoutes);
 v1ClientRouter.use('/shops', shopRoutes);
 v1ClientRouter.use('/parkings', parkingRoutes);
 v1ClientRouter.use('/lands', landRoutes);
+v1ClientRouter.use('/owners', ownerRoutes);
 
 v1Router.use('/client', v1ClientRouter);
 
