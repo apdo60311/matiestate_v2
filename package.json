@@ -9,7 +9,8 @@
     "start:dev": "nodemon src/index.ts",
     "test": "jest",
     "lint": "eslint . --ext .ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "docker":"chmod +x docker-dev.sh && sudo ./docker-dev.sh start"
   },
   "author": "",
   "license": "ISC",
