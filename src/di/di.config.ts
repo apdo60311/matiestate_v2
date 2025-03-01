@@ -51,6 +51,11 @@ import { OwnerExpensesRepository } from "../repositories/owner/owner-expenses.re
 import { OwnerRepository } from "../repositories/owner/owner.repository";
 import { OwnerService } from "../services/owner.service";
 import { OwnerController } from "../controllers/owner.controller";
+import { BankRepository } from "../repositories/bank.repository";
+import { BankService } from "../services/bank.service";
+import { BankController } from "../controllers/bank.controller";
+
+
 
 export const container = new Container({ autoBindInjectable: true });
 
@@ -436,6 +441,14 @@ container.bind<ApartmentRepository>(DI_TYPES.ApartmentRepository)
 })
 .inSingletonScope();
 
+container.bind<BankRepository>(DI_TYPES.BankRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new BankRepository(dataSource);
+    })
+    .inSingletonScope();
+
+
 container.bind<ApartmentService>(DI_TYPES.ApartmentService)
 .toDynamicValue(async (context) => {
     const apartmentRepository = await context.container.getAsync<ApartmentRepository>(
@@ -487,6 +500,13 @@ container.bind<LandService>(DI_TYPES.LandService)
     })
     .inSingletonScope();
 
+container.bind<BankService>(DI_TYPES.BankService)
+.toDynamicValue(async (context) => {
+    const bankRepository = await context.container.getAsync<BankRepository>(DI_TYPES.BankRepository);
+    return new BankService(bankRepository);
+})
+.inSingletonScope();
+
 container.bind<ApartmentController>(DI_TYPES.ApartmentController)
 .toDynamicValue(async (context) => {
     const service = await context.container.getAsync<ApartmentService>(
@@ -523,3 +543,10 @@ container.bind<OwnerController>(DI_TYPES.OwnerController)
     return new OwnerController(service);
 })
 .inSingletonScope();
+
+container.bind<BankController>(DI_TYPES.BankController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<BankService>(DI_TYPES.BankService);
+        return new BankController(service);
+    })
+    .inSingletonScope();
