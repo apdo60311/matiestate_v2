@@ -1,4 +1,3 @@
-// src/dtos/create-parking.dto.ts
 import { Type } from 'class-transformer';
 import { 
     IsString, 

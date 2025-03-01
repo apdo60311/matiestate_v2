@@ -1,24 +1,24 @@
 import express from "express";
 import { container } from "../di/di.config";
 import { DI_TYPES } from "../di/di.types";
-import { ParkingController } from "../controllers/parking.controller";
+import { LessorController } from "../controllers/lessor.controller";
 import { validateDto } from "../middlewares/validation.middleware";
-import { CreateParkingDto } from "../dtos/create-parking.dto";
+import { CreateLessorDto } from "../dtos/create-lessor.dto";
 import { createUserSelectorMiddleware as auth } from "../middlewares/auth";
 
 const router = express.Router();
 
 (async () => {
-    const parkingController = await container.getAsync<ParkingController>(
-        DI_TYPES.ParkingController
+    const lessorController = await container.getAsync<LessorController>(
+        DI_TYPES.LessorController
     );
 
     /**
      * @openapi
-     * /parkings:
+     * /lessors:
      *   post:
-     *     summary: Create a new parking
-     *     tags: [Parkings]
+     *     summary: Create a new lessor
+     *     tags: [Lessors]
      *     security:
      *       - bearerAuth: []
      *     requestBody:
@@ -26,37 +26,37 @@ const router = express.Router();
      *       content:
      *         application/json:
      *           schema:
-     *             $ref: '#/components/schemas/CreateParkingDto'
+     *             $ref: '#/components/schemas/CreateLessorDto'
      *     responses:
      *       201:
-     *         description: Parking created successfully
+     *         description: Lessor created successfully
      *       500:
      *         description: Server error
      */
-    router.post("/", validateDto(CreateParkingDto), parkingController.create);
+    router.post("/", validateDto(CreateLessorDto), lessorController.create);
 
     /**
      * @openapi
-     * /parkings:
+     * /lessors:
      *   get:
-     *     summary: Get all parkings
-     *     tags: [Parkings]
+     *     summary: Get all lessors
+     *     tags: [Lessors]
      *     security:
      *       - bearerAuth: []
      *     responses:
      *       200:
-     *         description: List of parkings
+     *         description: List of lessors
      *       500:
      *         description: Server error
      */
-    router.get("/", parkingController.getAll);
+    router.get("/", lessorController.getAll);
 
     /**
      * @openapi
-     * /parkings/{id}:
+     * /lessors/{id}:
      *   get:
-     *     summary: Get parking by ID
-     *     tags: [Parkings]
+     *     summary: Get lessor by ID
+     *     tags: [Lessors]
      *     security:
      *       - bearerAuth: []
      *     parameters:
@@ -67,20 +67,20 @@ const router = express.Router();
      *           type: string
      *     responses:
      *       200:
-     *         description: Parking details
+     *         description: Lessor details
      *       404:
-     *         description: Parking not found
+     *         description: Lessor not found
      *       500:
      *         description: Server error
      */
-    router.get("/:id", parkingController.getById);
+    router.get("/:id", lessorController.getById);
 
     /**
      * @openapi
-     * /parkings/{id}:
-     *   put:
-     *     summary: Update a parking
-     *     tags: [Parkings]
+     * /lessors/{id}:
+     *   patch:
+     *     summary: Update lessor by ID
+     *     tags: [Lessors]
      *     security:
      *       - bearerAuth: []
      *     parameters:
@@ -94,21 +94,21 @@ const router = express.Router();
      *       content:
      *         application/json:
      *           schema:
-     *             $ref: '#/components/schemas/UpdateParkingDto'
+     *             $ref: '#/components/schemas/CreateLessorDto'
      *     responses:
      *       200:
-     *         description: Parking updated successfully
+     *         description: Lessor updated successfully
      *       500:
      *         description: Server error
      */
-    router.put("/:id", parkingController.update);
+    router.patch("/:id", validateDto(CreateLessorDto), lessorController.update);
 
     /**
      * @openapi
-     * /parkings/{id}:
+     * /lessors/{id}:
      *   delete:
-     *     summary: Delete a parking
-     *     tags: [Parkings]
+     *     summary: Delete lessor by ID
+     *     tags: [Lessors]
      *     security:
      *       - bearerAuth: []
      *     parameters:
@@ -119,11 +119,11 @@ const router = express.Router();
      *           type: string
      *     responses:
      *       200:
-     *         description: Parking deleted successfully
+     *         description: Lessor deleted successfully
      *       500:
      *         description: Server error
      */
-    router.delete("/:id", parkingController.delete);
+    router.delete("/:id", lessorController.delete);
 })();
 
 export default router;

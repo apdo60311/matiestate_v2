@@ -67,4 +67,8 @@ export const DI_TYPES = {
   CurrencyRepository: Symbol.for("CurrencyRepository"),
   CurrencyService: Symbol.for("CurrencyService"),
   CurrencyController: Symbol.for("CurrencyController"),
+
+  LessorRepository: Symbol.for("LessorRepository"),
+  LessorService: Symbol.for("LessorService"),
+  LessorController: Symbol.for("LessorController"),
 };

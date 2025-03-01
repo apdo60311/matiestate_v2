@@ -21,6 +21,7 @@ import parkingRoutes from './routes/parking.routes';
 import landRoutes from './routes/land.routes';
 import bankRoutes from './routes/bank.routes';
 import currencyRoutes from './routes/currency.routes';
+import lessorRoutes from './routes/lessor.routes';
 
 const app = express();
 
@@ -52,6 +53,8 @@ v1ClientRouter.use('/lands', landRoutes);
 v1ClientRouter.use('/owners', ownerRoutes);
 v1ClientRouter.use('/banks', bankRoutes);
 v1ClientRouter.use('/currencies', currencyRoutes);
+v1ClientRouter.use('/lessors', lessorRoutes);
+
 
 
 v1Router.use('/client', v1ClientRouter);

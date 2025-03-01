@@ -57,6 +57,9 @@ import { BankController } from "../controllers/bank.controller";
 import { CurrencyRepository } from "../repositories/currency.repository";
 import { CurrencyService } from "../services/currency.service";
 import { CurrencyController } from "../controllers/currency.controller";
+import { LessorService } from "../services/lessor.service";
+import { LessorRepository } from "../repositories/lessor.repository";
+import { LessorController } from "../controllers/lessor.controller";
 
 
 
@@ -569,4 +572,25 @@ container.bind<BankController>(DI_TYPES.BankController)
 
 container.bind<CurrencyController>(DI_TYPES.CurrencyController)
 .to(CurrencyController)
+.inSingletonScope();
+
+container.bind<LessorRepository>(DI_TYPES.LessorRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new LessorRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<LessorService>(DI_TYPES.LessorService)
+    .toDynamicValue(async (context) => {
+        const lessorRepository = await context.container.getAsync<LessorRepository>(DI_TYPES.LessorRepository);
+        return new LessorService(lessorRepository);
+    })
+    .inSingletonScope();
+
+container.bind<LessorController>(DI_TYPES.LessorController)
+.toDynamicValue(async (context) => {
+    const service = await context.container.getAsync<LessorService>(DI_TYPES.LessorService);
+    return new LessorController(service);
+})
 .inSingletonScope();

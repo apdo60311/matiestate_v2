@@ -1,41 +1,42 @@
-import { RequestHandler, Response, NextFunction } from "express";
+import { NextFunction, RequestHandler, Response } from "express";
 import { inject, injectable } from "inversify";
 import { DI_TYPES } from "../di/di.types";
-import { BankService } from "../services/bank.service";
-import { Bank } from "../entities/Bank.entity";
+import { LessorService } from "../services/lessor.service";
 import { CustomRequest } from "../types/request.types";
 import ResponseModel from "../types/response.types";
+import { Lessor } from "../entities/Lessor.entity";
+import { ILessorBody } from "../types/lessor.types";
 
 @injectable()
-export class BankController {
+export class LessorController {
     constructor(
-        @inject(DI_TYPES.BankService)
-        private bankService: BankService
+        @inject(DI_TYPES.LessorService)
+        private lessorService: LessorService
     ) {}
 
     public create: RequestHandler<
         unknown,
         ResponseModel<{ id: string }>,
-        Partial<Bank>,
+        ILessorBody,
         unknown,
         any
     > = async (
-        req: CustomRequest<unknown, ResponseModel<{ id: string }>, Partial<Bank>, unknown, any>,
+        req: CustomRequest<unknown, ResponseModel<{ id: string }>, ILessorBody, unknown, any>,
         res: Response<ResponseModel<{ id: string }>>,
         next: NextFunction
     ): Promise<any> => {
         try {
-            const bankId = await this.bankService.createBank(req.body);
-            if (!bankId) {
+            const lessorId = await this.lessorService.createLessor(req.body);
+            if (!lessorId) {
                 return res.status(500).send({
                     success: false,
-                    message: "Failed to create bank"
+                    message: "Failed to create lessor"
                 });
             }
             return res.status(201).send({
                 success: true,
-                message: "Bank created successfully",
-                data: { id: bankId }
+                message: "Lessor created successfully",
+                data: { id: lessorId }
             });
         } catch (e: any) {
             return res.status(500).send({
@@ -47,21 +48,21 @@ export class BankController {
 
     public getAll: RequestHandler<
         unknown,
-        ResponseModel<{ banks: Bank[] }>,
+        ResponseModel<{ lessors: Lessor[] }>,
         unknown,
         unknown,
         any
     > = async (
-        req: CustomRequest<unknown, ResponseModel<{ banks: Bank[] }>, unknown, unknown, any>,
-        res: Response<ResponseModel<{ banks: Bank[] }>>,
+        req: CustomRequest<unknown, ResponseModel<{ lessors: Lessor[] }>, unknown, unknown, any>,
+        res: Response<ResponseModel<{ lessors: Lessor[] }>>,
         next: NextFunction
     ): Promise<any> => {
         try {
-            const banks = await this.bankService.getAllBanks();
+            const lessors = await this.lessorService.getAllLessors();
             return res.status(200).send({
                 success: true,
-                message: "Banks retrieved successfully",
-                data: { banks }
+                message: "Lessors retrieved successfully",
+                data: { lessors }
             });
         } catch (e: any) {
             return res.status(500).send({
@@ -73,27 +74,27 @@ export class BankController {
 
     public getById: RequestHandler<
         { id: string },
-        ResponseModel<{ bank: Bank }>,
+        ResponseModel<{ lessor: Lessor }>,
         unknown,
         unknown,
         any
     > = async (
-        req: CustomRequest<{ id: string }, ResponseModel<{ bank: Bank }>, unknown, unknown, any>,
-        res: Response<ResponseModel<{ bank: Bank }>>,
+        req: CustomRequest<{ id: string }, ResponseModel<{ lessor: Lessor }>, unknown, unknown, any>,
+        res: Response<ResponseModel<{ lessor: Lessor }>>,
         next: NextFunction
     ): Promise<any> => {
         try {
-            const bank = await this.bankService.getBankById(req.params.id);
-            if (!bank) {
+            const lessor = await this.lessorService.getLessorById(req.params.id);
+            if (!lessor) {
                 return res.status(404).send({
                     success: false,
-                    message: "Bank not found"
+                    message: "Lessor not found"
                 });
             }
             return res.status(200).send({
                 success: true,
-                message: "Bank retrieved successfully",
-                data: { bank }
+                message: "Lessor retrieved successfully",
+                data: { lessor }
             });
         } catch (e: any) {
             return res.status(500).send({
@@ -106,19 +107,19 @@ export class BankController {
     public update: RequestHandler<
         { id: string },
         ResponseModel<Record<string, any>>,
-        Partial<Bank>,
+        Partial<Lessor>,
         unknown,
         any
     > = async (
-        req: CustomRequest<{ id: string }, ResponseModel<Record<string, any>>, Partial<Bank>, unknown, any>,
+        req: CustomRequest<{ id: string }, ResponseModel<Record<string, any>>, Partial<Lessor>, unknown, any>,
         res: Response<ResponseModel<Record<string, any>>>,
         next: NextFunction
     ): Promise<any> => {
         try {
-            const result = await this.bankService.updateBank(req.params.id, req.body);
+            const result = await this.lessorService.updateLessor(req.params.id, req.body);
             return res.status(200).send({
                 success: result,
-                message: result ? "Bank updated successfully" : "Failed to update bank"
+                message: result ? "Lessor updated successfully" : "Failed to update lessor"
             });
         } catch (e: any) {
             return res.status(500).send({
@@ -140,10 +141,10 @@ export class BankController {
         next: NextFunction
     ): Promise<any> => {
         try {
-            const result = await this.bankService.deleteBank(req.params.id);
+            const result = await this.lessorService.deleteLessor(req.params.id);
             return res.status(200).send({
                 success: result,
-                message: result ? "Bank deleted successfully" : "Failed to delete bank"
+                message: result ? "Lessor deleted successfully" : "Failed to delete lessor"
             });
         } catch (e: any) {
             return res.status(500).send({
