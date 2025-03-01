@@ -54,6 +54,9 @@ import { OwnerController } from "../controllers/owner.controller";
 import { BankRepository } from "../repositories/bank.repository";
 import { BankService } from "../services/bank.service";
 import { BankController } from "../controllers/bank.controller";
+import { CurrencyRepository } from "../repositories/currency.repository";
+import { CurrencyService } from "../services/currency.service";
+import { CurrencyController } from "../controllers/currency.controller";
 
 
 
@@ -406,6 +409,15 @@ container.bind<BuildingsController>(DI_TYPES.BuildingsController)
     })
     .inSingletonScope();
 
+
+container.bind<CurrencyRepository>(DI_TYPES.CurrencyRepository)
+.toDynamicValue(async (context) => {
+    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+    return new CurrencyRepository(dataSource);
+})
+.inSingletonScope();
+
+
 container.bind<ReservationPropertyService>(DI_TYPES.ReservationPropertyService)
     .toDynamicValue(async (context) => {
         const repository = await context.container.getAsync<ReservationPropertyRepository>(
@@ -507,6 +519,10 @@ container.bind<BankService>(DI_TYPES.BankService)
 })
 .inSingletonScope();
 
+container.bind<CurrencyService>(DI_TYPES.CurrencyService)
+    .to(CurrencyService)
+    .inSingletonScope();
+
 container.bind<ApartmentController>(DI_TYPES.ApartmentController)
 .toDynamicValue(async (context) => {
     const service = await context.container.getAsync<ApartmentService>(
@@ -550,3 +566,7 @@ container.bind<BankController>(DI_TYPES.BankController)
         return new BankController(service);
     })
     .inSingletonScope();
+
+container.bind<CurrencyController>(DI_TYPES.CurrencyController)
+.to(CurrencyController)
+.inSingletonScope();

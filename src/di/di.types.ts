@@ -62,4 +62,9 @@ export const DI_TYPES = {
   BankRepository: Symbol.for('BankRepository'),
   BankService: Symbol.for('BankService'),
   BankController: Symbol.for('BankController'),
+
+
+  CurrencyRepository: Symbol.for("CurrencyRepository"),
+  CurrencyService: Symbol.for("CurrencyService"),
+  CurrencyController: Symbol.for("CurrencyController"),
 };
