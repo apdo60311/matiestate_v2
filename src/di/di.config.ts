@@ -60,6 +60,9 @@ import { CurrencyController } from "../controllers/currency.controller";
 import { LessorService } from "../services/lessor.service";
 import { LessorRepository } from "../repositories/lessor.repository";
 import { LessorController } from "../controllers/lessor.controller";
+import { SellerService } from "../services/seller.service";
+import { SellerRepository } from "../repositories/seller.repository";
+import { SellerController } from "../controllers/seller.controller";
 
 
 
@@ -592,5 +595,27 @@ container.bind<LessorController>(DI_TYPES.LessorController)
 .toDynamicValue(async (context) => {
     const service = await context.container.getAsync<LessorService>(DI_TYPES.LessorService);
     return new LessorController(service);
+})
+.inSingletonScope();
+
+container.bind<SellerRepository>(DI_TYPES.SellerRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new SellerRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<SellerService>(DI_TYPES.SellerService)
+    .toDynamicValue(async (context) => {
+        const sellerRepository = await context.container.getAsync<SellerRepository>(DI_TYPES.SellerRepository);
+        return new SellerService(sellerRepository);
+    })
+    .inSingletonScope();
+
+
+container.bind<SellerController>(DI_TYPES.SellerController)
+.toDynamicValue(async (context) => {
+    const service = await context.container.getAsync<SellerService>(DI_TYPES.SellerService);
+    return new SellerController(service);
 })
 .inSingletonScope();
