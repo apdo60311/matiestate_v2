@@ -21,6 +21,18 @@ export class ShopRepository extends Repository<Shop> {
         }
     }
 
+    async createShops(shops: Partial<Shop>[]): Promise<string[] | null> {
+        try {
+            const result = await this.save(shops);
+            const shopIds = result.map((shop) => shop.id);
+            logger.info(`Shops Created successfully with ids: ${shopIds.join(', ')}`);
+            return shopIds;
+        } catch (error) {
+            logger.error(`Error while creating Shops. ${error}`);
+            return null;
+        }
+    }
+
     async getShopById(id: string): Promise<Shop | null> {
         try {
             const result = await this.findOne({

@@ -64,6 +64,15 @@ export class ShopService {
         }
     }
 
+    async createShops(data: Partial<Shop>[]): Promise<string[] | null> {
+        try {
+            const shopIds = await this.shopRepository.createShops(data);
+            return shopIds;
+        } catch (error) {
+            logger.error(`Error creating shops: ${error}`);
+            return null;
+        }
+    }
     async createShopPictures(shopId: string, pictures: IShopPicture[]): Promise<string[] | null> {
         try {
             const picturesWithShopId = pictures.map((picture) => {

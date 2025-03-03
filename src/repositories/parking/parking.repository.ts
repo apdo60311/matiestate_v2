@@ -21,6 +21,18 @@ export class ParkingRepository extends Repository<Parking> {
         }
     }
 
+    async createParkings(parkings: Partial<Parking>[]): Promise<string[] | null> {
+        try {
+            const result = await this.save(parkings);
+            const parkingIds = result.map((parking) => parking.id);
+            logger.info(`Parkings Created successfully with ids: ${parkingIds.join(', ')}`);
+            return parkingIds;
+        } catch (error) {
+            logger.error(`Error while creating Parkings. ${error}`);
+            return null;
+        }
+    }
+
     async getParkingById(id: string): Promise<Parking | null> {
         try {
             const result = await this.findOne({

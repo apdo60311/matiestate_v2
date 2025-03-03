@@ -25,6 +25,9 @@ export class Parking {
   @JoinColumn({ name: "building_id" })
   building!: Building;
 
+  @Column({ type:'uuid', nullable:false})
+  building_id!: string;
+
   @Column("text")
   parking_no!: string;
 
@@ -79,6 +82,9 @@ export class Parking {
   @ManyToOne(() => PropertyValues, { nullable: true })
   @JoinColumn({ name: "property_values_id" })
   property_values?: PropertyValues;
+
+  @Column("uuid", { nullable: true })
+  property_values_id?: string;
 
   @Column("int", { nullable: true })
   property_type?: number;

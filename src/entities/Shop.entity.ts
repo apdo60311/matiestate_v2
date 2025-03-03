@@ -117,6 +117,9 @@ export class Shop {
   @JoinColumn({ name: "building_id" })
   building!: Building;
 
+  @Column({ type:'uuid', nullable:false})
+  building_id!: string;
+
   @ManyToOne(() => Account, { nullable: true })
   @JoinColumn({ name: "customer_id" })
   customer?: Account;
@@ -128,6 +131,9 @@ export class Shop {
   @ManyToOne(() => PropertyValues, { nullable: true })
   @JoinColumn({ name: "property_values_id" })
   property_values?: PropertyValues;
+
+  @Column("uuid", { nullable: true })
+  property_values_id?: string;
 
   @ManyToOne(() => Tenant, { onDelete: "CASCADE" })
   @JoinColumn({ name: "tenant_id" })

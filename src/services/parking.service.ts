@@ -61,6 +61,17 @@ export class ParkingService {
         }
     }
 
+    async createParkings(data: Partial<Parking>[]): Promise<string[] | null> {
+        try {
+            const parkingIds = await this.parkingRepository.createParkings(data);
+
+            return parkingIds;
+        } catch (error) {
+            logger.error(`Error creating parkings: ${error}`);
+            return null;
+        }
+    }
+
     async createParkingPictures(parkingId: string, pictures: Partial<IParkingPicture>[]): Promise<string[] | null> {
         try {
             const picturesToInsert: ParkingPictures[] = pictures.map((picture) => {

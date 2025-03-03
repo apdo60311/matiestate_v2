@@ -63,6 +63,7 @@ import { LessorController } from "../controllers/lessor.controller";
 import { SellerService } from "../services/seller.service";
 import { SellerRepository } from "../repositories/seller.repository";
 import { SellerController } from "../controllers/seller.controller";
+import { PropertyValuesRepository } from "../repositories/property-values.repository";
 
 
 
@@ -319,11 +320,45 @@ container.bind<OwnerExpensesTypesRepository>(DI_TYPES.OwnerExpensesTypesReposito
 // Bind Services
 container.bind<BuildingsService>(DI_TYPES.BuildingsService)
   .toDynamicValue(async (context) => {
-    const buildingsRepository = await context.container.getAsync<BuildingsRepository>(DI_TYPES.BuildingsRepository);
-    const accountRepository = await context.container.getAsync<AccountRepository>(DI_TYPES.AccountRepository);
-    const costCenterRepository = await context.container.getAsync<CostCenterRepository>(DI_TYPES.CostCenterRepository);
-    
-    return new BuildingsService(buildingsRepository,accountRepository,costCenterRepository);
+    const buildingsRepository =
+      await context.container.getAsync<BuildingsRepository>(
+        DI_TYPES.BuildingsRepository
+      );
+    const accountRepository =
+      await context.container.getAsync<AccountRepository>(
+        DI_TYPES.AccountRepository
+      );
+    const costCenterRepository =
+      await context.container.getAsync<CostCenterRepository>(
+        DI_TYPES.CostCenterRepository
+      );
+    const propertyValuesRepository =
+      await context.container.getAsync<PropertyValuesRepository>(
+        DI_TYPES.PropertyValuesRepository
+      );
+
+      const apartmentService =
+        await context.container.getAsync<ApartmentService>(
+          DI_TYPES.ApartmentService
+        );
+
+      const parkingService = await context.container.getAsync<ParkingService>(
+        DI_TYPES.ParkingService
+      );
+
+      const shopService = await context.container.getAsync<ShopService>(
+        DI_TYPES.ShopService
+      );
+
+    return new BuildingsService(
+      buildingsRepository,
+      accountRepository,
+      costCenterRepository,
+      propertyValuesRepository,
+      apartmentService,
+      parkingService,
+      shopService
+    );
   })
   .inSingletonScope();
 
@@ -619,3 +654,10 @@ container.bind<SellerController>(DI_TYPES.SellerController)
     return new SellerController(service);
 })
 .inSingletonScope();
+
+container.bind<PropertyValuesRepository>(DI_TYPES.PropertyValuesRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new PropertyValuesRepository(dataSource);
+    })
+    .inSingletonScope();

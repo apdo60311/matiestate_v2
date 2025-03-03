@@ -4,6 +4,7 @@ import express from "express";
 import { DI_TYPES } from "../di/di.types";
 import { validateDto } from "../middlewares/validation.middleware";
 import { CreateBuildingDto } from "../dtos/create-building.dto";
+import { CreateBuildingDetailsDto } from "../dtos/create-building-details.dto";
 
 /**
  * @swagger
@@ -101,6 +102,51 @@ const router = express.Router();
    *         description: Building not found
    */
   router.put("/:id", buildingsController.update);
+
+
+  /**
+ * @openapi
+ * /buildings/details:
+ *   post:
+ *     summary: Create building details
+ *     tags: [Buildings]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateBuildingDetailsDto'
+ *     responses:
+ *       201:
+ *         description: Building details created successfully
+ *       400:
+ *         description: Invalid building details data  
+ *       500:
+ *         description: Error creating building details
+ */
+router.post("/details/:id", buildingsController.createDetails);
+/**
+ * @openapi
+ * /buildings/{id}/details:
+ *   get:
+ *     summary: Get building details
+ *     tags: [Buildings]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The building ID
+ *     responses:
+ *       200:
+ *         description: Building details retrieved successfully
+ *       500:
+ *         description: Error retrieving building details
+ */
+router.get("/details/:id", buildingsController.getDetails);
+
+
 })();
 
 export default router;

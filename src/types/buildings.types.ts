@@ -90,3 +90,112 @@ export interface IBuildingsBody {
   buildingInsuranceAccountId: string;
   buildingDiscountAccountId: string;
 }
+
+export interface IPropertyValues {
+  id?: string;
+  area?: number | null;
+  area_unit?: string;
+  view?: string | null;
+  property_type?: string | null;
+  room_count?: number;
+  hex?: string;
+  row_index?: string;
+  description?: string;
+  building_id?: string;
+  tenant_id?: string;
+}
+
+export interface IBaseAsset {
+  name?: string;
+  x_index: number | string;
+  y_index: number | string;
+  floor_no: number | string;
+  hex: string;
+  row_index: number | string;
+  asset_hash: string;
+}
+
+export interface IApartmentDetail extends IBaseAsset {
+  id?: string;
+  building_id?: string;
+  apartment_no: string;
+  description?: string;
+  category?: string | null;
+  area?: string;
+  area_unit?: string;
+  view?: string | null;
+  bathroom_count?: number | null;
+  balcony_count?: number | null;
+  has_lawsuit?: boolean;
+  main_cost_center_id?: string;
+  cost_center_id?: string;
+  property_type?: string | null;
+  water_meter?: string | null;
+  electricity_meter?: string | null;
+  statement?: string | null;
+  room_count?: number | null;
+  property_values_id?: string;
+  cost_price?: number | null;
+  amount_paid?: number | null;
+  cost_currency_id?: string | null;
+  note?: string | null;
+  apartment_kind: number;
+  number?: string;
+  code?: string;
+  blocked?: boolean | null;
+  kind?: string | null;
+  tenant_id?: string;
+}
+
+export interface IShopDetail extends IBaseAsset {
+  shop_no: string;
+  shop_kind: number;
+  property_values_id?: string;
+}
+
+export interface IParkingDetail extends IBaseAsset {
+  parking_no: string;
+  parking_kind: number;
+  property_values_id?: string;
+}
+
+export interface IBuildingDetailsData {
+  apartment: Record<string, IApartmentDetail>;
+  mezzanine: Record<string, IApartmentDetail>;
+  office: Record<string, IApartmentDetail>;
+  store: Record<string, IShopDetail>;
+  shop: Record<string, IShopDetail>;
+  parking: Record<string, IParkingDetail>;
+  penthouse: Record<string, IApartmentDetail>;
+  'underground parking': Record<string, IParkingDetail>;
+}
+
+export interface IBuildingDetailsBody {
+  property_values: IPropertyValues[];
+  building_details: IBuildingDetailsData;
+}
+
+export enum AssetKind {
+  Apartment = 1,
+  Mezzanine = 2,
+  Office = 3,
+  Penthouse = 4
+}
+
+export enum ParkingKind {
+  Regular = 1,
+  Underground = 2
+}
+
+export enum ShopKind {
+  Shop = 1,
+  Store = 2
+}
+
+
+export interface IBuildingDetailsResponse {
+  apartments: any[];
+  parkings: any[];
+  shops: any[];
+  property_values?: any[];
+}

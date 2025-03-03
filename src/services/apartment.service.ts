@@ -32,36 +32,51 @@ export class ApartmentService {
     return await this.apartmentRepository.createApartment(data);
   }
 
-  async createApartmentWithRelations(data: IApartmentBody): Promise<string | null> {
+  async createApartments(data: Partial<Apartment>[]): Promise<string[] | null> {
     try {
-        // Create apartment
-        const apartmentId = await this.createApartment(data);
-        if (!apartmentId) return null;
+      const apartmentIds = await this.apartmentRepository.createApartments(
+        data
+      );
 
-        if (data.pictures) {
-            await this.addApartmentPictures(apartmentId, data.pictures);
-        }
-
-        if (data.rental_price) {
-            data.rental_price.apartment_id = apartmentId;
-            await this.addRentalPrice(data.rental_price);
-        }
-
-        if (data.selling_price) {
-            data.selling_price.apartment_id = apartmentId;
-            await this.addSellingPrice(data.selling_price);
-        }
-
-        if (data.accumulates) {
-            await this.addAccumulations(data.accumulates);
-        }
-
-        return apartmentId;
+      return apartmentIds;
     } catch (error) {
-        logger.error(`Error in createApartmentWithRelations: ${error}`);
-        return null;
+      logger.error(`Error in createApartments: ${error}`);
+      return null;
     }
-}
+  }
+
+  async createApartmentWithRelations(
+    data: IApartmentBody
+  ): Promise<string | null> {
+    try {
+      // Create apartment
+      const apartmentId = await this.createApartment(data);
+      if (!apartmentId) return null;
+
+      if (data.pictures) {
+        await this.addApartmentPictures(apartmentId, data.pictures);
+      }
+
+      if (data.rental_price) {
+        data.rental_price.apartment_id = apartmentId;
+        await this.addRentalPrice(data.rental_price);
+      }
+
+      if (data.selling_price) {
+        data.selling_price.apartment_id = apartmentId;
+        await this.addSellingPrice(data.selling_price);
+      }
+
+      if (data.accumulates) {
+        await this.addAccumulations(data.accumulates);
+      }
+
+      return apartmentId;
+    } catch (error) {
+      logger.error(`Error in createApartmentWithRelations: ${error}`);
+      return null;
+    }
+  }
 
   async getApartmentById(id: string): Promise<Apartment | null> {
     return await this.apartmentRepository.getApartmentById(id);
@@ -72,7 +87,15 @@ export class ApartmentService {
   }
 
   async getApartmentsByBuildingId(buildingId: string): Promise<Apartment[]> {
-    return await this.apartmentRepository.getApartmentsByBuildingId(buildingId);
+    try {
+      const apartments =
+        await this.apartmentRepository.getApartmentsByBuildingId(buildingId);
+      logger.info("Fetched all Apartments successfully.");
+      return apartments;
+    } catch (error) {
+      logger.error(`Error in getApartmentsByBuildingId: ${error}`);
+      return [];
+    }
   }
 
   async updateApartment(
@@ -119,24 +142,20 @@ export class ApartmentService {
     }
   }
 
-  async addRentalPrice(
-    price: IApartmentRentalPrice
-  ): Promise<string | null> {
-    
-    
+  async addRentalPrice(price: IApartmentRentalPrice): Promise<string | null> {
     return await this.apartmentRentalPriceRepository.createRentalPrice(price);
   }
 
-  async addSellingPrice(
-    price: IApartmentSellingPrice
-  ): Promise<string | null> {
+  async addSellingPrice(price: IApartmentSellingPrice): Promise<string | null> {
     return await this.apartmentSellingPriceRepository.createSellingPrice(price);
   }
 
   async addAccumulation(
     accumulation: IApartmentAccumulate
   ): Promise<string | null> {
-    return await this.apartmentAccumulateRepository.createAccumulate(accumulation);
+    return await this.apartmentAccumulateRepository.createAccumulate(
+      accumulation
+    );
   }
 
   async addAccumulations(
@@ -151,34 +170,43 @@ export class ApartmentService {
         }
       );
 
-      const accumulationsIds = await this.apartmentAccumulateRepository.createAccumulates(
-        apartmentAccumulates
-      );
+      const accumulationsIds =
+        await this.apartmentAccumulateRepository.createAccumulates(
+          apartmentAccumulates
+        );
 
-      logger.info(`Created accumulates successfully with ids: ${accumulationsIds}`);
+      logger.info(
+        `Created accumulates successfully with ids: ${accumulationsIds}`
+      );
 
       return accumulationsIds ?? [];
     } catch (error) {
       logger.error(`Error in addAccumulations: ${error}`);
       return [];
     }
-  } 
+  }
 
   async getApartmentPictures(
     apartmentId: string
   ): Promise<ApartmentPictures[]> {
-    return await this.apartmentPictureRepository.getPicturesByApartmentId(apartmentId);
+    return await this.apartmentPictureRepository.getPicturesByApartmentId(
+      apartmentId
+    );
   }
 
   async getRentalPriceHistory(
     apartmentId: string
   ): Promise<ApartmentRentalPrice[]> {
-    return await this.apartmentRentalPriceRepository.getRentalPriceHistory(apartmentId);
+    return await this.apartmentRentalPriceRepository.getRentalPriceHistory(
+      apartmentId
+    );
   }
 
   async getSellingPriceHistory(
     apartmentId: string
   ): Promise<ApartmentSellingPrice[]> {
-    return await this.apartmentSellingPriceRepository.getSellingPriceHistory(apartmentId);
+    return await this.apartmentSellingPriceRepository.getSellingPriceHistory(
+      apartmentId
+    );
   }
 }

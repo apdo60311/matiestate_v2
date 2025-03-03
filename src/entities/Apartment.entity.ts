@@ -21,6 +21,9 @@ export class Apartment {
   @JoinColumn({ name: "building_id" })
   building!: Building;
 
+  @Column({ type:'uuid', nullable:false})
+  building_id!: string;
+
   @Column("varchar", { nullable: true })
   apartment_no?: string;
 
@@ -83,6 +86,9 @@ export class Apartment {
   @ManyToOne(() => PropertyValues, { nullable: true })
   @JoinColumn({ name: "property_values_id" })
   property_values?: PropertyValues;
+
+  @Column("uuid", { nullable: true })
+  property_values_id?: string;
 
   @Column("varchar", { nullable: true })
   hex?: string;

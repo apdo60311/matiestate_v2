@@ -75,4 +75,6 @@ export const DI_TYPES = {
   SellerRepository: Symbol.for("SellerRepository"),
   SellerService: Symbol.for("SellerService"),
   SellerController: Symbol.for("SellerController"),
+
+  PropertyValuesRepository: Symbol.for("PropertyValuesRepository"),
 };

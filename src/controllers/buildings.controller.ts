@@ -4,7 +4,7 @@ import { BuildingsService } from "../services/buildings.service";
 import { CustomRequest } from "../types/request.types";
 import ResponseModel from "../types/response.types";
 import { NextFunction, RequestHandler, Response } from "express";
-import { IBuildingsBody } from "../types/buildings.types";
+import { IBuildingDetailsBody, IBuildingsBody } from "../types/buildings.types";
 
 @injectable()
 export class BuildingsController {
@@ -129,6 +129,74 @@ try {
 }
 };
 
+public createDetails: RequestHandler<
+  {id : string},
+  ResponseModel<Record<string, any>>,
+  IBuildingDetailsBody,
+  unknown,
+  any
+> = async (
+  req: CustomRequest<
+    {id: string},
+    ResponseModel<Record<string, any>>,
+    IBuildingDetailsBody,
+    unknown,
+    any
+  >,
+  res: Response<ResponseModel<Record<string, any>>>,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    const buildingId = req.params.id;
+    const buildingDetails = req.body;
+    
+    const result = await this.buildingsService.createBuildingDetails(buildingId, buildingDetails);
+    
+    return res.status(201).send({
+      success: true,
+      message: 'Building details created successfully',
+      data: result
+    });
+  } catch (e: any) {
+    return res.status(500).send({
+      success: false,
+      message: e?.message
+    });
+  }
+};
+
+public getDetails: RequestHandler<
+  { id: string },
+  ResponseModel<Record<string, any>>,
+  unknown,
+  unknown,
+  any
+> = async (
+  req: CustomRequest<
+    { id: string },
+    ResponseModel<Record<string, any>>,
+    unknown,
+    unknown,
+    any
+  >,
+  res: Response<ResponseModel<Record<string, any>>>,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    const details = await this.buildingsService.getBuildingDetails(req.params.id);
+    
+    return res.status(200).send({
+      success: true,
+      message: 'Building details retrieved successfully',
+      data: details
+    });
+  } catch (e: any) {
+    return res.status(500).send({
+      success: false,
+      message: e?.message
+    });
+  }
+};
 
 public update: RequestHandler<
 {id: string},

@@ -25,6 +25,18 @@ export class ApartmentRepository extends Repository<Apartment> {
         }
     }
 
+    async createApartments(apartments: Partial<Apartment>[]): Promise<string[] | null> {
+        try {
+            const result = await this.save(apartments);
+            const apartmentIds = result.map((apartment) => apartment.id);
+            logger.info(`Apartments Created successfully with ids: ${apartmentIds.join(', ')}`);
+            return apartmentIds;
+        } catch (error) {
+            logger.error(`Error while creating Apartments. ${error}`);
+            return null;
+        }
+    }
+
     async getApartmentById(id: string): Promise<Apartment | null> {
         try {
             const result = await this.findOne({
