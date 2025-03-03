@@ -9,7 +9,7 @@ import { OwnerExpensesDetailsRepository } from "../repositories/owner/owner-expe
 import { OwnerExpensesTypesRepository } from "../repositories/owner/owner-expenses-types.repository";
 import { logger } from "../utils/logger";
 import { OwnerRepository } from "../repositories/owner/owner.repository";
-import { IOwnerExpenseDetailBody } from "@/types/owner.types";
+import { IOwnerExpenseDetailBody } from "../types/owner.types";
 
 @injectable()
 export class OwnerService {

@@ -64,7 +64,13 @@ import { SellerService } from "../services/seller.service";
 import { SellerRepository } from "../repositories/seller.repository";
 import { SellerController } from "../controllers/seller.controller";
 import { PropertyValuesRepository } from "../repositories/property-values.repository";
-
+import { ChequePatternRepository } from '../repositories/patterns/cheque-pattern.repository';
+import { ContractPatternRepository } from '../repositories/patterns/contract-pattern.repository';
+import { BillPatternRepository } from '../repositories/patterns/bill-pattern.repository';
+import { VoucherPatternRepository } from '../repositories/patterns/voucher-pattern.repository';
+import { AccountingVoucherPatternRepository } from '../repositories/patterns/account-voucher-pattern.repository';
+import { PatternService } from "../services/pattern.service";
+import { PatternController } from "../controllers/pattern.controller";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -659,5 +665,51 @@ container.bind<PropertyValuesRepository>(DI_TYPES.PropertyValuesRepository)
     .toDynamicValue(async (context) => {
         const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
         return new PropertyValuesRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ChequePatternRepository>(DI_TYPES.ChequePatternRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ChequePatternRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ContractPatternRepository>(DI_TYPES.ContractPatternRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ContractPatternRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<BillPatternRepository>(DI_TYPES.BillPatternRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new BillPatternRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<VoucherPatternRepository>(DI_TYPES.VoucherPatternRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new VoucherPatternRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<AccountingVoucherPatternRepository>(DI_TYPES.AccountingVoucherPatternRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new AccountingVoucherPatternRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<PatternService>(DI_TYPES.PatternService)
+.to(PatternService)
+.inSingletonScope();
+
+container.bind<PatternController>(DI_TYPES.PatternController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<PatternService>(DI_TYPES.PatternService);
+        return new PatternController(service);
     })
     .inSingletonScope();

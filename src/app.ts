@@ -23,6 +23,7 @@ import bankRoutes from './routes/bank.routes';
 import currencyRoutes from './routes/currency.routes';
 import lessorRoutes from './routes/lessor.routes';
 import sellerRoutes from './routes/seller.routes';
+import patternRoutes from './routes/pattern.routes';
 
 const app = express();
 
@@ -56,7 +57,7 @@ v1ClientRouter.use('/banks', bankRoutes);
 v1ClientRouter.use('/currencies', currencyRoutes);
 v1ClientRouter.use('/lessors', lessorRoutes);
 v1ClientRouter.use('/sellers', sellerRoutes);
-
+v1ClientRouter.use('/patterns', patternRoutes);
 
 
 v1Router.use('/client', v1ClientRouter);
