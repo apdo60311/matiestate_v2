@@ -71,6 +71,15 @@ import { VoucherPatternRepository } from '../repositories/patterns/voucher-patte
 import { AccountingVoucherPatternRepository } from '../repositories/patterns/account-voucher-pattern.repository';
 import { PatternService } from "../services/pattern.service";
 import { PatternController } from "../controllers/pattern.controller";
+import { MaterialRepository } from "../repositories/material/material.repository";
+import { MaterialGroupRepository } from "../repositories/material/material-group.repository";
+import { MaterialBalanceRepository } from "../repositories/material/material-balance.repository";
+import { MaterialMinimumRepository } from "../repositories/material/material-minimum.repository";
+import { MaterialPricesRepository } from "../repositories/material/material-prices.repository";
+import { MaterialPricesDetailsRepository } from "../repositories/material/material-prices-details.repository";
+import { MaterialService } from "../services/material.service";
+import { MaterialController } from "../controllers/material.controller";
+import { MaterialSpecificationsRepository } from "../repositories/material/material-specifications.repository";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -713,3 +722,66 @@ container.bind<PatternController>(DI_TYPES.PatternController)
         return new PatternController(service);
     })
     .inSingletonScope();
+
+    container.bind<MaterialRepository>(DI_TYPES.MaterialRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new MaterialRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<MaterialGroupRepository>(DI_TYPES.MaterialGroupRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new MaterialGroupRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<MaterialBalanceRepository>(DI_TYPES.MaterialBalanceRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new MaterialBalanceRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<MaterialMinimumRepository>(DI_TYPES.MaterialMinimumRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new MaterialMinimumRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<MaterialPricesRepository>(DI_TYPES.MaterialPricesRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new MaterialPricesRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<MaterialPricesDetailsRepository>(DI_TYPES.MaterialPricesDetailsRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new MaterialPricesDetailsRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<MaterialSpecificationsRepository>(DI_TYPES.MaterialSpecificationsRepository).toDynamicValue(
+    async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new MaterialSpecificationsRepository(dataSource);
+    }
+);
+
+container.bind<MaterialService>(DI_TYPES.MaterialService)
+.to(MaterialService)
+.inSingletonScope();
+
+container
+  .bind<MaterialController>(DI_TYPES.MaterialController)
+  .toDynamicValue(async (context) => {
+    const service = await context.container.getAsync<MaterialService>(
+      DI_TYPES.MaterialService
+    );
+    return new MaterialController(service);
+  })
+  .inSingletonScope();

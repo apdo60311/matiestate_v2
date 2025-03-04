@@ -1,3 +1,5 @@
+import { MaterialController } from "../controllers/material.controller";
+
 export const DI_TYPES = {
   DataSource: Symbol.for("DataSource"),
   BuildingsRepository: Symbol.for("BuildingsRepository"),
@@ -85,4 +87,14 @@ export const DI_TYPES = {
   AccountingVoucherPatternRepository: Symbol.for('AccountingVoucherPatternRepository'),
   PatternService: Symbol.for('PatternService'),
   PatternController: Symbol.for('PatternController'),
+
+  MaterialRepository: Symbol.for("MaterialRepository"),
+  MaterialGroupRepository: Symbol.for("MaterialGroupRepository"), 
+  MaterialBalanceRepository: Symbol.for("MaterialBalanceRepository"),
+  MaterialMinimumRepository: Symbol.for("MaterialMinimumRepository"),
+  MaterialPricesRepository: Symbol.for("MaterialPricesRepository"),
+  MaterialPricesDetailsRepository: Symbol.for("MaterialPricesDetailsRepository"),
+  MaterialSpecificationsRepository: Symbol.for("MaterialSpecificationsRepository"),
+  MaterialService: Symbol.for("MaterialService"),
+  MaterialController: Symbol.for("MaterialController"),
 };

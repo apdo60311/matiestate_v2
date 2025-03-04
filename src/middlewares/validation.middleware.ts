@@ -10,10 +10,14 @@ export const validateDto = (dtoClass: any): (
     res: Response<ResponseModel<Record<string, any>>>,
     next: NextFunction
   ) => {
+    console.log('Request body before validation:', req.body);
+    
     const dtoInstance = plainToInstance(dtoClass, req.body);
+    console.log('DTO instance:', dtoInstance);
 
     const errors = await validate(dtoInstance);
-
+    console.log('Validation errors:', errors);
+        
     if (errors.length > 0) {
       return res.status(400).json({
         success: false,
