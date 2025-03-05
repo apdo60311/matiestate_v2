@@ -27,6 +27,18 @@ export class VoucherGridData {
   @Column("real", { default: 0 })
   credit: number = 0;
 
+  @Column({type:'uuid', name:'cost_center_id', nullable: true})
+  costCenterId?: string;
+
+  @Column({type:'uuid', name:'voucher_main_data_id', nullable: false})
+  voucherMainDataId!: string;
+
+  @Column({type:'uuid', name:'tenant_id', nullable: true})
+  tenantId?: string;
+
+  @Column({type:'uuid', name:'account_id', nullable: true})
+  accountId?: string;
+
   @ManyToOne(() => CostCenter, { nullable: true })
   @JoinColumn({ name: "cost_center_id" })
   cost_center?: CostCenter;

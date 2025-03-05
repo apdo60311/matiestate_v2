@@ -26,6 +26,7 @@ import sellerRoutes from './routes/seller.routes';
 import patternRoutes from './routes/pattern.routes';
 import materialRoutes from './routes/material.routes';
 import entriesRoutes from './routes/entries.routes';
+import voucherRoutes from './routes/voucher.routes';
 
 const app = express();
 
@@ -62,6 +63,7 @@ v1ClientRouter.use('/sellers', sellerRoutes);
 v1ClientRouter.use('/patterns', patternRoutes);
 v1ClientRouter.use('/materials', materialRoutes);
 v1ClientRouter.use('/entries', entriesRoutes);
+v1ClientRouter.use('/vouchers', voucherRoutes);
 
 v1Router.use('/client', v1ClientRouter);
 

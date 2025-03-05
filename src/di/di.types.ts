@@ -103,4 +103,10 @@ export const DI_TYPES = {
   EntryGridDataRepository: Symbol.for('EntryGridDataRepository'),
   EntriesController: Symbol.for('EntriesController'),
   EntriesService: Symbol.for('EntriesService'),
+
+  VoucherMainDataRepository: Symbol.for('VoucherMainDataRepository'),
+  VoucherGridDataRepository: Symbol.for('VoucherGridDataRepository'),
+  VoucherPicturesRepository: Symbol.for('VoucherPicturesRepository'),
+  VoucherService: Symbol.for('VoucherService'),
+  VoucherController: Symbol.for('VoucherController'),
 };

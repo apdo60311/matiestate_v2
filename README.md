@@ -131,7 +131,7 @@ Before you begin, ensure you have met the following requirements:
 All routes marked with "Requires authentication" need a valid JWT token in the Authorization header:
 ```http
 Authorization: Bearer <your-jwt-token>
-
+```
 
 
 ##  🛠️ Installation

@@ -18,7 +18,7 @@ export class VoucherMainData {
   id: string = uuidv4().toString();
 
   @CreateDateColumn({ type: "timestamptz" })
-  created_at!: Date;
+  createdAt!: Date;
 
   @ManyToOne(() => Currency, { onDelete: "CASCADE" })
   @JoinColumn({ name: "currency_id" })
@@ -53,17 +53,20 @@ export class VoucherMainData {
   @JoinColumn({ name: "account_id" })
   account!: Account;
 
-  @Column({ type: "uuid", nullable: true })
-  connect_with_id?: string;
+  @Column({type:'uuid', name:'account_id', nullable: true})
+  accountId!: string;
 
-  @Column({ type: "float", nullable: true })
-  currency_val?: number;
+  @Column({ type: "uuid", name:'connect_with_id', nullable: true })
+  connectWithId?: string;
+
+  @Column({ type: "float", name:'currency_val', nullable: true })
+  currencyVal?: number;
 
   @Column({ type: "bigint", generated: "identity", unique: true })
   number!: number;
 
-  @Column({ type: "int" })
-  voucher_type!: number;
+  @Column({ type: "int" , name:'voucher_type' })
+  voucherType!: number;
 
   @Column({ type: "boolean", default: false })
   gen_entires: boolean = false;
@@ -77,6 +80,9 @@ export class VoucherMainData {
   @ManyToOne(() => Tenant, { onDelete: "CASCADE" })
   @JoinColumn({ name: "tenant_id" })
   tenant?: Tenant;
+
+  @Column({ type: "uuid", name:'tenant_id', nullable: true })
+  tenantId?: string;
 
   @ManyToOne(() => VoucherPattern, { onDelete: "CASCADE" })
   @JoinColumn({ name: "voucher_pattern_id" })

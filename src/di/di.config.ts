@@ -84,6 +84,11 @@ import { EntryMainDataRepository } from "../repositories/entries/entry-main-data
 import { EntryGridDataRepository } from "../repositories/entries/entry-grid-data.repository";
 import { EntriesController } from "../controllers/entry.controller";
 import { EntriesService } from "../services/entries.service";
+import { VoucherController } from "../controllers/voucher.controller";
+import { VoucherService } from "../services/voucher.service";
+import { VoucherMainDataRepository } from "../repositories/voucher/voucher-main-data.repository";
+import { VoucherGridDataRepository } from "../repositories/voucher/voucher-grid-data.repository";
+import { VoucherPicturesRepository } from "../repositories/voucher/voucher-pictures.repository";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -825,3 +830,57 @@ container.bind<EntriesController>(DI_TYPES.EntriesController)
         return new EntriesController(service);
     })
     .inSingletonScope();
+
+container.bind<VoucherMainDataRepository>(DI_TYPES.VoucherMainDataRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new VoucherMainDataRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<VoucherGridDataRepository>(DI_TYPES.VoucherGridDataRepository)
+.toDynamicValue(
+    async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new VoucherGridDataRepository(dataSource);
+    }
+).inSingletonScope();
+
+
+container.bind<VoucherPicturesRepository>(DI_TYPES.VoucherPicturesRepository)
+.toDynamicValue(
+    async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new VoucherPicturesRepository(dataSource);
+    }
+).inSingletonScope();
+
+
+container.bind<VoucherService>(DI_TYPES.VoucherService)
+.toDynamicValue(async (context) => {
+    const voucherMainDataRepository = await context.container.getAsync<VoucherMainDataRepository>(
+        DI_TYPES.VoucherMainDataRepository
+    );
+    const voucherGridDataRepository = await context.container.getAsync<VoucherGridDataRepository>(
+        DI_TYPES.VoucherGridDataRepository
+    );
+    const voucherPicturesRepository = await context.container.getAsync<VoucherPicturesRepository>(
+        DI_TYPES.VoucherPicturesRepository
+    );
+
+    return new VoucherService(
+        voucherMainDataRepository,
+        voucherGridDataRepository,
+        voucherPicturesRepository
+    );
+})
+.inSingletonScope();
+
+container.bind<VoucherController>(DI_TYPES.VoucherController)
+.toDynamicValue(async (context) => {
+    const service = await context.container.getAsync<VoucherService>(
+        DI_TYPES.VoucherService
+    );
+    return new VoucherController(service);
+})
+.inSingletonScope();
