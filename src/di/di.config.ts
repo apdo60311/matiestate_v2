@@ -80,6 +80,10 @@ import { MaterialPricesDetailsRepository } from "../repositories/material/materi
 import { MaterialService } from "../services/material.service";
 import { MaterialController } from "../controllers/material.controller";
 import { MaterialSpecificationsRepository } from "../repositories/material/material-specifications.repository";
+import { EntryMainDataRepository } from "../repositories/entries/entry-main-data.repository";
+import { EntryGridDataRepository } from "../repositories/entries/entry-grid-data.repository";
+import { EntriesController } from "../controllers/entry.controller";
+import { EntriesService } from "../services/entries.service";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -785,3 +789,39 @@ container
     return new MaterialController(service);
   })
   .inSingletonScope();
+
+container.bind<EntryMainDataRepository>(DI_TYPES.EntryMainDataRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new EntryMainDataRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<EntryGridDataRepository>(DI_TYPES.EntryGridDataRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new EntryGridDataRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<EntriesService>(DI_TYPES.EntriesService)
+.toDynamicValue(async (context) => {
+    const entryMainDataRepository = await context.container.getAsync<EntryMainDataRepository>(
+        DI_TYPES.EntryMainDataRepository
+    );
+    const entryGridDataRepository = await context.container.getAsync<EntryGridDataRepository>(
+        DI_TYPES.EntryGridDataRepository
+    );
+    return new EntriesService(entryMainDataRepository, entryGridDataRepository);
+})
+.inSingletonScope();
+
+
+container.bind<EntriesController>(DI_TYPES.EntriesController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<EntriesService>(
+            DI_TYPES.EntriesService
+        );
+        return new EntriesController(service);
+    })
+    .inSingletonScope();

@@ -55,7 +55,7 @@ export class EntryGridData  {
 
   @ManyToOne(() => Account)
   @JoinColumn({ name: 'account_id' })
-  account!: Account;
+  account?: Account;
 
   @ManyToOne(() => Currency, { nullable: true })
   @JoinColumn({ name: 'currency_id' })

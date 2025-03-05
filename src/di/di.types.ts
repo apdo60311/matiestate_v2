@@ -1,3 +1,4 @@
+import { EntriesService } from "../services/entries.service";
 import { MaterialController } from "../controllers/material.controller";
 
 export const DI_TYPES = {
@@ -97,4 +98,9 @@ export const DI_TYPES = {
   MaterialSpecificationsRepository: Symbol.for("MaterialSpecificationsRepository"),
   MaterialService: Symbol.for("MaterialService"),
   MaterialController: Symbol.for("MaterialController"),
+
+  EntryMainDataRepository: Symbol.for('EntryMainDataRepository'),
+  EntryGridDataRepository: Symbol.for('EntryGridDataRepository'),
+  EntriesController: Symbol.for('EntriesController'),
+  EntriesService: Symbol.for('EntriesService'),
 };

@@ -18,8 +18,8 @@ export class EntryMainData {
   @CreateDateColumn({ type: "timestamptz" })
   created_at: Date = new Date(new Date().getTime());
 
-  @Column({ type: "uuid", nullable: true })
-  currency_id?: string;
+  @Column({ type: "uuid", name:'currency_id', nullable: true })
+  currencyId?: string;
 
   @Column({ type: "text", nullable: true })
   note?: string;
@@ -33,14 +33,14 @@ export class EntryMainData {
   @Column({ type: "smallint", default: 0 })
   difference!: number;
 
-  @Column({ type: "float", nullable: true })
-  currency_val?: number;
+  @Column({ type: "float", name:'currency_val', nullable: true })
+  currencyVal?: number;
 
-  @Column({ type: "integer", nullable: true })
-  created_from?: number;
+  @Column({ type: "integer", name:'created_from', nullable: true })
+  createdFrom?: number;
 
-  @Column({ type: "uuid", nullable: true })
-  created_from_id?: string;
+  @Column({ type: "uuid", name:'created_from_id', nullable: true })
+  createdFromId?: string;
 
   @Column({ type: "bigint", generated: "identity" })
   number!: number;
@@ -54,8 +54,8 @@ export class EntryMainData {
   @Column({ type: "integer", nullable: true })
   created_from_code?: number;
 
-  @Column({ type: "uuid", nullable: true })
-  tenant_id?: string;
+  @Column({ type: "uuid", name:'tenant_id', nullable: true })
+  tenantId?: string;
 
   @ManyToOne(() => Currency, { onDelete: "CASCADE" })
   @JoinColumn({ name: "currency_id" })
