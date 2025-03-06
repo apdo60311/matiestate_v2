@@ -5,12 +5,9 @@ import {
     IsOptional, 
     IsUUID,
     ValidateNested,
-    IsArray,
-    ArrayMinSize,
     Min,
     IsDate,
     IsDefined,
-    IsBoolean
 } from 'class-validator';
 
 

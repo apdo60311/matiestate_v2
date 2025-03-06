@@ -1,6 +1,7 @@
 import path from 'path';
 import swaggerJSDoc from 'swagger-jsdoc';
 
+
 const options: swaggerJSDoc.Options = {
     definition: {
         openapi: "3.0.0",
@@ -17,9 +18,8 @@ const options: swaggerJSDoc.Options = {
         ],
     },
     apis: [
-        path.join(process.cwd(), "dist/routes/*.routes.js"),
-        path.join(process.cwd(), "dist/entities/*.entity.js"),
-        path.join(process.cwd(), "dist/dtos/*.dto.js")
+        path.join(__dirname, '../routes/*.routes.{js,ts}'),
+        path.join(__dirname, '../entities/*.entity.{js,ts}'),
     ], 
 };
 

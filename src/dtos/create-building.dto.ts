@@ -12,7 +12,7 @@ import {
   } from "class-validator";
   
 
-  /**
+/**
  * @openapi
  * components:
  *   schemas:
