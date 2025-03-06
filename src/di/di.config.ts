@@ -89,6 +89,9 @@ import { VoucherService } from "../services/voucher.service";
 import { VoucherMainDataRepository } from "../repositories/voucher/voucher-main-data.repository";
 import { VoucherGridDataRepository } from "../repositories/voucher/voucher-grid-data.repository";
 import { VoucherPicturesRepository } from "../repositories/voucher/voucher-pictures.repository";
+import { ChequeController } from "../controllers/cheque.controller";
+import { ChequeService } from "../services/cheque.service";
+import { ChequeRepository } from "../repositories/cheque.repository";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -884,3 +887,28 @@ container.bind<VoucherController>(DI_TYPES.VoucherController)
     return new VoucherController(service);
 })
 .inSingletonScope();
+
+container.bind<ChequeRepository>(DI_TYPES.ChequeRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ChequeRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ChequeService>(DI_TYPES.ChequeService)
+    .toDynamicValue(async (context) => {
+        const chequeRepository = await context.container.getAsync<ChequeRepository>(
+            DI_TYPES.ChequeRepository
+        );
+        return new ChequeService(chequeRepository);
+    })
+    .inSingletonScope();
+
+container.bind<ChequeController>(DI_TYPES.ChequeController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<ChequeService>(
+            DI_TYPES.ChequeService
+        );
+        return new ChequeController(service);
+    })
+    .inSingletonScope();

@@ -18,7 +18,8 @@ const options: swaggerJSDoc.Options = {
     },
     apis: [
         path.join(process.cwd(), "dist/routes/*.routes.js"),
-        path.join(process.cwd(), "dist/entities/*.entity.js")
+        path.join(process.cwd(), "dist/entities/*.entity.js"),
+        path.join(process.cwd(), "dist/dtos/*.dto.js")
     ], 
 };
 

@@ -11,6 +11,38 @@ import {
     IsDate
 } from 'class-validator';
 
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateLandRentalPriceDto:
+ *       type: object
+ *       required:
+ *         - date
+ *         - price
+ *         - land_id
+ *       properties:
+ *         date:
+ *           type: string
+ *           format: date-time
+ *         price:
+ *           type: number
+ *           minimum: 0
+ *         currency_id:
+ *           type: string
+ *           format: uuid
+ *         note:
+ *           type: string
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         number:
+ *           type: number
+ *         land_id:
+ *           type: string
+ *           format: uuid
+ */
 export class CreateLandRentalPriceDto {
     @Type(() => Date)
     date!: Date;
@@ -39,6 +71,38 @@ export class CreateLandRentalPriceDto {
     land_id!: string;
 }
 
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateLandSellingPriceDto:
+ *       type: object
+ *       required:
+ *         - date
+ *         - price
+ *         - land_id
+ *       properties:
+ *         date:
+ *           type: string
+ *           format: date-time
+ *         price:
+ *           type: number
+ *           minimum: 0
+ *         currency_id:
+ *           type: string
+ *           format: uuid
+ *         note:
+ *           type: string
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         number:
+ *           type: number
+ *         land_id:
+ *           type: string
+ *           format: uuid
+ */
 export class CreateLandSellingPriceDto {
     @Type(() => Date)
     date!: Date;
@@ -67,6 +131,29 @@ export class CreateLandSellingPriceDto {
     land_id!: string;
 }
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateLandAccumulateDto:
+ *       type: object
+ *       required:
+ *         - main_land_id
+ *         - land_id
+ *         - tenant_id
+ *       properties:
+ *         number:
+ *           type: number
+ *         main_land_id:
+ *           type: string
+ *           format: uuid
+ *         land_id:
+ *           type: string
+ *           format: uuid
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ */
 export class CreateLandAccumulateDto {
     @IsNumber()
     @IsOptional()
@@ -82,6 +169,45 @@ export class CreateLandAccumulateDto {
     tenant_id!: string;
 }
 
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateLandWalletDto:
+ *       type: object
+ *       required:
+ *         - number
+ *         - contract_id
+ *         - main_cost
+ *         - land_id
+ *       properties:
+ *         number:
+ *           type: string
+ *         contract_id:
+ *           type: string
+ *           format: uuid
+ *         main_cost:
+ *           type: number
+ *           minimum: 0
+ *         expense:
+ *           type: number
+ *         begin_date:
+ *           type: string
+ *           format: date-time
+ *         sale_date:
+ *           type: string
+ *           format: date-time
+ *         sale_value:
+ *           type: number
+ *           minimum: 0
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         land_id:
+ *           type: string
+ *           format: uuid
+ */
 export class CreateLandWalletDto {
     @IsString()
     number!: string;
@@ -118,6 +244,164 @@ export class CreateLandWalletDto {
     land_id!: string;
 }
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateLandDto:
+ *       type: object
+ *       required:
+ *         - type
+ *       properties:
+ *         land_no:
+ *           type: string
+ *         name:
+ *           type: string
+ *         last_name:
+ *           type: string
+ *         type:
+ *           type: number
+ *         ban:
+ *           type: boolean
+ *         date:
+ *           type: string
+ *           format: date-time
+ *         number:
+ *           type: number
+ *         city:
+ *           type: string
+ *         region:
+ *           type: string
+ *         space:
+ *           type: string
+ *         area:
+ *           type: number
+ *           minimum: 0
+ *         area_unit:
+ *           type: string
+ *         street_name:
+ *           type: string
+ *         street_count:
+ *           type: number
+ *           minimum: 0
+ *         side:
+ *           type: string
+ *         license_no:
+ *           type: string
+ *         license:
+ *           type: string
+ *         license_date:
+ *           type: string
+ *           format: date-time
+ *         details:
+ *           type: string
+ *         land_type:
+ *           type: string
+ *         buildble:
+ *           type: boolean
+ *         landowner:
+ *           type: number
+ *         begin_land_value:
+ *           type: number
+ *           minimum: 0
+ *         currency_val_begin_land:
+ *           type: number
+ *         currency_val_purchase:
+ *           type: number
+ *         purchase_note:
+ *           type: string
+ *         commission_percent:
+ *           type: number
+ *           minimum: 0
+ *         identity_value:
+ *           type: number
+ *         currency_valid_entity:
+ *           type: number
+ *         identity_begin_date:
+ *           type: string
+ *           format: date-time
+ *         identity_end_date:
+ *           type: string
+ *           format: date-time
+ *         create_entry_investment:
+ *           type: boolean
+ *         identity_note:
+ *           type: string
+ *         ltn_land_type:
+ *           type: string
+ *         ltn_city:
+ *           type: string
+ *         ltn_region:
+ *           type: string
+ *         ltn_space:
+ *           type: string
+ *         ltn_license:
+ *           type: string
+ *         ltn_side:
+ *           type: string
+ *         ltnname:
+ *           type: string
+ *         rent:
+ *           type: number
+ *           minimum: 0
+ *         used_end_date:
+ *           type: boolean
+ *         customer_id:
+ *           type: string
+ *           format: uuid
+ *         account_id:
+ *           type: string
+ *           format: uuid
+ *         cuowner_id:
+ *           type: string
+ *           format: uuid
+ *         cost_center_id:
+ *           type: string
+ *           format: uuid
+ *         bank_account_id:
+ *           type: string
+ *           format: uuid
+ *         account_comm_income_id:
+ *           type: string
+ *           format: uuid
+ *         customer_owner_id:
+ *           type: string
+ *           format: uuid
+ *         owner_account_id:
+ *           type: string
+ *           format: uuid
+ *         currency_identity_id:
+ *           type: string
+ *           format: uuid
+ *         currency_begin_land_id:
+ *           type: string
+ *           format: uuid
+ *         begin_land_cost_center_id:
+ *           type: string
+ *           format: uuid
+ *         currency_purchase_id:
+ *           type: string
+ *           format: uuid
+ *         rent_currency_id:
+ *           type: string
+ *           format: uuid
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         identity_entry_id:
+ *           type: string
+ *           format: uuid
+ *         rental_price:
+ *           $ref: '#/components/schemas/CreateLandRentalPriceDto'
+ *         selling_price:
+ *           $ref: '#/components/schemas/CreateLandSellingPriceDto'
+ *         accumulates:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/CreateLandAccumulateDto'
+ *         wallet:
+ *           $ref: '#/components/schemas/CreateLandWalletDto'
+ */
 export class CreateLandDto {
     @IsOptional()
     @IsString()

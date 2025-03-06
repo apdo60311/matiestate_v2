@@ -1,5 +1,38 @@
 import { IsString, IsNumber, IsOptional, IsUUID, IsEmail } from 'class-validator';
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateLessorDto:
+ *       type: object
+ *       required:
+ *         - name
+ *         - passport
+ *       properties:
+ *         name:
+ *           type: string
+ *         passport:
+ *           type: number
+ *         id_card:
+ *           type: number
+ *         lessor_card:
+ *           type: number
+ *         cell_phone:
+ *           type: number
+ *         passport_expiry_date:
+ *           type: string
+ *         address:
+ *           type: string
+ *         nationality:
+ *           type: string
+ *         email:
+ *           type: string
+ *           format: email
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ */
 export class CreateLessorDto {
     @IsString()
     name!: string;

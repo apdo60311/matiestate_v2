@@ -109,4 +109,8 @@ export const DI_TYPES = {
   VoucherPicturesRepository: Symbol.for('VoucherPicturesRepository'),
   VoucherService: Symbol.for('VoucherService'),
   VoucherController: Symbol.for('VoucherController'),
+
+  ChequeRepository: Symbol.for('ChequeRepository'),
+  ChequeService: Symbol.for('ChequeService'),
+  ChequeController: Symbol.for('ChequeController'),  
 };

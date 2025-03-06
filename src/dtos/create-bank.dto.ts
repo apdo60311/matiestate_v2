@@ -1,5 +1,19 @@
 import { IsString, IsOptional, IsUUID, Length } from "class-validator";
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateBankDto:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *         code:
+ *           type: number
+ *       required:
+ *         - name
+ */
 export class CreateBankDto {
     @IsString({ message: "Name must be a string" })
     @Length(1, 255, { message: "Name must be between 1 and 255 characters" })
