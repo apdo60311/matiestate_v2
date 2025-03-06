@@ -15,121 +15,151 @@ const router = express.Router();
  *   description: Bank management endpoints
  */
 (async () => {
-    const bankController = await container.getAsync<BankController>(
-        DI_TYPES.BankController
-    );
+  const bankController = await container.getAsync<BankController>(
+    DI_TYPES.BankController
+  );
 
-    /**
-     * @openapi
-     * /banks:
-     *   post:
-     *     summary: Create a new bank
-     *     tags: [Banks]
-     *     security:
-     *       - bearerAuth: []
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             $ref: '#/components/schemas/CreateBankDto'
-     *     responses:
-     *       201:
-     *         description: Bank created successfully
-     *       500:
-     *         description: Server error
-     */
-    router.post("/", validateDto(CreateBankDto), bankController.create);
+  /**
+   * @openapi
+   * components:
+   *   schemas:
+   *     CreateBankDto:
+   *       type: object
+   *       required:
+   *         - name
+   *       properties:
+   *         name:
+   *           type: string
+   *           minLength: 1
+   *           maxLength: 255
+   *           description: The name of the bank
+   *         address:
+   *           type: string
+   *           description: The address of the bank
+   *         tenant_id:
+   *           type: string
+   *           format: uuid
+   *           description: The tenant ID associated with the bank
+   *         ltnname:
+   *           type: string
+   *           description: The Latin name of the bank
+   */
 
-    /**
-     * @openapi
-     * /banks:
-     *   get:
-     *     summary: Get all banks
-     *     tags: [Banks]
-     *     security:
-     *       - bearerAuth: []
-     *     responses:
-     *       200:
-     *         description: List of banks
-     *       500:
-     *         description: Server error
-     */
-    router.get("/", bankController.getAll);
+  /**
+   * @openapi
+   * /banks:
+   *   post:
+   *     summary: Create a new bank
+   *     tags: [Banks]
+   *     security:
+   *       - bearerAuth: []
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/CreateBankDto'
+   *     responses:
+   *       201:
+   *         description: Bank created successfully
+   *       400:
+   *         description: Invalid input data
+   *       401:
+   *         description: Unauthorized
+   *       500:
+   *         description: Server error
+   */
+  router.post("/", validateDto(CreateBankDto), bankController.create);
 
-    /**
-     * @openapi
-     * /banks/{id}:
-     *   get:
-     *     summary: Get bank by ID
-     *     tags: [Banks]
-     *     security:
-     *       - bearerAuth: []
-     *     parameters:
-     *       - in: path
-     *         name: id
-     *         required: true
-     *         schema:
-     *           type: string
-     *     responses:
-     *       200:
-     *         description: Bank details
-     *       404:
-     *         description: Bank not found
-     *       500:
-     *         description: Server error
-     */
-    router.get("/:id", bankController.getById);
+  /**
+   * @openapi
+   * /banks:
+   *   get:
+   *     summary: Get all banks
+   *     tags: [Banks]
+   *     security:
+   *       - bearerAuth: []
+   *     responses:
+   *       200:
+   *         description: List of banks
+   *       500:
+   *         description: Server error
+   */
+  router.get("/", bankController.getAll);
 
-    /**
-     * @openapi
-     * /banks/{id}:
-     *   put:
-     *     summary: Update a bank
-     *     tags: [Banks]
-     *     security:
-     *       - bearerAuth: []
-     *     parameters:
-     *       - in: path
-     *         name: id
-     *         required: true
-     *         schema:
-     *           type: string
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             $ref: '#/components/schemas/CreateBankDto'
-     *     responses:
-     *       200:
-     *         description: Bank updated successfully
-     *       500:
-     *         description: Server error
-     */
-    router.put("/:id", bankController.update);
+  /**
+   * @openapi
+   * /banks/{id}:
+   *   get:
+   *     summary: Get bank by ID
+   *     tags: [Banks]
+   *     security:
+   *       - bearerAuth: []
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *     responses:
+   *       200:
+   *         description: Bank details
+   *       404:
+   *         description: Bank not found
+   *       500:
+   *         description: Server error
+   */
+  router.get("/:id", bankController.getById);
 
-    /**
-     * @openapi
-     * /banks/{id}:
-     *   delete:
-     *     summary: Delete a bank
-     *     tags: [Banks]
-     *     security:
-     *       - bearerAuth: []
-     *     parameters:
-     *       - in: path
-     *         name: id
-     *         required: true
-     *         schema:
-     *           type: string
-     *     responses:
-     *       200:
-     *         description: Bank deleted successfully
-     *       500:
-     *         description: Server error
-     */
-    router.delete("/:id", bankController.delete);
+  /**
+   * @openapi
+   * /banks/{id}:
+   *   put:
+   *     summary: Update a bank
+   *     tags: [Banks]
+   *     security:
+   *       - bearerAuth: []
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/CreateBankDto'
+   *     responses:
+   *       200:
+   *         description: Bank updated successfully
+   *       500:
+   *         description: Server error
+   */
+  router.put("/:id", bankController.update);
+
+  /**
+   * @openapi
+   * /banks/{id}:
+   *   delete:
+   *     summary: Delete a bank
+   *     tags: [Banks]
+   *     security:
+   *       - bearerAuth: []
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *     responses:
+   *       200:
+   *         description: Bank deleted successfully
+   *       500:
+   *         description: Server error
+   */
+  router.delete("/:id", bankController.delete);
 })();
 
 export default router;

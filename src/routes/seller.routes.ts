@@ -13,6 +13,28 @@ const router = express.Router();
         DI_TYPES.SellerController
     );
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateSellerDto:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         name:
+ *           type: string
+ *         phone:
+ *           type: string
+ *         email:
+ *           type: string
+ *           format: email
+ *         address:
+ *           type: string
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ */
     /**
      * @openapi
      * /sellers:

@@ -20,6 +20,86 @@ const router = express.Router();
   );
 
   /**
+ * @openapi
+ * components:
+ *   schemas:
+ *     AccountingVoucherPattern:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         name:
+ *           type: string
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         default_account_id:
+ *           type: string
+ *           format: uuid
+ *     
+ *     VoucherPattern:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         name:
+ *           type: string
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         default_account_id:
+ *           type: string
+ *           format: uuid
+ *     
+ *     BillPattern:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         name:
+ *           type: string
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         default_store_id:
+ *           type: string
+ *           format: uuid
+ *         cost_center_id:
+ *           type: string
+ *           format: uuid
+ *         material_account_id:
+ *           type: string
+ *           format: uuid
+ *         currency_id:
+ *           type: string
+ *           format: uuid
+ *     
+ *     ContractPattern:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         name:
+ *           type: string
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *     
+ *     ChequePattern:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         name:
+ *           type: string
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         default_account_id:
+ *           type: string
+ *           format: uuid
+ */
+  /**
    * @openapi
    * /patterns/cheque:
    *   post:

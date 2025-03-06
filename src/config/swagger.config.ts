@@ -20,6 +20,7 @@ const options: swaggerJSDoc.Options = {
     apis: [
         path.join(__dirname, '../routes/*.routes.{js,ts}'),
         path.join(__dirname, '../entities/*.entity.{js,ts}'),
+        path.join(__dirname, '../dtos/*.dto.{js,ts}')
     ], 
 };
 

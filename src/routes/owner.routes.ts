@@ -14,6 +14,77 @@ const router = express.Router();
     );
 
     /**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateOwnerDto:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         name:
+ *           type: string
+ *           minLength: 1
+ *           maxLength: 255
+ *         id_card:
+ *           type: string
+ *         phone:
+ *           type: string
+ *         cell_phone:
+ *           type: string
+ *         fax:
+ *           type: string
+ *         mailbox:
+ *           type: string
+ *         email:
+ *           type: string
+ *           format: email
+ *         address:
+ *           type: string
+ *         nationality:
+ *           type: string
+ *         account_id:
+ *           type: string
+ *           format: uuid
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *     
+ *     CreateOwnerExpenseDto:
+ *       type: object
+ *       required:
+ *         - owner_id
+ *         - amount
+ *         - type_id
+ *       properties:
+ *         owner_id:
+ *           type: string
+ *           format: uuid
+ *         amount:
+ *           type: number
+ *         date:
+ *           type: string
+ *           format: date-time
+ *         description:
+ *           type: string
+ *         type_id:
+ *           type: string
+ *           format: uuid
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         note:
+ *           type: string
+ *         number:
+ *           type: number
+ *         details:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/CreateOwnerExpenseDetailDto'
+ *     UpdateOwnerDto:
+ *       $ref: '#/components/schemas/CreateOwnerDto'
+ */
+    /**
      * @openapi
      * /owners:
      *   post:

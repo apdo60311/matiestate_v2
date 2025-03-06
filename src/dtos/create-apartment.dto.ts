@@ -11,44 +11,6 @@ import {
 } from 'class-validator';
 
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateApartmentDto:
- *       type: object
- *       required:
- *         - building_id
- *         - apartment_no
- *         - x_index
- *         - y_index
- *       properties:
- *         building_id:
- *           type: string
- *           format: uuid
- *         apartment_no:
- *           type: string
- *         floor_no:
- *           type: string
- *         area:
- *           type: number
- *           minimum: 0
- *         bathroom_count:
- *           type: integer
- *           minimum: 0
- *         pictures:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/CreateApartmentPicturesDto'
- *         rental_price:
- *           $ref: '#/components/schemas/CreateApartmentRentalPriceDto'
- *         selling_price:
- *           $ref: '#/components/schemas/CreateApartmentSellingPriceDto'
- *         accumulates:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/CreateApartmentAccumulateDto'
- */
 export class CreateApartmentDto {
     @IsUUID()
     building_id!: string;
@@ -209,25 +171,6 @@ export class CreateApartmentDto {
 }
 
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateApartmentPicturesDto:
- *       type: object
- *       required:
- *         - apartment_id
- *         - picture
- *       properties:
- *         apartment_id:
- *           type: string
- *           format: uuid
- *         picture:
- *           type: string
- *         tenant_id:
- *           type: string
- *           format: uuid
- */
 export class CreateApartmentPicturesDto {
     @IsUUID()
     apartment_id!: string;
@@ -241,34 +184,6 @@ export class CreateApartmentPicturesDto {
 }
 
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateApartmentRentalPriceDto:
- *       type: object
- *       required:
- *         - apartment_id
- *         - date
- *         - price
- *       properties:
- *         apartment_id:
- *           type: string
- *           format: uuid
- *         date:
- *           type: string
- *           format: date-time
- *         price:
- *           type: number
- *           minimum: 0
- *         currency_id:
- *           type: string
- *           format: uuid
- *         note:
- *           type: string
- *         number:
- *           type: integer
- */
 export class CreateApartmentRentalPriceDto {
     @IsUUID()
     apartment_id!: string;
@@ -298,36 +213,6 @@ export class CreateApartmentRentalPriceDto {
 }
 
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateApartmentSellingPriceDto:
- *       type: object
- *       required:
- *         - apartment_id
- *         - date
- *         - price
- *       properties:
- *         apartment_id:
- *           type: string
- *           format: uuid
- *         date:
- *           type: string
- *           format: date-time
- *         price:
- *           type: number
- *           minimum: 0
- *         currency_id:
- *           type: string
- *           format: uuid
- *         note:
- *           type: string
- *         number:
- *           type: integer
- *         apartment_kind:
- *           type: string
- */
 export class CreateApartmentSellingPriceDto {
     @IsUUID()
     apartment_id!: string;
@@ -361,29 +246,6 @@ export class CreateApartmentSellingPriceDto {
 }
 
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateApartmentAccumulateDto:
- *       type: object
- *       required:
- *         - main_apartment_id
- *         - apartment_id
- *         - tenant_id
- *       properties:
- *         number:
- *           type: integer
- *         main_apartment_id:
- *           type: string
- *           format: uuid
- *         apartment_id:
- *           type: string
- *           format: uuid
- *         tenant_id:
- *           type: string
- *           format: uuid
- */
 export class CreateApartmentAccumulateDto {
     @IsNumber()
     @IsOptional()

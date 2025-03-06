@@ -13,6 +13,81 @@ const router = express.Router();
         DI_TYPES.VillaController
     );
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateVillaRentalPriceDto:
+ *       type: object
+ *       required:
+ *         - date
+ *         - price
+ *         - villa_id
+ *       properties:
+ *         date:
+ *           type: string
+ *           format: date-time
+ *         price:
+ *           type: number
+ *           minimum: 0
+ *         currency_id:
+ *           type: string
+ *           format: uuid
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         number:
+ *           type: number
+ *         villa_id:
+ *           type: string
+ *           format: uuid
+ *     
+ *     CreateVillaSellingPriceDto:
+ *       type: object
+ *       required:
+ *         - date
+ *         - price
+ *         - villa_id
+ *       properties:
+ *         date:
+ *           type: string
+ *           format: date-time
+ *         price:
+ *           type: number
+ *           minimum: 0
+ *         currency_id:
+ *           type: string
+ *           format: uuid
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         number:
+ *           type: number
+ *         villa_id:
+ *           type: string
+ *           format: uuid
+ *     CreateVillaDto:
+ *       type: object
+ *       required:
+ *         - complex_name
+ *         - villa_no
+ *       properties:
+ *         complex_name:
+ *           type: string
+ *         villa_no:
+ *           type: string
+ *         emirate:
+ *           type: string
+ *         area:
+ *           type: string
+ *         rental_price:
+ *           $ref: '#/components/schemas/CreateVillaRentalPriceDto'
+ *         selling_price:
+ *           $ref: '#/components/schemas/CreateVillaSellingPriceDto'
+ *     
+ *     UpdateVillaDto:
+ *       $ref: '#/components/schemas/CreateVillaDto'
+ */
     /**
      * @openapi
      * /villas:

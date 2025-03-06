@@ -15,6 +15,125 @@ const router = express.Router();
     );
 
     /**
+ * @openapi
+ * components:
+ *   schemas:
+ *     MaterialDto:
+ *       type: object
+ *       required:
+ *         - name
+ *         - code
+ *         - material_group_id
+ *         - material_type
+ *         - tenant_id
+ *       properties:
+ *         name:
+ *           type: string
+ *         code:
+ *           type: number
+ *         material_group_id:
+ *           type: string
+ *           format: uuid
+ *         material_type:
+ *           type: number
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         note:
+ *           type: string
+ *         category_id:
+ *           type: string
+ *           format: uuid
+ *         ltnname:
+ *           type: string
+ *         unit1:
+ *           type: string
+ *         barcode1:
+ *           type: string
+ *         defaults1:
+ *           type: boolean
+ *
+ *     MaterialPricesDto:
+ *       type: object
+ *       required:
+ *         - tenant_id
+ *         - vat_rate
+ *       properties:
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         vat_rate:
+ *           type: number
+ *         currency_id:
+ *           type: string
+ *           format: uuid
+ *         currency_val:
+ *           type: number
+ *         average_purchase:
+ *           type: number
+ *           minimum: 0
+ *
+ *     MaterialPriceDetailsDto:
+ *       type: object
+ *       required:
+ *         - price_type
+ *         - tenant_id
+ *       properties:
+ *         price_type:
+ *           type: number
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         unit1_price:
+ *           type: number
+ *           minimum: 0
+ *
+ *     MaterialSpecificationsDto:
+ *       type: object
+ *       required:
+ *         - specification
+ *         - value
+ *         - tenant_id
+ *       properties:
+ *         specification:
+ *           type: string
+ *         value:
+ *           type: number
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ *         note:
+ *           type: string
+ *     MaterialRequestBody:
+ *       type: object
+ *       required:
+ *         - material
+ *       properties:
+ *         material:
+ *           $ref: '#/components/schemas/MaterialDto'
+ *         prices:
+ *           $ref: '#/components/schemas/MaterialPricesDto'
+ *         priceDetails:
+ *           $ref: '#/components/schemas/MaterialPriceDetailsDto'
+ *         specifications:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/MaterialSpecificationsDto'
+ *     
+ *     MaterialGroup:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         name:
+ *           type: string
+ *         description:
+ *           type: string
+ *         tenant_id:
+ *           type: string
+ *           format: uuid
+ */
+    /**
      * @openapi
      * /materials:
      *   post:

@@ -11,36 +11,6 @@ import {
     Min,
   } from "class-validator";
   
-
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateBuildingDto:
- *       type: object
- *       required:
- *         - name
- *       properties:
- *         name:
- *           type: string
- *         emirate:
- *           type: string
- *         suburb:
- *           type: string
- *         area:
- *           type: string
- *         street:
- *           type: string
- *         apartment_count:
- *           type: integer
- *           minimum: 0
- *         parking_count:
- *           type: integer
- *           minimum: 0
- *         building_cost:
- *           type: number
- *           minimum: 0
- */
   export class CreateBuildingDto {
     @IsNotEmpty({ message: "Name is required" })
     @IsString({ message: "Name must be a string" })

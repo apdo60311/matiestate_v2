@@ -13,6 +13,35 @@ const router = express.Router();
         DI_TYPES.ShopController
     );
 
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateShopDto:
+ *       type: object
+ *       required:
+ *         - shop_no
+ *         - building_id
+ *       properties:
+ *         shop_no:
+ *           type: string
+ *         building_id:
+ *           type: string
+ *           format: uuid
+ *         floor_no:
+ *           type: string
+ *         description:
+ *           type: string
+ *         area:
+ *           type: number
+ *         area_unit:
+ *           type: string
+ *         view:
+ *           type: string
+ *         shop_kind:
+ *           type: number
+ */
     /**
      * @openapi
      * /shops:

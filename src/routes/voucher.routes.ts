@@ -13,6 +13,109 @@ const router = express.Router();
         DI_TYPES.VoucherController
     );
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     VoucherMainDataDto:
+ *       type: object
+ *       required:
+ *         - voucherType
+ *       properties:
+ *         number:
+ *           type: number
+ *         voucherType:
+ *           type: number
+ *         currencyId:
+ *           type: string
+ *           format: uuid
+ *         sellerId:
+ *           type: string
+ *           format: uuid
+ *         accountId:
+ *           type: string
+ *           format: uuid
+ *         patternId:
+ *           type: string
+ *           format: uuid
+ *         tenantId:
+ *           type: string
+ *           format: uuid
+ *         note:
+ *           type: string
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         code:
+ *           type: number
+ *         totalAmount:
+ *           type: number
+ *           minimum: 0
+ *         currencyVal:
+ *           type: number
+ *     
+ *     VoucherGridDataDto:
+ *       type: object
+ *       required:
+ *         - accountId
+ *       properties:
+ *         accountId:
+ *           type: string
+ *           format: uuid
+ *         costCenterId:
+ *           type: string
+ *           format: uuid
+ *         tenantId:
+ *           type: string
+ *           format: uuid
+ *         note:
+ *           type: string
+ *         debit:
+ *           type: number
+ *           minimum: 0
+ *         credit:
+ *           type: number
+ *           minimum: 0
+ *         currencyId:
+ *           type: string
+ *           format: uuid
+ *         currencyVal:
+ *           type: number
+ *     
+ *     VoucherPicturesDto:
+ *       type: object
+ *       required:
+ *         - picture
+ *       properties:
+ *         picture:
+ *           type: string
+ *         tenantId:
+ *           type: string
+ *           format: uuid
+ *         note:
+ *           type: string
+ *         voucherMainDataId:
+ *           type: string
+ *           format: uuid
+ *         number:
+ *           type: number
+ *     CreateVoucherRequestDto:
+ *       type: object
+ *       required:
+ *         - mainData
+ *         - gridData
+ *       properties:
+ *         mainData:
+ *           $ref: '#/components/schemas/VoucherMainDataDto'
+ *         gridData:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/VoucherGridDataDto'
+ *         pictures:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/VoucherPicturesDto'
+ */
     /**
      * @openapi
      * /vouchers:

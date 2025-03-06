@@ -1,28 +1,6 @@
 import { IsString, IsNumber, IsOptional, IsUUID } from "class-validator";
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateCurrencyDto:
- *       type: object
- *       required:
- *         - name
- *         - code
- *         - rate
- *       properties:
- *         name:
- *           type: string
- *         code:
- *           type: string
- *         rate:
- *           type: number
- *         tenant_id:
- *           type: string
- *           format: uuid
- *         ltnname:
- *           type: string
- */
+
 export class CreateCurrencyDto {
     @IsString({ message: "Name must be a string" })
     name!: string;

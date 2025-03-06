@@ -11,67 +11,6 @@ import {
 } from 'class-validator';
 
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     ChequeMainDataDto:
- *       type: object
- *       required:
- *         - type
- *       properties:
- *         number:
- *           type: number
- *         type:
- *           type: number
- *         currencyId:
- *           type: string
- *           format: uuid
- *         sellerId:
- *           type: string
- *           format: uuid
- *         accountId:
- *           type: string
- *           format: uuid
- *         patternId:
- *           type: string
- *           format: uuid
- *         tenantId:
- *           type: string
- *           format: uuid
- *         note:
- *           type: string
- *         createdAt:
- *           type: string
- *           format: date-time
- *         code:
- *           type: number
- *         amount:
- *           type: number
- *           minimum: 0
- *         currencyVal:
- *           type: number
- *         beneficiaryName:
- *           type: string
- *         costCenterId:
- *           type: string
- *           format: uuid
- *         bankId:
- *           type: string
- *           format: uuid
- *         installmentId:
- *           type: string
- *           format: uuid
- *         apartmentId:
- *           type: string
- *           format: uuid
- *         shopId:
- *           type: string
- *           format: uuid
- *         parkingId:
- *           type: string
- *           format: uuid
- **/
 export class ChequeMainDataDto {
     @IsOptional()
     @IsNumber()
@@ -152,18 +91,6 @@ export class ChequeMainDataDto {
 }
 
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateChequeRequestDto:
- *       type: object
- *       required:
- *         - mainData
- *       properties:
- *         mainData:
- *           $ref: '#/components/schemas/ChequeMainDataDto'
-*/
 export class CreateChequeRequestDto {
     @IsDefined()
     @ValidateNested()
@@ -171,18 +98,6 @@ export class CreateChequeRequestDto {
     mainData!: ChequeMainDataDto;
 }
 
-/** 
- * @openapi
- * components:
- *  schemas:
- *    UpdateChequeRequestDto:
- *      type: object
- *      required:
- *      - mainData
- *      properties:
- *        mainData:
- *          ref: '#/components/schemas/ChequeMainDataDto'
-*/
 export class UpdateChequeRequestDto {
     @ValidateNested()
     @Type(() => ChequeMainDataDto)

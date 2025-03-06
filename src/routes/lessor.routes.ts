@@ -14,6 +14,46 @@ const router = express.Router();
     );
 
     /**
+ * @openapi
+ * components:
+ *   schemas:
+ *     CreateLessorDto:
+ *       type: object
+ *       required:
+ *         - name
+ *         - passport
+ *       properties:
+ *         name:
+ *           type: string
+ *         passport:
+ *           type: number
+ *         id_card:
+ *           type: number
+ *         lessor_card:
+ *           type: number
+ *         cell_phone:
+ *           type: number
+ *         passport_expiry_date:
+ *           type: string
+ *         address:
+ *           type: string
+ *         nationality:
+ *           type: string
+ *         fax:
+ *           type: string
+ *         mailbox:
+ *           type: string
+ *         email:
+ *           type: string
+ *           format: email
+ *         note:
+ *           type: string
+ *         mobile:
+ *           type: number
+ *         role:
+ *           type: string
+ */
+    /**
      * @openapi
      * /lessors:
      *   post:

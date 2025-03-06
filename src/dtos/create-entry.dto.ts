@@ -10,38 +10,6 @@ import {
     IsDefined
 } from 'class-validator';
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     EntryMainDataDto:
- *       type: object
- *       required:
- *         - debit
- *         - credit
- *         - difference
- *       properties:
- *         currencyId:
- *           type: string
- *           format: uuid
- *         note:
- *           type: string
- *         debit:
- *           type: number
- *         credit:
- *           type: number
- *         difference:
- *           type: number
- *         currencyVal:
- *           type: number
- *         createdFrom:
- *           type: number
- *         createdFromId:
- *           type: string
- *         tenantId:
- *           type: string
- *           format: uuid
- */
 export class EntryMainDataDto {
     @IsOptional()
     @IsUUID()
@@ -77,39 +45,6 @@ export class EntryMainDataDto {
     tenantId?: string;
 }
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     EntryGridDataDto:
- *       type: object
- *       required:
- *         - accountId
- *       properties:
- *         accountId:
- *           type: string
- *           format: uuid
- *         debit:
- *           type: number
- *         credit:
- *           type: number
- *         currencyId:
- *           type: string
- *           format: uuid
- *         costCenterId:
- *           type: string
- *           format: uuid
- *         observeAccountId:
- *           type: string
- *           format: uuid
- *         note:
- *           type: string
- *         tenantId:
- *           type: string
- *           format: uuid
- *         currencyVal:
- *           type: number
- */
 export class EntryGridDataDto {
     @IsUUID()
     accountId!: string;
@@ -147,24 +82,6 @@ export class EntryGridDataDto {
     currencyVal?: number;
 }
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateEntryRequestDto:
- *       type: object
- *       required:
- *         - mainData
- *         - gridData
- *       properties:
- *         mainData:
- *           $ref: '#/components/schemas/EntryMainDataDto'
- *         gridData:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/EntryGridDataDto'
- *           minItems: 1
- */
 export class CreateEntryRequestDto {
     @IsDefined()
     @ValidateNested()
@@ -178,23 +95,6 @@ export class CreateEntryRequestDto {
     gridData!: EntryGridDataDto[];
 }
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     UpdateEntryRequestDto:
- *       type: object
- *       required:
- *         - mainData
- *         - gridData
- *       properties:
- *         mainData:
- *           $ref: '#/components/schemas/EntryMainDataDto'
- *         gridData:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/EntryGridDataDto'
- */
 export class UpdateEntryRequestDto {
     @ValidateNested()
     @Type(() => EntryMainDataDto)
