@@ -59,4 +59,37 @@ export class AccountingVoucherPatternRepository extends Repository<AccountingVou
             throw error;
         }
     }
+
+    async findByCode(code: number): Promise<AccountingVoucherPattern | null> {
+        try {
+            const pattern = await this.findOne({
+                where: { code },
+                relations: [
+                    'tenant',
+                    'defaultAccount'
+                ]
+            });
+            logger.info(`Retrieved Accounting Voucher Pattern with code: ${code}`);
+            return pattern;
+        } catch (error) {
+            logger.error(`Error getting Accounting Voucher Pattern by code: ${error}`);
+            throw error;
+        }
+    }
+    async findByTenant(tenant_id: string): Promise<AccountingVoucherPattern[] | null> {
+        try {
+            const patterns = await this.find({
+                where: { tenant_id },
+                relations: [
+                    'tenant',
+                    'defaultAccount'
+                ]
+            });
+            logger.info(`Retrieved Accounting Voucher Patterns for tenant: ${tenant_id}`);
+            return patterns;
+        } catch (error) {
+            logger.error(`Error getting Accounting Voucher Patterns by tenant: ${error}`);
+            throw error;
+        }
+    }
 }

@@ -17,7 +17,7 @@ export class VoucherMainData {
   @PrimaryGeneratedColumn("uuid")
   id: string = uuidv4().toString();
 
-  @CreateDateColumn({ type: "timestamptz" })
+  @CreateDateColumn({ name: "created_at", type: "timestamptz" })
   createdAt!: Date;
 
   @ManyToOne(() => Currency, { onDelete: "CASCADE" })
@@ -34,57 +34,60 @@ export class VoucherMainData {
   @JoinColumn({ name: "seller_id" })
   seller?: Account;
 
-  @Column({ type: "int", nullable: true })
-  connect_with?: number;
+  @Column({ name: "connect_with", type: "int", nullable: true })
+  connectWith?: number;
 
-  @Column({ type: "float", default: 0 })
-  debit_amount: number = 0;
+  @Column({ name: "debit_amount", type: "float", default: 0 })
+  debitAmount: number = 0;
 
-  @Column({ type: "double precision", default: 0 })
-  debit_total: number = 0;
+  @Column({ name: "debit_total", type: "double precision", default: 0 })
+  debitTotal: number = 0;
 
-  @Column({ type: "double precision", default: 0 })
-  credit_total: number = 0;
+  @Column({ name: "credit_total", type: "double precision", default: 0 })
+  creditTotal: number = 0;
 
-  @Column({ type: "double precision", default: 0 })
-  credit_amount: number = 0;
+  @Column({ name: "credit_amount", type: "double precision", default: 0 })
+  creditAmount: number = 0;
 
   @ManyToOne(() => Account, { onDelete: "CASCADE" })
   @JoinColumn({ name: "account_id" })
   account!: Account;
 
-  @Column({type:'uuid', name:'account_id', nullable: true})
+  @Column({ type: 'uuid', name: 'account_id', nullable: true })
   accountId!: string;
 
-  @Column({ type: "uuid", name:'connect_with_id', nullable: true })
+  @Column({ type: "uuid", name: 'connect_with_id', nullable: true })
   connectWithId?: string;
 
-  @Column({ type: "float", name:'currency_val', nullable: true })
+  @Column({ type: "float", name: 'currency_val', nullable: true })
   currencyVal?: number;
 
   @Column({ type: "bigint", generated: "identity", unique: true })
   number!: number;
 
-  @Column({ type: "int" , name:'voucher_type' })
+  @Column({ type: "int", name: 'voucher_type' })
   voucherType!: number;
 
-  @Column({ type: "boolean", default: false })
-  gen_entires: boolean = false;
+  @Column({ name: "gen_entires", type: "boolean", default: false })
+  genEntires: boolean = false;
 
-  @Column({ type: "boolean", default: false })
-  is_deleted: boolean = false;
+  @Column({ name: "is_deleted", type: "boolean", default: false })
+  isDeleted: boolean = false;
 
-  @Column({ type: "boolean", nullable: true })
-  is_first_batch?: boolean;
+  @Column({ name: "is_first_batch", type: "boolean", nullable: true })
+  isFirstBatch?: boolean;
 
   @ManyToOne(() => Tenant, { onDelete: "CASCADE" })
   @JoinColumn({ name: "tenant_id" })
   tenant?: Tenant;
 
-  @Column({ type: "uuid", name:'tenant_id', nullable: true })
+  @Column({ type: "uuid", name: 'tenant_id', nullable: true })
   tenantId?: string;
 
   @ManyToOne(() => VoucherPattern, { onDelete: "CASCADE" })
   @JoinColumn({ name: "voucher_pattern_id" })
   voucherPattern?: VoucherPattern;
+
+  @Column({ type: "uuid", name: 'voucher_pattern_id', nullable: true })
+  voucherPatternId?: string;
 }

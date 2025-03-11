@@ -8,11 +8,11 @@ export const DI_TYPES = {
   BuildingsController: Symbol.for("BuildingsController"),
   CostCenterRepository: Symbol.for("CostCenterRepository"),
   AccountRepository: Symbol.for("AccountRepository"),
-  
+
   ReservationPropertyRepository: Symbol.for("ReservationPropertyRepository"),
   ReservationPropertyService: Symbol.for("ReservationPropertyService"),
   ReservationPropertyController: Symbol.for("ReservationPropertyController"),
-  
+
   ApartmentRepository: Symbol.for("ApartmentRepository"),
   ApartmentService: Symbol.for("ApartmentService"),
   ApartmentController: Symbol.for("ApartmentController"),
@@ -22,7 +22,7 @@ export const DI_TYPES = {
     "ApartmentSellingPriceRepository"
   ),
   ApartmentAccumulateRepository: Symbol.for("ApartmentAccumulateRepository"),
-  
+
   ShopRepository: Symbol.for('ShopRepository'),
   ShopService: Symbol.for('ShopService'),
   ShopController: Symbol.for('ShopController'),
@@ -50,14 +50,14 @@ export const DI_TYPES = {
   LandController: Symbol.for('LandController'),
 
   VillaRepository: Symbol.for('VillaRepository'),
-  VillaRentalPriceRepository: Symbol.for('VillaRentalPriceRepository'), 
+  VillaRentalPriceRepository: Symbol.for('VillaRentalPriceRepository'),
   VillaSellingPriceRepository: Symbol.for('VillaSellingPriceRepository'),
   VillaService: Symbol.for('VillaService'),
   VillaController: Symbol.for('VillaController'),
 
   OwnerRepository: Symbol.for('OwnerRepository'),
   OwnerExpensesRepository: Symbol.for('OwnerExpensesRepository'),
-  OwnerExpensesDetailsRepository: Symbol.for('OwnerExpensesDetailsRepository'), 
+  OwnerExpensesDetailsRepository: Symbol.for('OwnerExpensesDetailsRepository'),
   OwnerExpensesTypesRepository: Symbol.for('OwnerExpensesTypesRepository'),
   OwnerService: Symbol.for('OwnerService'),
   OwnerController: Symbol.for('OwnerController'),
@@ -90,7 +90,7 @@ export const DI_TYPES = {
   PatternController: Symbol.for('PatternController'),
 
   MaterialRepository: Symbol.for("MaterialRepository"),
-  MaterialGroupRepository: Symbol.for("MaterialGroupRepository"), 
+  MaterialGroupRepository: Symbol.for("MaterialGroupRepository"),
   MaterialBalanceRepository: Symbol.for("MaterialBalanceRepository"),
   MaterialMinimumRepository: Symbol.for("MaterialMinimumRepository"),
   MaterialPricesRepository: Symbol.for("MaterialPricesRepository"),
@@ -112,5 +112,12 @@ export const DI_TYPES = {
 
   ChequeRepository: Symbol.for('ChequeRepository'),
   ChequeService: Symbol.for('ChequeService'),
-  ChequeController: Symbol.for('ChequeController'),  
+  ChequeController: Symbol.for('ChequeController'),
+
+  ChequeEntryService: Symbol.for('ChequeEntryService'),
+  TerminationEntryService: Symbol.for('TerminationEntryService'),
+  TerminationFinesEntryService: Symbol.for('TerminationFinesEntryService'),
+  FeesEntryService: Symbol.for('FeesEntryService'),
+  ContractEntryService: Symbol.for('ContractEntryService'),
+  EntryGenerationFacade: Symbol.for('EntryGenerationFacade'),
 };

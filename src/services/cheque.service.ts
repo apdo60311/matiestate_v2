@@ -10,7 +10,7 @@ export class ChequeService {
     constructor(
         @inject(DI_TYPES.ChequeRepository)
         private chequeRepository: ChequeRepository
-    ) {}
+    ) { }
 
     // Cheque Methods
     async createCheque(data: IChequeMainDataBody): Promise<string | null> {
@@ -46,6 +46,30 @@ export class ChequeService {
         } catch (error) {
             logger.error(`Error updating cheque: ${error}`);
             return false;
+        }
+    }
+
+    async deleteCheque(id: string): Promise<boolean> {
+        try {
+            return await this.chequeRepository.deleteCheque(id);
+        } catch (error) {
+            logger.error(`Error deleting cheque: ${error}`);
+            return false;
+        }
+    }
+
+    async getChequesByInstallmentAndCode(
+        installmentId: string,
+        code: number
+    ): Promise<Cheque[] | null> {
+        try {
+            return await this.chequeRepository.findByInstallmentAndCode(
+                installmentId,
+                code
+            );
+        } catch (error) {
+            logger.error(`Error getting cheques by installment and code: ${error}`);
+            return [];
         }
     }
 }

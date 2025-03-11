@@ -15,10 +15,10 @@ export class EntryMainData {
   @PrimaryGeneratedColumn("uuid")
   id: string = uuidv4().toString();
 
-  @CreateDateColumn({ type: "timestamptz" })
-  created_at: Date = new Date(new Date().getTime());
+  @CreateDateColumn({ name: "created_at", type: "timestamptz" })
+  createdAt: Date = new Date(new Date().getTime());
 
-  @Column({ type: "uuid", name:'currency_id', nullable: true })
+  @Column({ type: "uuid", name: 'currency_id', nullable: true })
   currencyId?: string;
 
   @Column({ type: "text", nullable: true })
@@ -33,28 +33,28 @@ export class EntryMainData {
   @Column({ type: "smallint", default: 0 })
   difference!: number;
 
-  @Column({ type: "float", name:'currency_val', nullable: true })
+  @Column({ type: "float", name: 'currency_val', nullable: true })
   currencyVal?: number;
 
-  @Column({ type: "integer", name:'created_from', nullable: true })
-  createdFrom?: number;
+  @Column({ type: "text", name: 'created_from', nullable: true })
+  createdFrom?: string;
 
-  @Column({ type: "uuid", name:'created_from_id', nullable: true })
+  @Column({ type: "uuid", name: 'created_from_id', nullable: true })
   createdFromId?: string;
 
   @Column({ type: "bigint", generated: "identity" })
   number!: number;
 
-  @Column({ type: "boolean", nullable: true })
-  is_deleted?: boolean;
+  @Column({ type: "boolean", name: "is_deleted", nullable: true })
+  isDeleted?: boolean;
 
-  @Column({ type: "boolean", nullable: true })
-  is_first_batch?: boolean;
+  @Column({ type: "boolean", name: "is_first_batch", nullable: true })
+  isFirstBatch?: boolean;
 
-  @Column({ type: "integer", nullable: true })
-  created_from_code?: number;
+  @Column({ type: "integer", name: "created_from_code", nullable: true })
+  createdFromCode?: number;
 
-  @Column({ type: "uuid", name:'tenant_id', nullable: true })
+  @Column({ type: "uuid", name: 'tenant_id', nullable: true })
   tenantId?: string;
 
   @ManyToOne(() => Currency, { onDelete: "CASCADE" })

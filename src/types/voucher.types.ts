@@ -3,6 +3,7 @@ import { Currency } from "../entities/Currency.entity";
 import { CostCenter } from "../entities/CostCenter.entity";
 
 export interface IVoucherMainDataBody {
+    id?: string;
     number?: number;
     voucherType: number;
     currencyId?: string;
@@ -15,6 +16,16 @@ export interface IVoucherMainDataBody {
     code?: number;
     totalAmount?: number;
     currencyVal?: number;
+    debit?: number;
+    credit?: number;
+    feedback?: boolean;
+    debitAmount?: number;
+    creditAmount?: number;
+    debitTotal?: number;
+    creditTotal?: number;
+    connectWith?: number;
+    connectWithId?: string;
+    isDeleted?: boolean;
 }
 
 export interface IVoucherGridDataBody {
@@ -44,14 +55,29 @@ export interface IVoucherBody {
 
 export interface IVoucherResponse {
     mainData: {
-        id: string;
-        number: number;
-        createdAt: Date;
-        currency?: Currency;
-        seller?: Account;
-        account?: Account;
+        id?: string;
+        number?: number;
+        voucherType: number;
+        currencyId?: string;
+        sellerId?: string;
+        accountId?: string;
+        patternId?: string;
+        tenantId?: string;
         note?: string;
-        total_amount: number;
+        createdAt?: Date;
+        code?: number;
+        totalAmount?: number;
+        currencyVal?: number;
+        debit?: number;
+        credit?: number;
+        feedback?: boolean;
+        debitAmount?: number;
+        creditAmount?: number;
+        debitTotal?: number;
+        creditTotal?: number;
+        connectWith?: number;
+        connectWithId?: string;
+        isDeleted?: boolean;
     };
     gridData: {
         id: string;
@@ -67,4 +93,26 @@ export interface IVoucherResponse {
         picture: string;
         note?: string;
     }[];
+}
+
+export interface IVoucherValues {
+    currency_id: string;
+    currency_val: number;
+    note: string;
+    difference: number;
+    account_id: string;
+    cost_center_id: string;
+    debit_amount: number;
+    credit_amount: number;
+}
+
+export interface IVoucherEntry {
+    values: IVoucherValues;
+    created_from: string;
+    created_from_id: string;
+    created_from_code: string;
+    grid: Array<{
+        account_id: string;
+        cost_center_id?: string;
+    }>;
 }

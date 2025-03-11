@@ -92,56 +92,62 @@ import { VoucherPicturesRepository } from "../repositories/voucher/voucher-pictu
 import { ChequeController } from "../controllers/cheque.controller";
 import { ChequeService } from "../services/cheque.service";
 import { ChequeRepository } from "../repositories/cheque.repository";
+import { ChequeEntryService } from "../services/entry-services/cheque-entry.service";
+import { TerminationEntryService } from "../services/entry-services/termination-entry.service";
+import { TerminationFinesEntryService } from "../services/entry-services/termination-fines-entry.service";
+import { FeesEntryService } from "../services/entry-services/fees-entry.service";
+import { ContractEntryService } from "../services/entry-services/generate-entry.service";
+import { EntryGenerationFacade } from "../services/entry-services/entry-services-facade";
 
 
 export const container = new Container({ autoBindInjectable: true });
 
 // DataSource 
 container.bind<DataSource>(DI_TYPES.DataSource).toDynamicValue(async () => {
-  const dbConfig = DatabaseConfig.getInstance();
-  const dataSource = await dbConfig.getDataSource();
-  
-  // Initialize if not already initialized
-  if (!dataSource.isInitialized) {
-    await dataSource.initialize();
-  }
-  
-  return dataSource;
+    const dbConfig = DatabaseConfig.getInstance();
+    const dataSource = await dbConfig.getDataSource();
+
+    // Initialize if not already initialized
+    if (!dataSource.isInitialized) {
+        await dataSource.initialize();
+    }
+
+    return dataSource;
 }).inSingletonScope();
 
 // Bind Repositories
 container.bind<BuildingsRepository>(DI_TYPES.BuildingsRepository)
-  .toDynamicValue(async (context) => {
-    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
-    if (!dataSource.isInitialized) {
-      await dataSource.initialize();
-    }
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        if (!dataSource.isInitialized) {
+            await dataSource.initialize();
+        }
 
-    return new BuildingsRepository(dataSource);
-  })
-  .inSingletonScope();
+        return new BuildingsRepository(dataSource);
+    })
+    .inSingletonScope();
 
-  container.bind<CostCenterRepository>(DI_TYPES.CostCenterRepository)
-  .toDynamicValue(async (context) => {
-    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
-    if (!dataSource.isInitialized) {
-      await dataSource.initialize();
-    }
+container.bind<CostCenterRepository>(DI_TYPES.CostCenterRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        if (!dataSource.isInitialized) {
+            await dataSource.initialize();
+        }
 
-    return new CostCenterRepository(dataSource);
-  })
-  .inSingletonScope();
+        return new CostCenterRepository(dataSource);
+    })
+    .inSingletonScope();
 
 container.bind<AccountRepository>(DI_TYPES.AccountRepository)
-.toDynamicValue(async (context) => {
-  const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
-  if (!dataSource.isInitialized) {
-    await dataSource.initialize();
-  }
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        if (!dataSource.isInitialized) {
+            await dataSource.initialize();
+        }
 
-  return new AccountRepository(dataSource);
-})
-.inSingletonScope();
+        return new AccountRepository(dataSource);
+    })
+    .inSingletonScope();
 
 container.bind<ApartmentPicturesRepository>(DI_TYPES.ApartmentPicturesRepository)
     .toDynamicValue(async (context) => {
@@ -216,7 +222,7 @@ container.bind<ShopFixedAssetsRepository>(DI_TYPES.ShopFixedAssetsRepository)
     )
     .inSingletonScope();
 
-    container.bind<ParkingRepository>(DI_TYPES.ParkingRepository)
+container.bind<ParkingRepository>(DI_TYPES.ParkingRepository)
     .toDynamicValue(async (context) => {
         const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
         return new ParkingRepository(dataSource);
@@ -317,99 +323,99 @@ container.bind<VillaSellingPriceRepository>(DI_TYPES.VillaSellingPriceRepository
 
 
 container.bind<OwnerRepository>(DI_TYPES.OwnerRepository)
-  .toDynamicValue(async (context) => {
-    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
-    return new OwnerRepository(dataSource);
-  })
-  .inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new OwnerRepository(dataSource);
+    })
+    .inSingletonScope();
 
 container.bind<OwnerExpensesRepository>(DI_TYPES.OwnerExpensesRepository)
-  .toDynamicValue(async (context) => {
-    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
-    return new OwnerExpensesRepository(dataSource);
-  })
-  .inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new OwnerExpensesRepository(dataSource);
+    })
+    .inSingletonScope();
 
 container.bind<OwnerExpensesDetailsRepository>(DI_TYPES.OwnerExpensesDetailsRepository)
-  .toDynamicValue(async (context) => {
-    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
-    return new OwnerExpensesDetailsRepository(dataSource);
-  })
-  .inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new OwnerExpensesDetailsRepository(dataSource);
+    })
+    .inSingletonScope();
 
 container.bind<OwnerExpensesTypesRepository>(DI_TYPES.OwnerExpensesTypesRepository)
-  .toDynamicValue(async (context) => {
-    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
-    return new OwnerExpensesTypesRepository(dataSource);
-  })
-  .inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new OwnerExpensesTypesRepository(dataSource);
+    })
+    .inSingletonScope();
 
 // Bind Services
 container.bind<BuildingsService>(DI_TYPES.BuildingsService)
-  .toDynamicValue(async (context) => {
-    const buildingsRepository =
-      await context.container.getAsync<BuildingsRepository>(
-        DI_TYPES.BuildingsRepository
-      );
-    const accountRepository =
-      await context.container.getAsync<AccountRepository>(
-        DI_TYPES.AccountRepository
-      );
-    const costCenterRepository =
-      await context.container.getAsync<CostCenterRepository>(
-        DI_TYPES.CostCenterRepository
-      );
-    const propertyValuesRepository =
-      await context.container.getAsync<PropertyValuesRepository>(
-        DI_TYPES.PropertyValuesRepository
-      );
+    .toDynamicValue(async (context) => {
+        const buildingsRepository =
+            await context.container.getAsync<BuildingsRepository>(
+                DI_TYPES.BuildingsRepository
+            );
+        const accountRepository =
+            await context.container.getAsync<AccountRepository>(
+                DI_TYPES.AccountRepository
+            );
+        const costCenterRepository =
+            await context.container.getAsync<CostCenterRepository>(
+                DI_TYPES.CostCenterRepository
+            );
+        const propertyValuesRepository =
+            await context.container.getAsync<PropertyValuesRepository>(
+                DI_TYPES.PropertyValuesRepository
+            );
 
-      const apartmentService =
-        await context.container.getAsync<ApartmentService>(
-          DI_TYPES.ApartmentService
+        const apartmentService =
+            await context.container.getAsync<ApartmentService>(
+                DI_TYPES.ApartmentService
+            );
+
+        const parkingService = await context.container.getAsync<ParkingService>(
+            DI_TYPES.ParkingService
         );
 
-      const parkingService = await context.container.getAsync<ParkingService>(
-        DI_TYPES.ParkingService
-      );
+        const shopService = await context.container.getAsync<ShopService>(
+            DI_TYPES.ShopService
+        );
 
-      const shopService = await context.container.getAsync<ShopService>(
-        DI_TYPES.ShopService
-      );
+        return new BuildingsService(
+            buildingsRepository,
+            accountRepository,
+            costCenterRepository,
+            propertyValuesRepository,
+            apartmentService,
+            parkingService,
+            shopService
+        );
+    })
+    .inSingletonScope();
 
-    return new BuildingsService(
-      buildingsRepository,
-      accountRepository,
-      costCenterRepository,
-      propertyValuesRepository,
-      apartmentService,
-      parkingService,
-      shopService
-    );
-  })
-  .inSingletonScope();
+container.bind<ShopService>(DI_TYPES.ShopService)
+    .toDynamicValue(async (context) => {
+        const shopRepository = await context.container.getAsync<ShopRepository>(DI_TYPES.ShopRepository);
+        const shopPicturesRepository = await context.container.getAsync<ShopPicturesRepository>(DI_TYPES.ShopPicturesRepository);
+        const shopRentalPriceRepository = await context.container.getAsync<ShopRentalPriceRepository>(DI_TYPES.ShopRentalPriceRepository);
+        const shopSellingPriceRepository = await context.container.getAsync<ShopSellingPriceRepository>(DI_TYPES.ShopSellingPriceRepository);
+        const shopAccumulateRepository = await context.container.getAsync<ShopAccumulateRepository>(DI_TYPES.ShopAccumulateRepository);
+        const shopFixedAssetsRepository = await context.container.getAsync<ShopFixedAssetsRepository>(DI_TYPES.ShopFixedAssetsRepository);
 
-  container.bind<ShopService>(DI_TYPES.ShopService)
-  .toDynamicValue(async (context) => {
-      const shopRepository = await context.container.getAsync<ShopRepository>(DI_TYPES.ShopRepository);
-      const shopPicturesRepository = await context.container.getAsync<ShopPicturesRepository>(DI_TYPES.ShopPicturesRepository);
-      const shopRentalPriceRepository = await context.container.getAsync<ShopRentalPriceRepository>(DI_TYPES.ShopRentalPriceRepository);
-      const shopSellingPriceRepository = await context.container.getAsync<ShopSellingPriceRepository>(DI_TYPES.ShopSellingPriceRepository);
-      const shopAccumulateRepository = await context.container.getAsync<ShopAccumulateRepository>(DI_TYPES.ShopAccumulateRepository);
-      const shopFixedAssetsRepository = await context.container.getAsync<ShopFixedAssetsRepository>(DI_TYPES.ShopFixedAssetsRepository);
+        return new ShopService(
+            shopRepository,
+            shopPicturesRepository,
+            shopRentalPriceRepository,
+            shopSellingPriceRepository,
+            shopAccumulateRepository,
+            shopFixedAssetsRepository
+        );
+    })
+    .inSingletonScope();
 
-      return new ShopService(
-          shopRepository,
-          shopPicturesRepository,
-          shopRentalPriceRepository,
-          shopSellingPriceRepository,
-          shopAccumulateRepository,
-          shopFixedAssetsRepository
-      );
-  })
-  .inSingletonScope();
-
-  container.bind<ParkingService>(DI_TYPES.ParkingService)
+container.bind<ParkingService>(DI_TYPES.ParkingService)
     .toDynamicValue(async (context) => {
         const parkingRepository = await context.container.getAsync<ParkingRepository>(DI_TYPES.ParkingRepository);
         const parkingPicturesRepository = await context.container.getAsync<ParkingPicturesRepository>(DI_TYPES.ParkingPicturesRepository);
@@ -420,7 +426,7 @@ container.bind<BuildingsService>(DI_TYPES.BuildingsService)
 
         return new ParkingService(
             parkingRepository,
-            parkingPicturesRepository, 
+            parkingPicturesRepository,
             parkingRentalPriceRepository,
             parkingSellingPriceRepository,
             parkingAccumulateRepository,
@@ -445,29 +451,29 @@ container.bind<VillaService>(DI_TYPES.VillaService)
 
 container.bind<OwnerService>(DI_TYPES.OwnerService)
     .toDynamicValue(async (context) => {
-      const ownerRepository = await context.container.getAsync<OwnerRepository>(DI_TYPES.OwnerRepository);
-      const ownerExpensesRepository = await context.container.getAsync<OwnerExpensesRepository>(DI_TYPES.OwnerExpensesRepository);
-      const ownerExpensesDetailsRepository = await context.container.getAsync<OwnerExpensesDetailsRepository>(DI_TYPES.OwnerExpensesDetailsRepository);
-      const ownerExpensesTypesRepository = await context.container.getAsync<OwnerExpensesTypesRepository>(DI_TYPES.OwnerExpensesTypesRepository);
-  
-      return new OwnerService(
-        ownerRepository,
-        ownerExpensesRepository,
-        ownerExpensesDetailsRepository,
-        ownerExpensesTypesRepository
-      );
+        const ownerRepository = await context.container.getAsync<OwnerRepository>(DI_TYPES.OwnerRepository);
+        const ownerExpensesRepository = await context.container.getAsync<OwnerExpensesRepository>(DI_TYPES.OwnerExpensesRepository);
+        const ownerExpensesDetailsRepository = await context.container.getAsync<OwnerExpensesDetailsRepository>(DI_TYPES.OwnerExpensesDetailsRepository);
+        const ownerExpensesTypesRepository = await context.container.getAsync<OwnerExpensesTypesRepository>(DI_TYPES.OwnerExpensesTypesRepository);
+
+        return new OwnerService(
+            ownerRepository,
+            ownerExpensesRepository,
+            ownerExpensesDetailsRepository,
+            ownerExpensesTypesRepository
+        );
     })
     .inSingletonScope();
 
 // Bind Controllers
 container.bind<BuildingsController>(DI_TYPES.BuildingsController)
-  .toDynamicValue(async (context) => {
-    const service = await context.container.getAsync<BuildingsService>(DI_TYPES.BuildingsService);
-    return new BuildingsController(service);
-  })
-  .inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<BuildingsService>(DI_TYPES.BuildingsService);
+        return new BuildingsController(service);
+    })
+    .inSingletonScope();
 
-  container.bind<ReservationPropertyRepository>(DI_TYPES.ReservationPropertyRepository)
+container.bind<ReservationPropertyRepository>(DI_TYPES.ReservationPropertyRepository)
     .toDynamicValue(async (context) => {
         const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
         if (!dataSource.isInitialized) {
@@ -479,11 +485,11 @@ container.bind<BuildingsController>(DI_TYPES.BuildingsController)
 
 
 container.bind<CurrencyRepository>(DI_TYPES.CurrencyRepository)
-.toDynamicValue(async (context) => {
-    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
-    return new CurrencyRepository(dataSource);
-})
-.inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new CurrencyRepository(dataSource);
+    })
+    .inSingletonScope();
 
 
 container.bind<ReservationPropertyService>(DI_TYPES.ReservationPropertyService)
@@ -512,14 +518,14 @@ container.bind<ParkingController>(DI_TYPES.ParkingController)
     .inSingletonScope();
 
 container.bind<ApartmentRepository>(DI_TYPES.ApartmentRepository)
-.toDynamicValue(async (context) => {
-    const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
-    if (!dataSource.isInitialized) {
-        await dataSource.initialize();
-    }
-    return new ApartmentRepository(dataSource);
-})
-.inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        if (!dataSource.isInitialized) {
+            await dataSource.initialize();
+        }
+        return new ApartmentRepository(dataSource);
+    })
+    .inSingletonScope();
 
 container.bind<BankRepository>(DI_TYPES.BankRepository)
     .toDynamicValue(async (context) => {
@@ -530,37 +536,37 @@ container.bind<BankRepository>(DI_TYPES.BankRepository)
 
 
 container.bind<ApartmentService>(DI_TYPES.ApartmentService)
-.toDynamicValue(async (context) => {
-    const apartmentRepository = await context.container.getAsync<ApartmentRepository>(
-        DI_TYPES.ApartmentRepository
-    );
+    .toDynamicValue(async (context) => {
+        const apartmentRepository = await context.container.getAsync<ApartmentRepository>(
+            DI_TYPES.ApartmentRepository
+        );
 
-    const apartmentPicturesRepository = await context.container.getAsync<ApartmentPicturesRepository>(
-      DI_TYPES.ApartmentPicturesRepository
-    )
+        const apartmentPicturesRepository = await context.container.getAsync<ApartmentPicturesRepository>(
+            DI_TYPES.ApartmentPicturesRepository
+        )
 
-    const apartmentSellingPriceRepository = await context.container.getAsync<ApartmentSellingPriceRepository>(
-      DI_TYPES.ApartmentSellingPriceRepository
-    )
+        const apartmentSellingPriceRepository = await context.container.getAsync<ApartmentSellingPriceRepository>(
+            DI_TYPES.ApartmentSellingPriceRepository
+        )
 
-    const apartmentRentalPriceRepository = await context.container.getAsync<ApartmentRentalPriceRepository>(
-      DI_TYPES.ApartmentRentalPriceRepository
-    )
+        const apartmentRentalPriceRepository = await context.container.getAsync<ApartmentRentalPriceRepository>(
+            DI_TYPES.ApartmentRentalPriceRepository
+        )
 
-    const apartmentAccumulateRepository = await context.container.getAsync<ApartmentAccumulateRepository>(
-      DI_TYPES.ApartmentAccumulateRepository
-    )
+        const apartmentAccumulateRepository = await context.container.getAsync<ApartmentAccumulateRepository>(
+            DI_TYPES.ApartmentAccumulateRepository
+        )
 
 
-    return new ApartmentService(
-        apartmentRepository,
-        apartmentPicturesRepository,
-        apartmentAccumulateRepository,
-        apartmentRentalPriceRepository,
-        apartmentSellingPriceRepository
-    );
-})
-.inSingletonScope();
+        return new ApartmentService(
+            apartmentRepository,
+            apartmentPicturesRepository,
+            apartmentAccumulateRepository,
+            apartmentRentalPriceRepository,
+            apartmentSellingPriceRepository
+        );
+    })
+    .inSingletonScope();
 
 container.bind<LandService>(DI_TYPES.LandService)
     .toDynamicValue(async (context) => {
@@ -573,7 +579,7 @@ container.bind<LandService>(DI_TYPES.LandService)
         return new LandService(
             landRepository,
             landRentalPriceRepository,
-            landSellingPriceRepository, 
+            landSellingPriceRepository,
             landAccumulateRepository,
             landWalletRepository
         );
@@ -581,24 +587,24 @@ container.bind<LandService>(DI_TYPES.LandService)
     .inSingletonScope();
 
 container.bind<BankService>(DI_TYPES.BankService)
-.toDynamicValue(async (context) => {
-    const bankRepository = await context.container.getAsync<BankRepository>(DI_TYPES.BankRepository);
-    return new BankService(bankRepository);
-})
-.inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const bankRepository = await context.container.getAsync<BankRepository>(DI_TYPES.BankRepository);
+        return new BankService(bankRepository);
+    })
+    .inSingletonScope();
 
 container.bind<CurrencyService>(DI_TYPES.CurrencyService)
     .to(CurrencyService)
     .inSingletonScope();
 
 container.bind<ApartmentController>(DI_TYPES.ApartmentController)
-.toDynamicValue(async (context) => {
-    const service = await context.container.getAsync<ApartmentService>(
-        DI_TYPES.ApartmentService
-    );
-    return new ApartmentController(service);
-})
-.inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<ApartmentService>(
+            DI_TYPES.ApartmentService
+        );
+        return new ApartmentController(service);
+    })
+    .inSingletonScope();
 
 container.bind<ShopController>(DI_TYPES.ShopController)
     .toDynamicValue(async (context) => {
@@ -614,7 +620,7 @@ container.bind<LandController>(DI_TYPES.LandController)
     })
     .inSingletonScope();
 
-    container.bind<VillaController>(DI_TYPES.VillaController)
+container.bind<VillaController>(DI_TYPES.VillaController)
     .toDynamicValue(async (context) => {
         const service = await context.container.getAsync<VillaService>(DI_TYPES.VillaService);
         return new VillaController(service);
@@ -622,11 +628,11 @@ container.bind<LandController>(DI_TYPES.LandController)
     .inSingletonScope();
 
 container.bind<OwnerController>(DI_TYPES.OwnerController)
-.toDynamicValue(async (context) => {
-    const service = await context.container.getAsync<OwnerService>(DI_TYPES.OwnerService);
-    return new OwnerController(service);
-})
-.inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<OwnerService>(DI_TYPES.OwnerService);
+        return new OwnerController(service);
+    })
+    .inSingletonScope();
 
 container.bind<BankController>(DI_TYPES.BankController)
     .toDynamicValue(async (context) => {
@@ -636,8 +642,8 @@ container.bind<BankController>(DI_TYPES.BankController)
     .inSingletonScope();
 
 container.bind<CurrencyController>(DI_TYPES.CurrencyController)
-.to(CurrencyController)
-.inSingletonScope();
+    .to(CurrencyController)
+    .inSingletonScope();
 
 container.bind<LessorRepository>(DI_TYPES.LessorRepository)
     .toDynamicValue(async (context) => {
@@ -654,11 +660,11 @@ container.bind<LessorService>(DI_TYPES.LessorService)
     .inSingletonScope();
 
 container.bind<LessorController>(DI_TYPES.LessorController)
-.toDynamicValue(async (context) => {
-    const service = await context.container.getAsync<LessorService>(DI_TYPES.LessorService);
-    return new LessorController(service);
-})
-.inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<LessorService>(DI_TYPES.LessorService);
+        return new LessorController(service);
+    })
+    .inSingletonScope();
 
 container.bind<SellerRepository>(DI_TYPES.SellerRepository)
     .toDynamicValue(async (context) => {
@@ -676,11 +682,11 @@ container.bind<SellerService>(DI_TYPES.SellerService)
 
 
 container.bind<SellerController>(DI_TYPES.SellerController)
-.toDynamicValue(async (context) => {
-    const service = await context.container.getAsync<SellerService>(DI_TYPES.SellerService);
-    return new SellerController(service);
-})
-.inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<SellerService>(DI_TYPES.SellerService);
+        return new SellerController(service);
+    })
+    .inSingletonScope();
 
 container.bind<PropertyValuesRepository>(DI_TYPES.PropertyValuesRepository)
     .toDynamicValue(async (context) => {
@@ -725,8 +731,8 @@ container.bind<AccountingVoucherPatternRepository>(DI_TYPES.AccountingVoucherPat
     .inSingletonScope();
 
 container.bind<PatternService>(DI_TYPES.PatternService)
-.to(PatternService)
-.inSingletonScope();
+    .to(PatternService)
+    .inSingletonScope();
 
 container.bind<PatternController>(DI_TYPES.PatternController)
     .toDynamicValue(async (context) => {
@@ -735,7 +741,7 @@ container.bind<PatternController>(DI_TYPES.PatternController)
     })
     .inSingletonScope();
 
-    container.bind<MaterialRepository>(DI_TYPES.MaterialRepository)
+container.bind<MaterialRepository>(DI_TYPES.MaterialRepository)
     .toDynamicValue(async (context) => {
         const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
         return new MaterialRepository(dataSource);
@@ -785,18 +791,18 @@ container.bind<MaterialSpecificationsRepository>(DI_TYPES.MaterialSpecifications
 );
 
 container.bind<MaterialService>(DI_TYPES.MaterialService)
-.to(MaterialService)
-.inSingletonScope();
+    .to(MaterialService)
+    .inSingletonScope();
 
 container
-  .bind<MaterialController>(DI_TYPES.MaterialController)
-  .toDynamicValue(async (context) => {
-    const service = await context.container.getAsync<MaterialService>(
-      DI_TYPES.MaterialService
-    );
-    return new MaterialController(service);
-  })
-  .inSingletonScope();
+    .bind<MaterialController>(DI_TYPES.MaterialController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<MaterialService>(
+            DI_TYPES.MaterialService
+        );
+        return new MaterialController(service);
+    })
+    .inSingletonScope();
 
 container.bind<EntryMainDataRepository>(DI_TYPES.EntryMainDataRepository)
     .toDynamicValue(async (context) => {
@@ -813,16 +819,16 @@ container.bind<EntryGridDataRepository>(DI_TYPES.EntryGridDataRepository)
     .inSingletonScope();
 
 container.bind<EntriesService>(DI_TYPES.EntriesService)
-.toDynamicValue(async (context) => {
-    const entryMainDataRepository = await context.container.getAsync<EntryMainDataRepository>(
-        DI_TYPES.EntryMainDataRepository
-    );
-    const entryGridDataRepository = await context.container.getAsync<EntryGridDataRepository>(
-        DI_TYPES.EntryGridDataRepository
-    );
-    return new EntriesService(entryMainDataRepository, entryGridDataRepository);
-})
-.inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const entryMainDataRepository = await context.container.getAsync<EntryMainDataRepository>(
+            DI_TYPES.EntryMainDataRepository
+        );
+        const entryGridDataRepository = await context.container.getAsync<EntryGridDataRepository>(
+            DI_TYPES.EntryGridDataRepository
+        );
+        return new EntriesService(entryMainDataRepository, entryGridDataRepository);
+    })
+    .inSingletonScope();
 
 
 container.bind<EntriesController>(DI_TYPES.EntriesController)
@@ -842,51 +848,51 @@ container.bind<VoucherMainDataRepository>(DI_TYPES.VoucherMainDataRepository)
     .inSingletonScope();
 
 container.bind<VoucherGridDataRepository>(DI_TYPES.VoucherGridDataRepository)
-.toDynamicValue(
-    async (context) => {
-        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
-        return new VoucherGridDataRepository(dataSource);
-    }
-).inSingletonScope();
+    .toDynamicValue(
+        async (context) => {
+            const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+            return new VoucherGridDataRepository(dataSource);
+        }
+    ).inSingletonScope();
 
 
 container.bind<VoucherPicturesRepository>(DI_TYPES.VoucherPicturesRepository)
-.toDynamicValue(
-    async (context) => {
-        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
-        return new VoucherPicturesRepository(dataSource);
-    }
-).inSingletonScope();
+    .toDynamicValue(
+        async (context) => {
+            const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+            return new VoucherPicturesRepository(dataSource);
+        }
+    ).inSingletonScope();
 
 
 container.bind<VoucherService>(DI_TYPES.VoucherService)
-.toDynamicValue(async (context) => {
-    const voucherMainDataRepository = await context.container.getAsync<VoucherMainDataRepository>(
-        DI_TYPES.VoucherMainDataRepository
-    );
-    const voucherGridDataRepository = await context.container.getAsync<VoucherGridDataRepository>(
-        DI_TYPES.VoucherGridDataRepository
-    );
-    const voucherPicturesRepository = await context.container.getAsync<VoucherPicturesRepository>(
-        DI_TYPES.VoucherPicturesRepository
-    );
+    .toDynamicValue(async (context) => {
+        const voucherMainDataRepository = await context.container.getAsync<VoucherMainDataRepository>(
+            DI_TYPES.VoucherMainDataRepository
+        );
+        const voucherGridDataRepository = await context.container.getAsync<VoucherGridDataRepository>(
+            DI_TYPES.VoucherGridDataRepository
+        );
+        const voucherPicturesRepository = await context.container.getAsync<VoucherPicturesRepository>(
+            DI_TYPES.VoucherPicturesRepository
+        );
 
-    return new VoucherService(
-        voucherMainDataRepository,
-        voucherGridDataRepository,
-        voucherPicturesRepository
-    );
-})
-.inSingletonScope();
+        return new VoucherService(
+            voucherMainDataRepository,
+            voucherGridDataRepository,
+            voucherPicturesRepository
+        );
+    })
+    .inSingletonScope();
 
 container.bind<VoucherController>(DI_TYPES.VoucherController)
-.toDynamicValue(async (context) => {
-    const service = await context.container.getAsync<VoucherService>(
-        DI_TYPES.VoucherService
-    );
-    return new VoucherController(service);
-})
-.inSingletonScope();
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<VoucherService>(
+            DI_TYPES.VoucherService
+        );
+        return new VoucherController(service);
+    })
+    .inSingletonScope();
 
 container.bind<ChequeRepository>(DI_TYPES.ChequeRepository)
     .toDynamicValue(async (context) => {
@@ -912,3 +918,10 @@ container.bind<ChequeController>(DI_TYPES.ChequeController)
         return new ChequeController(service);
     })
     .inSingletonScope();
+
+container.bind<ChequeEntryService>(DI_TYPES.ChequeEntryService).to(ChequeEntryService);
+container.bind<TerminationEntryService>(DI_TYPES.TerminationEntryService).to(TerminationEntryService);
+container.bind<TerminationFinesEntryService>(DI_TYPES.TerminationFinesEntryService).to(TerminationFinesEntryService);
+container.bind<FeesEntryService>(DI_TYPES.FeesEntryService).to(FeesEntryService);
+container.bind<ContractEntryService>(DI_TYPES.ContractEntryService).to(ContractEntryService);
+container.bind<EntryGenerationFacade>(DI_TYPES.EntryGenerationFacade).to(EntryGenerationFacade);

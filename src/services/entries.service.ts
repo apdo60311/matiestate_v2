@@ -14,7 +14,7 @@ export class EntriesService {
         private entryMainDataRepository: EntryMainDataRepository,
         @inject(DI_TYPES.EntryGridDataRepository)
         private entryGridDataRepository: EntryGridDataRepository
-    ) {}
+    ) { }
 
     async createEntry(entryData: IEntryDataRequestBody): Promise<IEntryResponse | null> {
         try {
@@ -30,7 +30,7 @@ export class EntriesService {
             const gridEntries = entryData.gridData.map((entry) => {
 
                 const gridEntryEntity = new EntryGridData();
-                Object.assign(gridEntryEntity, {...entry, entryMainDataId:mainEntryId});
+                Object.assign(gridEntryEntity, { ...entry, entryMainDataId: mainEntryId });
                 return gridEntryEntity;
             });
 
@@ -63,8 +63,8 @@ export class EntriesService {
                 mainData: {
                     id: mainData.id,
                     number: mainData.number,
-                    createdAt: mainData.created_at,
-                    currency: mainData.currency,
+                    createdAt: mainData.createdAt,
+                    currencyId: mainData.currencyId,
                     note: mainData.note,
                     debit: mainData.debit,
                     credit: mainData.credit
@@ -105,7 +105,7 @@ export class EntriesService {
                 }
                 );
                 const gridResults = await Promise.all(gridUpdatePromises);
-                
+
                 if (gridResults.some(result => !result)) {
                     throw new Error("Failed to update some grid entries");
                 }
@@ -121,7 +121,7 @@ export class EntriesService {
     async deleteEntry(id: string): Promise<boolean> {
         try {
             const gridEntries = await this.entryGridDataRepository.getGridEntriesByMainEntry(id);
-            
+
             // Delete grid entries first
             const gridDeletePromises = gridEntries.map(entry =>
                 this.entryGridDataRepository.deleteGridEntry(entry.id)
@@ -133,6 +133,17 @@ export class EntriesService {
         } catch (error) {
             logger.error(`Error in deleteEntry: ${error}`);
             return false;
+        }
+    }
+
+    async softDeleteBySource(sourceId: string): Promise<void> {
+        try {
+            await this.entryMainDataRepository.update(
+                { createdFromId: sourceId },
+                { isDeleted: true }
+            );
+        } catch (error) {
+            logger.error(`Error soft deleting entries by source: ${error}`);
         }
     }
 }

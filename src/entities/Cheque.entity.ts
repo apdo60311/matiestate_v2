@@ -1,13 +1,13 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    ManyToOne,
-    JoinColumn,
-    Column,
-    CreateDateColumn,
-  } from "typeorm";
-  import { v4 as uuidv4 } from "uuid";
-  import { Tenant } from "./Tenant.entity";
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  Column,
+  CreateDateColumn,
+} from "typeorm";
+import { v4 as uuidv4 } from "uuid";
+import { Tenant } from "./Tenant.entity";
 import { Account } from "./Account.entity";
 import { Currency } from "./Currency.entity";
 import { Seller } from "./Seller.entity";
@@ -22,10 +22,13 @@ import { ChequePattern } from "./ChequePattern.entity";
 
 @Entity('cheque')
 export class Cheque {
-    @PrimaryGeneratedColumn('uuid')
-    id: string = uuidv4().toString();
-  
-    @CreateDateColumn({ type: 'timestamptz' })
+  @PrimaryGeneratedColumn('uuid')
+  id: string = uuidv4().toString();
+
+  @Column({ type: "bigint", generated: "identity", unique: true })
+  code!: number;
+
+  @CreateDateColumn({ type: 'timestamptz' })
   created_at: Date = new Date(new Date().getTime());
 
   @Column({ type: 'bigint', generated: 'identity' })
@@ -122,6 +125,9 @@ export class Cheque {
   @ManyToOne(() => Installment, { nullable: true })
   @JoinColumn({ name: 'installment_id' })
   installment?: Installment;
+
+  @Column('uuid', { name: 'installment_id', nullable: true })
+  installment_id?: string;
 
   @Column('boolean', { default: false })
   is_deleted: boolean = false;

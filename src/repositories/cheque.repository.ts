@@ -58,4 +58,31 @@ export class ChequeRepository extends Repository<Cheque> {
             return [];
         }
     }
+
+    async deleteCheque(id: string): Promise<boolean> {
+        try {
+            await this.delete({ id });
+            logger.info(`Deleted Cheque with id: ${id}`);
+            return true;
+        }
+        catch (error) {
+            logger.error(`Error deleting Cheque: ${error}`);
+            return false;
+        }
+    }
+
+    // create method findByInstallmentAndCode
+    async findByInstallmentAndCode(installment_id: string, code: number): Promise<Cheque[] | null> {
+        try {
+            const cheque = await this.find({
+                where: { installment_id, code },
+                relations: ['currency', 'seller', 'account', 'tenant', 'pattern']
+            });
+            logger.info(`Retrieved Cheque with installment: ${installment_id} and code: ${code}`);
+            return cheque;
+        } catch (error) {
+            logger.error(`Error getting Cheque: ${error}`);
+            return null;
+        }
+    }
 }

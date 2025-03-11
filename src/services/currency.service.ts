@@ -9,7 +9,7 @@ export class CurrencyService {
     constructor(
         @inject(DI_TYPES.CurrencyRepository)
         private currencyRepository: CurrencyRepository
-    ) {}
+    ) { }
 
     async createCurrency(currencyData: Partial<Currency>): Promise<string | null> {
         try {
@@ -53,6 +53,15 @@ export class CurrencyService {
         } catch (error) {
             logger.error(`Error deleting currency: ${error}`);
             return false;
+        }
+    }
+
+    async getCurrencyByCode(code: string): Promise<Currency | null> {
+        try {
+            return await this.currencyRepository.getCurrencyByCode(code);
+        } catch (error) {
+            logger.error(`Error getting currency by code: ${error}`);
+            return null;
         }
     }
 }

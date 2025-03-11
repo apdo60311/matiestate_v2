@@ -26,7 +26,7 @@ export class PatternService {
         private voucherPatternRepository: VoucherPatternRepository,
         @inject(DI_TYPES.AccountingVoucherPatternRepository)
         private accountingVoucherPatternRepository: AccountingVoucherPatternRepository
-    ) {}
+    ) { }
 
     // Cheque Pattern Methods
     async createChequePattern(pattern: IChequePatternBody): Promise<string | null> {
@@ -214,62 +214,171 @@ export class PatternService {
     }
 
     // Get all cheque patterns
-async getAllChequePatterns(): Promise<ChequePattern[]> {
-    try {
-        return await this.chequePatternRepository.find({
-            relations: ['tenant', 'defaultAccount']
-        });
-    } catch (error) {
-        logger.error(`Error getting all cheque patterns: ${error}`);
-        throw error;
+    async getAllChequePatterns(): Promise<ChequePattern[]> {
+        try {
+            return await this.chequePatternRepository.find({
+                relations: ['tenant', 'defaultAccount']
+            });
+        } catch (error) {
+            logger.error(`Error getting all cheque patterns: ${error}`);
+            throw error;
+        }
     }
-}
 
-// Get all contract patterns 
-async getAllContractPatterns(): Promise<ContractPattern[]> {
-    try {
-        return await this.contractPatternRepository.find({
-            relations: ['tenant', 'defaultRevenueAccount']
-        });
-    } catch (error) {
-        logger.error(`Error getting all contract patterns: ${error}`);
-        throw error;
+    // Get all contract patterns 
+    async getAllContractPatterns(): Promise<ContractPattern[]> {
+        try {
+            return await this.contractPatternRepository.find({
+                relations: ['tenant', 'defaultRevenueAccount']
+            });
+        } catch (error) {
+            logger.error(`Error getting all contract patterns: ${error}`);
+            throw error;
+        }
     }
-}
 
-// Get all bill patterns
-async getAllBillPatterns(): Promise<BillPattern[]> {
-    try {
-        return await this.billPatternRepository.find({
-            relations: ['tenant', 'defaultStore']
-        });
-    } catch (error) {
-        logger.error(`Error getting all bill patterns: ${error}`);
-        throw error;
+    // Get all bill patterns
+    async getAllBillPatterns(): Promise<BillPattern[]> {
+        try {
+            return await this.billPatternRepository.find({
+                relations: ['tenant', 'defaultStore']
+            });
+        } catch (error) {
+            logger.error(`Error getting all bill patterns: ${error}`);
+            throw error;
+        }
     }
-}
 
-// Get all voucher patterns
-async getAllVoucherPatterns(): Promise<VoucherPattern[]> {
-    try {
-        return await this.voucherPatternRepository.find({
-            relations: ['tenant', 'defaultAccount']
-        });
-    } catch (error) {
-        logger.error(`Error getting all voucher patterns: ${error}`);
-        throw error;
+    // Get all voucher patterns
+    async getAllVoucherPatterns(): Promise<VoucherPattern[]> {
+        try {
+            return await this.voucherPatternRepository.find({
+                relations: ['tenant', 'defaultAccount']
+            });
+        } catch (error) {
+            logger.error(`Error getting all voucher patterns: ${error}`);
+            throw error;
+        }
     }
-}
 
-// Get all accounting voucher patterns
-async getAllAccountingVoucherPatterns(): Promise<AccountingVoucherPattern[]> {
-    try {
-        return await this.accountingVoucherPatternRepository.find({
-            relations: ['tenant', 'defaultAccount']
-        });
-    } catch (error) {
-        logger.error(`Error getting all accounting voucher patterns: ${error}`);
-        throw error;
+    // Get all accounting voucher patterns
+    async getAllAccountingVoucherPatterns(): Promise<AccountingVoucherPattern[]> {
+        try {
+            return await this.accountingVoucherPatternRepository.find({
+                relations: ['tenant', 'defaultAccount']
+            });
+        } catch (error) {
+            logger.error(`Error getting all accounting voucher patterns: ${error}`);
+            throw error;
+        }
     }
-}
+
+    async getChequePatternByCode(code: number): Promise<ChequePattern | null> {
+        try {
+            return await this.chequePatternRepository.findByCode(code);
+        } catch (error) {
+            logger.error(`Error getting cheque pattern by code: ${error}`);
+            return null;
+        }
+    }
+
+    async getBillPatternByCode(code: number): Promise<BillPattern | null> {
+        try {
+            return await this.billPatternRepository.findByCode(code);
+        } catch (error) {
+            logger.error(`Error getting bill pattern by code: ${error}`);
+            return null;
+        }
+    }
+
+    async getContractPatternByCode(code: number): Promise<ContractPattern | null> {
+        try {
+            return await this.contractPatternRepository.findByCode(code);
+        } catch (error) {
+            logger.error(`Error getting contract pattern by code: ${error}`);
+            return null;
+        }
+    }
+
+    async getVoucherPatternByCode(code: number): Promise<VoucherPattern | null> {
+        try {
+            return await this.voucherPatternRepository.findByCode(code);
+        } catch (error) {
+            logger.error(`Error getting voucher pattern by code: ${error}`);
+            return null;
+        }
+    }
+
+    async getAccountingVoucherPatternByCode(code: number): Promise<AccountingVoucherPattern | null> {
+        try {
+            return await this.accountingVoucherPatternRepository.findByCode(code);
+        } catch (error) {
+            logger.error(`Error getting accounting voucher pattern by code: ${error}`);
+            return null;
+        }
+    }
+
+    async getPatternsByTenant(tenantId: string): Promise<{
+        chequePatterns: ChequePattern[];
+        contractPatterns: ContractPattern[];
+        billPatterns: BillPattern[];
+        voucherPatterns: VoucherPattern[];
+        accountingVoucherPatterns: AccountingVoucherPattern[];
+    }> {
+        try {
+            let [
+                chequePatterns,
+                contractPatterns,
+                billPatterns,
+                voucherPatterns,
+                accountingVoucherPatterns
+            ] = await Promise.all([
+                this.chequePatternRepository.findByTenant(tenantId),
+                this.contractPatternRepository.findByTenant(tenantId),
+                this.billPatternRepository.findByTenant(tenantId),
+                this.voucherPatternRepository.findByTenant(tenantId),
+                this.accountingVoucherPatternRepository.findByTenant(tenantId)
+            ]);
+
+            chequePatterns ??= [];
+            contractPatterns ??= [];
+            billPatterns ??= [];
+            voucherPatterns ??= [];
+            accountingVoucherPatterns ??= [];
+
+            return {
+                chequePatterns,
+                contractPatterns,
+                billPatterns,
+                voucherPatterns,
+                accountingVoucherPatterns
+            };
+        } catch (error) {
+            logger.error(`Error getting patterns by tenant: ${error}`);
+            throw error;
+        }
+    }
+
+    async validatePattern(patternId: string, type: string): Promise<boolean> {
+        try {
+            switch (type) {
+                case 'cheque':
+                    return !!(await this.getChequePatternById(patternId));
+                case 'contract':
+                    return !!(await this.getContractPatternById(patternId));
+                case 'bill':
+                    return !!(await this.getBillPatternById(patternId));
+                case 'voucher':
+                    return !!(await this.getVoucherPatternById(patternId));
+                case 'accounting':
+                    return !!(await this.getAccountingVoucherPatternById(patternId));
+                default:
+                    return false;
+            }
+        } catch (error) {
+            logger.error(`Error validating pattern: ${error}`);
+            return false;
+        }
+    }
+
 }

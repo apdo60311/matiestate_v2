@@ -1,4 +1,4 @@
- import { logger } from "../utils/logger";
+import { logger } from "../utils/logger";
 import { DI_TYPES } from "../di/di.types";
 import { Currency } from "../entities/Currency.entity";
 import { inject, injectable } from "inversify";
@@ -23,7 +23,7 @@ export class CurrencyRepository extends Repository<Currency> {
 
     async getCurrencyById(id: string): Promise<Currency | null> {
         try {
-            const currency = await this.findOne({ 
+            const currency = await this.findOne({
                 where: { id },
                 relations: ['tenant']
             });
@@ -67,6 +67,20 @@ export class CurrencyRepository extends Repository<Currency> {
         } catch (error) {
             logger.error(`Error while deleting Currency. ${error}`);
             return false;
+        }
+    }
+
+    async getCurrencyByCode(code: string): Promise<Currency | null> {
+        try {
+            const currency = await this.findOne({
+                where: { code },
+                relations: ['tenant']
+            });
+            logger.info(`Fetched Currency with code: ${code}`);
+            return currency;
+        } catch (error) {
+            logger.error(`Error while fetching Currency. ${error}`);
+            return null;
         }
     }
 }
