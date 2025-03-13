@@ -1,13 +1,13 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    ManyToOne,
-    JoinColumn,
-    Column,
-    CreateDateColumn,
-  } from "typeorm";
-  import { v4 as uuidv4 } from "uuid";
-  import { Tenant } from "./Tenant.entity";
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  Column,
+  CreateDateColumn,
+} from "typeorm";
+import { v4 as uuidv4 } from "uuid";
+import { Tenant } from "./Tenant.entity";
 import { Account } from "./Account.entity";
 import { Currency } from "./Currency.entity";
 import { CostCenter } from "./CostCenter.entity";

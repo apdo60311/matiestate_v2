@@ -71,7 +71,6 @@ export class ChequeRepository extends Repository<Cheque> {
         }
     }
 
-    // create method findByInstallmentAndCode
     async findByInstallmentAndCode(installment_id: string, code: number): Promise<Cheque[] | null> {
         try {
             const cheque = await this.find({

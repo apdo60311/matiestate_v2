@@ -120,4 +120,11 @@ export const DI_TYPES = {
   FeesEntryService: Symbol.for('FeesEntryService'),
   ContractEntryService: Symbol.for('ContractEntryService'),
   EntryGenerationFacade: Symbol.for('EntryGenerationFacade'),
+
+  OpCollectionRepository: Symbol.for('OpCollectionRepository'),
+  OpReturnRepository: Symbol.for('OpReturnRepository'),
+  OpDeportationRepository: Symbol.for('OpDeportationRepository'),
+  OpPartialCollectionRepository: Symbol.for('OpPartialCollectionRepository'),
+  OpService: Symbol.for('OpService'),
+  OpController: Symbol.for('OpController'),
 };

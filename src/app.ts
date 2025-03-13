@@ -28,6 +28,7 @@ import materialRoutes from './routes/material.routes';
 import entriesRoutes from './routes/entries.routes';
 import voucherRoutes from './routes/voucher.routes';
 import chequeRoutes from './routes/cheque.routes';
+import opRoutes from './routes/op.routes';
 
 const app = express();
 
@@ -66,13 +67,14 @@ v1ClientRouter.use('/materials', materialRoutes);
 v1ClientRouter.use('/entries', entriesRoutes);
 v1ClientRouter.use('/vouchers', voucherRoutes);
 v1ClientRouter.use('/cheques', chequeRoutes);
+v1ClientRouter.use('/op', opRoutes);
 
 v1Router.use('/client', v1ClientRouter);
 
 app.use('/api/v1', v1Router);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
-app.get('/health',(req, res) => {
+app.get('/health', (req, res) => {
     res.send('OK');
 });
 
