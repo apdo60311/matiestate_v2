@@ -128,4 +128,16 @@ export const DI_TYPES = {
   OpPartialCollectionRepository: Symbol.for('OpPartialCollectionRepository'),
   OpService: Symbol.for('OpService'),
   OpController: Symbol.for('OpController'),
+
+  ContractRepository: Symbol.for('ContractRepository'),
+  ContractTermsRepository: Symbol.for('ContractTermsRepository'),
+  ContractPicturesRepository: Symbol.for('ContractPicturesRepository'),
+  ContractCommissionRepository: Symbol.for('ContractCommissionRepository'),
+  ContractCycleRepository: Symbol.for('ContractCycleRepository'),
+  ContractFeeRepository: Symbol.for('ContractFeeRepository'),
+  ContractOtherFeesRepository: Symbol.for('ContractOtherFeesRepository'),
+  ContractTerminationRepository: Symbol.for('ContractTerminationRepository'),
+  InstallmentRepository: Symbol.for('InstallmentRepository'),
+  ContractService: Symbol.for('ContractService'),
+  ContractController: Symbol.for('ContractController'),
 };

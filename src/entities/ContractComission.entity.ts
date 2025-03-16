@@ -1,13 +1,13 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    ManyToOne,
-    JoinColumn,
-    CreateDateColumn,
-  } from "typeorm";
-  import { v4 as uuidv4 } from "uuid";
-  import { Tenant } from "./Tenant.entity";
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  CreateDateColumn,
+} from "typeorm";
+import { v4 as uuidv4 } from "uuid";
+import { Tenant } from "./Tenant.entity";
 import { Account } from "./Account.entity";
 import { Contract } from "./Contract.entity";
 
@@ -23,6 +23,9 @@ export class ContractCommission {
   @ManyToOne(() => Contract, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'contract_id' })
   contract!: Contract;
+
+  @Column('uuid', { nullable: false })
+  contract_id!: string;
 
   @Column('real', { nullable: true })
   commission_percentage?: number;

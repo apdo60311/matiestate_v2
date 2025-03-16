@@ -2,7 +2,7 @@ import { logger } from "../../utils/logger";
 import { DI_TYPES } from "../../di/di.types";
 import { Parking } from "../../entities/Parking.entity";
 import { inject, injectable } from "inversify";
-import { DataSource, Repository } from "typeorm";
+import { DataSource, In, Not, Repository } from "typeorm";
 
 @injectable()
 export class ParkingRepository extends Repository<Parking> {
@@ -88,4 +88,25 @@ export class ParkingRepository extends Repository<Parking> {
             return false;
         }
     }
+
+    async getAvailableParkings(occupiedIds: string[]): Promise<Parking[]> {
+        try {
+            const result = await this.find({
+                where: {
+                    blocked: false,
+                    id: Not(In(occupiedIds))
+                },
+                relations: [
+                    'building',
+                    'cost_center',
+                ]
+            });
+            logger.info(`Fetched available Parkings successfully`);
+            return result;
+        } catch (error) {
+            logger.error(`Error while fetching available Parkings. ${error}`);
+            return [];
+        }
+    }
+
 }

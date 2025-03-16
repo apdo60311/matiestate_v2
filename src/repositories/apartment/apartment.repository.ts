@@ -6,7 +6,7 @@ import { ApartmentPictures } from "../../entities/ApartmentPictures.entity";
 import { ApartmentRentalPrice } from "../../entities/ApartmentRentalPrice.entity";
 import { ApartmentSellingPrice } from "../../entities/ApartmentSellingPrice.entity";
 import { inject, injectable } from "inversify";
-import { DataSource, Repository } from "typeorm";
+import { DataSource, In, Not, Repository } from "typeorm";
 
 @injectable()
 export class ApartmentRepository extends Repository<Apartment> {
@@ -120,6 +120,30 @@ export class ApartmentRepository extends Repository<Apartment> {
         } catch (error) {
             logger.error(`Error while deleting Apartment with id: ${id}. ${error}`);
             return false;
+        }
+    }
+
+    async getAvailableApartments(occupiedIds: string[]): Promise<Apartment[]> {
+        try {
+            const result = await this.find({
+                where: {
+                    blocked: false,
+                    id: Not(In(occupiedIds))
+                },
+                relations: [
+                    'building',
+                    'main_cost_center',
+                    'cost_center',
+                    'property_values',
+                    'cost_currency',
+                    'tenant'
+                ]
+            });
+            logger.info(`Fetched available Apartments successfully`);
+            return result;
+        } catch (error) {
+            logger.error(`Error while fetching available Apartments. ${error}`);
+            return [];
         }
     }
 }

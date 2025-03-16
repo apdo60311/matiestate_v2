@@ -98,6 +98,18 @@ import { TerminationFinesEntryService } from "../services/entry-services/termina
 import { FeesEntryService } from "../services/entry-services/fees-entry.service";
 import { ContractEntryService } from "../services/entry-services/generate-entry.service";
 import { EntryGenerationFacade } from "../services/entry-services/entry-services-facade";
+import { ContractController } from "../controllers/contract.controller";
+import { ContractService } from "../services/contract.service";
+import { ContractRepository } from "../repositories/contract/contract.repository";
+import { ContractTermsRepository } from "../repositories/contract/contract-terms.repository";
+import { ContractPicturesRepository } from "../repositories/contract/contract-pictures.repository";
+import { ContractCommissionRepository } from "../repositories/contract/contract-commision.repository";
+import { ContractCycleRepository } from "../repositories/contract/contract-cycle.repository";
+import { ContractFeeRepository } from "../repositories/contract/contract-fee.repository";
+import { ContractOtherFeesRepository } from "../repositories/contract/contract-other-fees.repository";
+import { ContractTerminationRepository } from "../repositories/contract/contract-termination.repository";
+import { InstallmentRepository } from "../repositories/installment.repository";
+import { VoucherEntryService } from "../services/entry-services/voucher-entry.service";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -865,6 +877,39 @@ container.bind<VoucherPicturesRepository>(DI_TYPES.VoucherPicturesRepository)
     ).inSingletonScope();
 
 
+container.bind<EntryGenerationFacade>(DI_TYPES.EntryGenerationFacade)
+    .toDynamicValue(async (context) => {
+        const chequeEntryService = await context.container.getAsync<ChequeEntryService>(
+            DI_TYPES.ChequeEntryService
+        );
+        const terminationEntryService = await context.container.getAsync<TerminationEntryService>(
+            DI_TYPES.TerminationEntryService
+        );
+        const terminationFinesEntryService = await context.container.getAsync<TerminationFinesEntryService>(
+            DI_TYPES.TerminationFinesEntryService
+        );
+        const feesEntryService = await context.container.getAsync<FeesEntryService>(
+            DI_TYPES.FeesEntryService
+        );
+        const contractEntryService = await context.container.getAsync<ContractEntryService>(
+            DI_TYPES.ContractEntryService
+        );
+        const voucherEntryService = await context.container.getAsync<VoucherEntryService>(
+            DI_TYPES.VoucherEntryService
+        );
+
+        return new EntryGenerationFacade(
+            chequeEntryService,
+            terminationEntryService,
+            terminationFinesEntryService,
+            feesEntryService,
+            contractEntryService,
+            voucherEntryService
+        );
+    })
+    .inSingletonScope();
+
+
 container.bind<VoucherService>(DI_TYPES.VoucherService)
     .toDynamicValue(async (context) => {
         const voucherMainDataRepository = await context.container.getAsync<VoucherMainDataRepository>(
@@ -877,10 +922,15 @@ container.bind<VoucherService>(DI_TYPES.VoucherService)
             DI_TYPES.VoucherPicturesRepository
         );
 
+        const entryGenerationFacade = await context.container.getAsync<EntryGenerationFacade>(
+            DI_TYPES.EntryGenerationFacade
+        );
+
         return new VoucherService(
             voucherMainDataRepository,
             voucherGridDataRepository,
-            voucherPicturesRepository
+            voucherPicturesRepository,
+            entryGenerationFacade
         );
     })
     .inSingletonScope();
@@ -925,3 +975,109 @@ container.bind<TerminationFinesEntryService>(DI_TYPES.TerminationFinesEntryServi
 container.bind<FeesEntryService>(DI_TYPES.FeesEntryService).to(FeesEntryService);
 container.bind<ContractEntryService>(DI_TYPES.ContractEntryService).to(ContractEntryService);
 container.bind<EntryGenerationFacade>(DI_TYPES.EntryGenerationFacade).to(EntryGenerationFacade);
+
+
+
+container.bind<ContractRepository>(DI_TYPES.ContractRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ContractRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ContractTermsRepository>(DI_TYPES.ContractTermsRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ContractTermsRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ContractPicturesRepository>(DI_TYPES.ContractPicturesRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ContractPicturesRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ContractCommissionRepository>(DI_TYPES.ContractCommissionRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ContractCommissionRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ContractCycleRepository>(DI_TYPES.ContractCycleRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ContractCycleRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ContractFeeRepository>(DI_TYPES.ContractFeeRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ContractFeeRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ContractOtherFeesRepository>(DI_TYPES.ContractOtherFeesRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ContractOtherFeesRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ContractTerminationRepository>(DI_TYPES.ContractTerminationRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new ContractTerminationRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<InstallmentRepository>(DI_TYPES.InstallmentRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new InstallmentRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<ContractService>(DI_TYPES.ContractService)
+    .toDynamicValue(async (context) => {
+        const contractRepository = await context.container.getAsync<ContractRepository>(DI_TYPES.ContractRepository);
+        const contractTermsRepository = await context.container.getAsync<ContractTermsRepository>(DI_TYPES.ContractTermsRepository);
+        const contractPicturesRepository = await context.container.getAsync<ContractPicturesRepository>(DI_TYPES.ContractPicturesRepository);
+        const contractCommissionRepository = await context.container.getAsync<ContractCommissionRepository>(DI_TYPES.ContractCommissionRepository);
+        const contractCycleRepository = await context.container.getAsync<ContractCycleRepository>(DI_TYPES.ContractCycleRepository);
+        const contractFeeRepository = await context.container.getAsync<ContractFeeRepository>(DI_TYPES.ContractFeeRepository);
+        const contractOtherFeesRepository = await context.container.getAsync<ContractOtherFeesRepository>(DI_TYPES.ContractOtherFeesRepository);
+        const contractTerminationRepository = await context.container.getAsync<ContractTerminationRepository>(DI_TYPES.ContractTerminationRepository);
+        const installmentRepository = await context.container.getAsync<InstallmentRepository>(DI_TYPES.InstallmentRepository);
+        const apartmentRepository = await context.container.getAsync<ApartmentRepository>(DI_TYPES.ApartmentRepository);
+        const shopRepository = await context.container.getAsync<ShopRepository>(DI_TYPES.ShopRepository);
+        const parkingRepository = await context.container.getAsync<ParkingRepository>(DI_TYPES.ParkingRepository);
+        const buildingsRepository = await context.container.getAsync<BuildingsRepository>(DI_TYPES.BuildingsRepository);
+
+        return new ContractService(
+            contractRepository,
+            contractTermsRepository,
+            contractPicturesRepository,
+            contractCommissionRepository,
+            contractCycleRepository,
+            contractFeeRepository,
+            contractOtherFeesRepository,
+            contractTerminationRepository,
+            installmentRepository,
+            apartmentRepository,
+            shopRepository,
+            parkingRepository,
+            buildingsRepository
+        );
+    })
+    .inSingletonScope();
+
+container.bind<ContractController>(DI_TYPES.ContractController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<ContractService>(DI_TYPES.ContractService);
+        return new ContractController(service);
+    })
+    .inSingletonScope();

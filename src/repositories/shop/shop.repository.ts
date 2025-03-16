@@ -2,7 +2,7 @@ import { logger } from "../../utils/logger";
 import { DI_TYPES } from "../../di/di.types";
 import { Shop } from "../../entities/Shop.entity";
 import { inject, injectable } from "inversify";
-import { DataSource, Repository } from "typeorm";
+import { DataSource, In, Not, Repository } from "typeorm";
 
 @injectable()
 export class ShopRepository extends Repository<Shop> {
@@ -91,4 +91,25 @@ export class ShopRepository extends Repository<Shop> {
             return false;
         }
     }
+
+    async getAvailableShops(occupiedIds: string[]): Promise<Shop[]> {
+        try {
+            const result = await this.find({
+                where: {
+                    blocked: false,
+                    id: Not(In(occupiedIds))
+                },
+                relations: [
+                    'building',
+                    'cost_center',
+                ]
+            });
+            logger.info(`Fetched available Shops successfully`);
+            return result;
+        } catch (error) {
+            logger.error(`Error while fetching available Shops. ${error}`);
+            return [];
+        }
+    }
+
 }

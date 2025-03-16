@@ -62,10 +62,6 @@ export class Installment {
   @Column("text", { nullable: true })
   beneficiary_name?: string;
 
-  @Unique(["contract"])
-  @Column({type: "varchar", length: 255})
-  contract_unique!: string;
-
   @ManyToOne(() => Tenant, { onDelete: "CASCADE", nullable: true })
   @JoinColumn({ name: "tenant_id" })
   tenant?: Tenant;
@@ -73,4 +69,7 @@ export class Installment {
   @ManyToOne(() => Contract, { onDelete: "CASCADE" })
   @JoinColumn({ name: "contract_id" })
   contract!: Contract;
+
+  @Column("uuid", { nullable: false })
+  contract_id!: string;
 }

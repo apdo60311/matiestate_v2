@@ -1,12 +1,12 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    ManyToOne,
-    JoinColumn,
-    Column,
-  } from "typeorm";
-  import { v4 as uuidv4 } from "uuid";
-  import { Tenant } from "./Tenant.entity";
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  Column,
+} from "typeorm";
+import { v4 as uuidv4 } from "uuid";
+import { Tenant } from "./Tenant.entity";
 import { Contract } from "./Contract.entity";
 import { Account } from "./Account.entity";
 
@@ -57,6 +57,9 @@ export class ContractTermination {
   @JoinColumn({ name: 'contract_id' })
   contract!: Contract;
 
+  @Column('uuid', { nullable: false })
+  contract_id!: string;
+
   @Column('boolean', { default: false })
   terminated: boolean = false;
 
@@ -66,6 +69,10 @@ export class ContractTermination {
   @ManyToOne(() => Account)
   @JoinColumn({ name: 'revenue_account_id' })
   revenue_account!: Account;
+
+
+  @Column('uuid', { nullable: false })
+  revenue_account_id!: string;
 
   @ManyToOne(() => Tenant, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'tenant_id' })
