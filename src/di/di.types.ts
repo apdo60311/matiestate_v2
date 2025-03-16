@@ -119,6 +119,7 @@ export const DI_TYPES = {
   TerminationFinesEntryService: Symbol.for('TerminationFinesEntryService'),
   FeesEntryService: Symbol.for('FeesEntryService'),
   ContractEntryService: Symbol.for('ContractEntryService'),
+  VoucherEntryService: Symbol.for('VoucherEntryService'),
   EntryGenerationFacade: Symbol.for('EntryGenerationFacade'),
 
   OpCollectionRepository: Symbol.for('OpCollectionRepository'),

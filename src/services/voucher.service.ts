@@ -8,7 +8,9 @@ import { VoucherMainData } from "../entities/VoucherMainData.entity";
 import { VoucherGridData } from "../entities/VoucherGridData.entity";
 import { VoucherPictures } from "../entities/VoucherPictures.entity";
 import { VoucherPattern } from "../entities/VoucherPattern.entity";
-import { IVoucherBody, IVoucherGridDataBody, IVoucherMainDataBody, IVoucherPicturesBody } from "../types/voucher.types";
+import { IVoucherBody, IVoucherEntry, IVoucherGridDataBody, IVoucherMainDataBody, IVoucherPicturesBody } from "../types/voucher.types";
+import { VoucherEntryService } from "./entry-services/voucher-entry.service";
+import { EntryGenerationFacade, EntryType } from "./entry-services/entry-services-facade";
 
 @injectable()
 export class VoucherService {
@@ -19,12 +21,40 @@ export class VoucherService {
         private voucherGridDataRepository: VoucherGridDataRepository,
         @inject(DI_TYPES.VoucherPicturesRepository)
         private voucherPicturesRepository: VoucherPicturesRepository,
-    ) {}
+        @inject(DI_TYPES.EntryGenerationFacade)
+        private entryGenerationFacade: EntryGenerationFacade,
+    ) { }
 
     // Voucher Main Data Methods
     async createVoucher(data: IVoucherMainDataBody): Promise<string | null> {
         try {
-            return await this.voucherMainDataRepository.createVoucher(data);
+
+            const voucherEntry: IVoucherEntry = {
+                values: {
+                    currency_id: data.currencyId!,
+                    currency_val: data.currencyVal!,
+                    note: data.note!,
+                    difference: data.creditTotal! - data.debitTotal!,
+                    account_id: data.accountId!,
+                    cost_center_id: "",
+                    debit_amount: data.debitAmount ?? 0,
+                    credit_amount: data.creditAmount ?? 0,
+                },
+                created_from: "voucher",
+                created_from_id: data.id!,
+                created_from_code: data.code!,
+                grid: []
+            }
+
+            const entryGenerationPromise = this.entryGenerationFacade.generateEntry({
+                type: EntryType.VOUCHER,
+                data: voucherEntry
+            });
+
+            const voucherMainDataPromise = this.voucherMainDataRepository.createVoucher(data);
+
+            const [_, result] = await Promise.all([entryGenerationPromise, voucherMainDataPromise])
+            return result;
         } catch (error) {
             logger.error(`Error creating voucher: ${error}`);
             return null;
@@ -124,13 +154,47 @@ export class VoucherService {
             }
 
             const [gridId, pictureIds] = await Promise.all([
-              voucherGridDataPromise,
-              voucherPicturesPromise,
+                voucherGridDataPromise,
+                voucherPicturesPromise,
             ]);
 
             if (!gridId || !pictureIds) {
                 throw new Error(`Voucher Grid Data or Pictures Not created!`);
             }
+
+            const voucherEntry: IVoucherEntry = {
+                values: {
+                    currency_id: voucherData.mainData.currencyId!,
+                    currency_val: voucherData.mainData.currencyVal!,
+                    note: voucherData.mainData.note!,
+                    difference: voucherData.mainData.creditTotal! - voucherData.mainData.debitTotal!,
+                    account_id: voucherData.mainData.accountId!,
+                    cost_center_id: (voucherData.gridData.length > 0) ? voucherData.gridData.at(0)!.costCenterId! : "",
+                    debit_amount: voucherData.mainData.debitAmount ?? 0,
+                    credit_amount: voucherData.mainData.creditAmount ?? 0,
+                },
+                created_from: "voucher",
+                created_from_id: voucherData.mainData.id!,
+                created_from_code: voucherData.mainData.code!,
+                grid: voucherData.gridData.map((voucherGrid) => {
+                    return {
+                        account_id: voucherGrid.accountId,
+                        debit_amount: voucherGrid.debit!,
+                        credit_amount: voucherGrid.credit!,
+                        currency_id: voucherGrid.currencyId!,
+                        currency_val: voucherGrid.currencyVal!,
+                        cost_center_id: voucherGrid.costCenterId!,
+                        note: voucherGrid.note!,
+                    }
+                })
+            }
+
+            const entryGenerationPromise = this.entryGenerationFacade.generateEntry({
+                type: EntryType.VOUCHER,
+                data: voucherEntry
+            });
+
+            await Promise.all([entryGenerationPromise]);
 
             logger.info(`Voucher created successfully with id: ${voucherId}`);
             return voucherId;

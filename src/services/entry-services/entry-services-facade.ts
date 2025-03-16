@@ -5,6 +5,7 @@ import { TerminationEntryService } from "./termination-entry.service";
 import { FeesEntryService } from "./fees-entry.service";
 import { ContractEntryService } from "./generate-entry.service";
 import { TerminationFinesEntryService } from "./termination-fines-entry.service";
+import { VoucherEntryService } from "./voucher-entry.service";
 
 
 export enum EntryType {
@@ -12,7 +13,8 @@ export enum EntryType {
     TERMINATION = "termination",
     TERMINATION_FINES = "termination_fines",
     FEES = "fees",
-    CONTRACT = "contract"
+    CONTRACT = "contract",
+    VOUCHER = "voucher"
 }
 
 interface IEntryGenerationData {
@@ -36,10 +38,13 @@ export class EntryGenerationFacade {
         private readonly feesEntryService: FeesEntryService,
 
         @inject("ContractEntryService")
-        private readonly contractEntryService: ContractEntryService
+        private readonly contractEntryService: ContractEntryService,
+
+        @inject("VoucherEntryService")
+        private readonly voucherEntryService: VoucherEntryService
     ) { }
 
-    async generateEntry(data: IEntryGenerationData): Promise<void> {
+    async generateEntry(data: IEntryGenerationData): Promise<boolean> {
         try {
             logger.info(`Starting entry generation for type: ${data.type}`);
             this.validateInput(data);
@@ -64,14 +69,17 @@ export class EntryGenerationFacade {
                     const { contract, contractId } = data.data;
                     await this.contractEntryService.generateEntry(contract, contractId);
                     break;
-
+                case EntryType.VOUCHER:
+                    await this.voucherEntryService.generateEntry(data.data);
+                    break;
                 default:
                     throw new Error(`Unhandled entry type: ${data.type}`);
             }
             logger.info(`Successfully generated entry of type: ${data.type}`);
+            return true;
         } catch (error: any) {
             logger.error(`Error generating entry: ${error.message}`);
-            throw error;
+            return false;
         }
     }
 

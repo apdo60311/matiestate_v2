@@ -110,9 +110,15 @@ export interface IVoucherEntry {
     values: IVoucherValues;
     created_from: string;
     created_from_id: string;
-    created_from_code: string;
-    grid: Array<{
-        account_id: string;
-        cost_center_id?: string;
-    }>;
+    created_from_code: number;
+    grid: Array<IGridRow>;
+}
+
+export interface IGridRow {
+    account_id: string;
+    cost_center_id?: string;
+    debit_amount: number;
+    credit_amount: number;
+    currency_id: string;
+    currency_val: number;
 }
