@@ -205,3 +205,56 @@ export interface ITerminationFinesEntryData {
         cost_center_id: string;
     };
 }
+
+export enum EntryType {
+    CHEQUE = "cheque",
+    TERMINATION = "termination",
+    TERMINATION_FINES = "termination_fines",
+    FEES = "fees",
+    CONTRACT = "contract",
+    VOUCHER = "voucher"
+}
+
+export interface IEntryGenerationData {
+    type: EntryType;
+    data: any;
+}
+
+export interface IContractEntryData {
+    contract_id: string;
+    pattern: {
+        record_date_created?: number;
+        bill_type?: number;
+    };
+    contract: {
+        id: string;
+        code: number;
+        number: number;
+        start_duration_date: Date;
+        issue_date: Date;
+        contract_value: number;
+        current_securing_value: number;
+        cost_center_id: string;
+        client_id: string;
+        revenue_account_id: string;
+        insurance_account_id: string;
+        discount_account_id: string;
+        created_at: Date;
+        discount_value: number;
+        vat_value: number;
+        vat_account_id: string;
+        final_price: number;
+        price_before_vat: number;
+    
+
+    };
+    currency: {
+        currency_id: string;
+        currency_val: number;
+    };
+    commission?: {
+        commission_percentage: number;
+        commission_account_id: string;
+        commission_from_owner_account_id: string;
+    };
+}

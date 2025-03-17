@@ -22,9 +22,14 @@ import { ApartmentRepository } from "../repositories/apartment/apartment.reposit
 import { ShopRepository } from "../repositories/shop/shop.repository";
 import { ParkingRepository } from "../repositories/parking/parking.repository";
 import { BuildingsRepository } from "../repositories/buildings.repository";
-import { ContractCommissionRepository } from "@/repositories/contract/contract-commision.repository";
-import { InstallmentRepository } from "@/repositories/installment.repository";
+import { ContractCommissionRepository } from "../repositories/contract/contract-commision.repository";
+import { InstallmentRepository } from "../repositories/installment.repository";
 import e from "express";
+import { EntryGenerationFacade } from "./entry-services/entry-services-facade";
+import { EntryType, IContractEntryData, IEntryGenerationData } from "../types/entry.types";
+import { ContractPatternRepository } from "../repositories/patterns/contract-pattern.repository";
+import { CurrencyRepository } from "../repositories/currency.repository";
+import { DEFAULT_CURRENCY_CODE, DEFAULT_CURRENCY_RATE } from "../constants/default.constants";
 
 @injectable()
 export class ContractService {
@@ -45,6 +50,10 @@ export class ContractService {
         private contractOtherFeesRepository: ContractOtherFeesRepository,
         @inject(DI_TYPES.ContractTerminationRepository)
         private contractTerminationRepository: ContractTerminationRepository,
+        @inject(DI_TYPES.ContractPatternRepository)
+        private contractPatternRepository: ContractPatternRepository,
+        @inject(DI_TYPES.CurrencyRepository)
+        private currencyRepository: CurrencyRepository,
         @inject(DI_TYPES.InstallmentRepository)
         private installmentRepository: InstallmentRepository,
         @inject(DI_TYPES.ApartmentRepository)
@@ -54,7 +63,9 @@ export class ContractService {
         @inject(DI_TYPES.ParkingRepository)
         private parkingRepository: ParkingRepository,
         @inject(DI_TYPES.BuildingsRepository)
-        private buildingsRepository: BuildingsRepository
+        private buildingsRepository: BuildingsRepository,
+        @inject(DI_TYPES.EntryGenerationFacade)
+        private entryGenerationFacade: EntryGenerationFacade,
     ) { }
 
     async createContract(data: Partial<Contract>): Promise<string | null> {
@@ -114,6 +125,54 @@ export class ContractService {
                 contractOtherFeesPromise,
                 contractTerminationPromise
             ]);
+
+            const contractPattern = await this.contractPatternRepository.getPatternByCode(data.code);
+            const currency = await this.currencyRepository.getCurrencyByCode(DEFAULT_CURRENCY_CODE);
+
+
+            // Generate entries after all relations are created
+            const contractEntryData: IContractEntryData = {
+                contract_id: contractId,
+                pattern: {
+                    record_date_created: contractPattern?.recordDateCreated,
+                    bill_type: 1,
+                },
+                contract: {
+                    id: contractId,
+                    code: data.code,
+                    number: data.number!,
+                    start_duration_date: data.start_duration_date!,
+                    issue_date: data.issue_date!,
+                    contract_value: data.contract_value,
+                    current_securing_value: data.current_securing_value!,
+                    cost_center_id: data.cost_center_id!,
+                    client_id: data.client_id!,
+                    revenue_account_id: data.revenue_account_id,
+                    insurance_account_id: data.insurance_account_id!,
+                    discount_account_id: data.discount_account_id!,
+                    created_at: contractPattern?.createdAt!,
+                    discount_value: data.discount_value!,
+                    vat_value: data.vat_value!,
+                    vat_account_id: data.vat_account_id!,
+                    final_price: data.final_price,
+                    price_before_vat: data.price_before_vat!,
+                },
+                currency: {
+                    currency_id: currency?.id!,
+                    currency_val:DEFAULT_CURRENCY_RATE,
+                },
+                commission: {
+                    commission_percentage: data.commission?.commission_percentage!,
+                    commission_account_id: data.commission?.commission_account_id!,
+                    commission_from_owner_account_id: data.commission?.commission_from_owner_account_id!,
+                },
+            };
+
+            const entryGenerationData: IEntryGenerationData = {
+                type: EntryType.CONTRACT,
+                data: contractEntryData
+            };
+            await this.entryGenerationFacade.generateEntry(entryGenerationData);
 
             logger.info(`Contract with ID ${contractId} created successfully.`);
             logger.info(`Terms created: ${termsRes}`);

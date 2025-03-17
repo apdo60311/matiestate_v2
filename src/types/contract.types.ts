@@ -102,6 +102,7 @@ export interface IContractBody {
     is_deleted?: boolean;
     status?: number;
     code: number;
+    number?: number;
     contracts_number_prev?: number;
     contracts_number_current?: number;
     lawsuit?: boolean;
@@ -137,6 +138,9 @@ export interface IContractBody {
     tenant_id?: string;
     villa_id?: string;
     contract_pattern_id: string;
+    vat_value?: number;
+	vat_account_id?: string;
+	price_before_vat?: number;
     terms?: IContractTerms[];
     pictures?: IContractPictures[];
     commission?: IContractCommission;

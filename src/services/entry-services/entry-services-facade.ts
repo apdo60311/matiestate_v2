@@ -3,79 +3,66 @@ import { logger } from "../../utils/logger";
 import { ChequeEntryService } from "./cheque-entry.service";
 import { TerminationEntryService } from "./termination-entry.service";
 import { FeesEntryService } from "./fees-entry.service";
-import { ContractEntryService } from "./generate-entry.service";
+import { ContractEntryService } from "./contract-entry.service";
 import { TerminationFinesEntryService } from "./termination-fines-entry.service";
 import { VoucherEntryService } from "./voucher-entry.service";
+import { EntryType, IEntryGenerationData } from "../../types/entry.types";
+import { DI_TYPES } from "../../di/di.types";
 
-
-export enum EntryType {
-    CHEQUE = "cheque",
-    TERMINATION = "termination",
-    TERMINATION_FINES = "termination_fines",
-    FEES = "fees",
-    CONTRACT = "contract",
-    VOUCHER = "voucher"
-}
-
-interface IEntryGenerationData {
-    type: EntryType;
-    data: any;
-}
 
 @injectable()
 export class EntryGenerationFacade {
     constructor(
-        @inject("ChequeEntryService")
+        @inject(DI_TYPES.ChequeEntryService)
         private readonly chequeEntryService: ChequeEntryService,
 
-        @inject("TerminationEntryService")
+        @inject(DI_TYPES.TerminationEntryService)
         private readonly terminationEntryService: TerminationEntryService,
 
-        @inject("TerminationFinesEntryService")
+        @inject(DI_TYPES.TerminationFinesEntryService)
         private readonly terminationFinesEntryService: TerminationFinesEntryService,
 
-        @inject("FeesEntryService")
+        @inject(DI_TYPES.FeesEntryService)
         private readonly feesEntryService: FeesEntryService,
 
-        @inject("ContractEntryService")
+        @inject(DI_TYPES.ContractEntryService)
         private readonly contractEntryService: ContractEntryService,
 
-        @inject("VoucherEntryService")
+        @inject(DI_TYPES.VoucherEntryService)
         private readonly voucherEntryService: VoucherEntryService
     ) { }
 
-    async generateEntry(data: IEntryGenerationData): Promise<boolean> {
+    async generateEntry(entryGenerationData: IEntryGenerationData): Promise<boolean> {
         try {
-            logger.info(`Starting entry generation for type: ${data.type}`);
-            this.validateInput(data);
-            switch (data.type) {
+            logger.info(`Starting entry generation for type: ${entryGenerationData.type}`);
+            this.validateInput(entryGenerationData);
+            switch (entryGenerationData.type) {
                 case EntryType.CHEQUE:
-                    await this.chequeEntryService.generateChequesFromInstallment(data.data);
+                    await this.chequeEntryService.generateChequesFromInstallment(entryGenerationData.data);
                     break;
 
                 case EntryType.TERMINATION:
-                    await this.terminationEntryService.generateEntryFromTermination(data.data);
+                    await this.terminationEntryService.generateEntryFromTermination(entryGenerationData.data);
                     break;
 
                 case EntryType.TERMINATION_FINES:
-                    await this.terminationFinesEntryService.generateEntryFromTerminationFines(data.data);
+                    await this.terminationFinesEntryService.generateEntryFromTerminationFines(entryGenerationData.data);
                     break;
 
                 case EntryType.FEES:
-                    await this.feesEntryService.generateEntryFromFees(data.data);
+                    await this.feesEntryService.generateEntryFromFees(entryGenerationData.data);
                     break;
 
                 case EntryType.CONTRACT:
-                    const { contract, contractId } = data.data;
-                    await this.contractEntryService.generateEntry(contract, contractId);
+                    await this.contractEntryService.generateEntry(entryGenerationData.data);
                     break;
                 case EntryType.VOUCHER:
-                    await this.voucherEntryService.generateEntry(data.data);
+                    await this.voucherEntryService.generateEntry(entryGenerationData.data);
                     break;
                 default:
-                    throw new Error(`Unhandled entry type: ${data.type}`);
+                    throw new Error(`Unhandled entry type: ${entryGenerationData.type}`);
             }
-            logger.info(`Successfully generated entry of type: ${data.type}`);
+            logger.info(`Successfully generated entry of type: ${entryGenerationData.type}`);
             return true;
         } catch (error: any) {
             logger.error(`Error generating entry: ${error.message}`);

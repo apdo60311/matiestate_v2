@@ -191,6 +191,15 @@ export class Contract {
   @Column('date', { nullable: true })
   property_delivery_date?: Date;
 
+  @Column('float64', { nullable: true })
+  vat_value?: number;
+
+  @Column('uuid', { nullable: true }) 
+  vat_account_id?: string;
+
+  @Column('float64', { nullable: true })
+  price_before_vat?: number;
+
   @ManyToOne(() => Tenant, { onDelete: 'CASCADE', nullable: true })
   @JoinColumn({ name: 'tenant_id' })
   tenant?: Tenant;

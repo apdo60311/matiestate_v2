@@ -40,6 +40,25 @@ export class ContractPatternRepository extends Repository<ContractPattern> {
         }
     }
 
+    async getPatternByCode(code: number): Promise<ContractPattern | null> {
+        try {
+            const pattern = await this.findOne({
+                where: { code },
+                relations: [
+                    'tenant',
+                    'defaultRevenueAccount',
+                    'defaultCommissionFromClientAccount',
+                    'defaultCommissionFromOwnerAccount'
+                ]
+            });
+            logger.info(`Retrieved Contract Pattern with code: ${code}`);
+            return pattern;
+        } catch (error) {
+            logger.error(`Error getting Contract Pattern: ${error}`);
+            throw error;
+        }
+    }
+
     async updatePattern(id: string, pattern: Partial<ContractPattern>): Promise<boolean> {
         try {
             await this.update(id, pattern);

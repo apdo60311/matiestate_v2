@@ -96,7 +96,7 @@ import { ChequeEntryService } from "../services/entry-services/cheque-entry.serv
 import { TerminationEntryService } from "../services/entry-services/termination-entry.service";
 import { TerminationFinesEntryService } from "../services/entry-services/termination-fines-entry.service";
 import { FeesEntryService } from "../services/entry-services/fees-entry.service";
-import { ContractEntryService } from "../services/entry-services/generate-entry.service";
+import { ContractEntryService } from "../services/entry-services/contract-entry.service";
 import { EntryGenerationFacade } from "../services/entry-services/entry-services-facade";
 import { ContractController } from "../controllers/contract.controller";
 import { ContractService } from "../services/contract.service";
@@ -1128,11 +1128,16 @@ container.bind<ContractService>(DI_TYPES.ContractService)
         const contractFeeRepository = await context.container.getAsync<ContractFeeRepository>(DI_TYPES.ContractFeeRepository);
         const contractOtherFeesRepository = await context.container.getAsync<ContractOtherFeesRepository>(DI_TYPES.ContractOtherFeesRepository);
         const contractTerminationRepository = await context.container.getAsync<ContractTerminationRepository>(DI_TYPES.ContractTerminationRepository);
+        const contractPatternRepository = await context.container.getAsync<ContractPatternRepository>(DI_TYPES.ContractPatternRepository);
+        const currencyRepository = await context.container.getAsync<CurrencyRepository>(DI_TYPES.CurrencyRepository);
         const installmentRepository = await context.container.getAsync<InstallmentRepository>(DI_TYPES.InstallmentRepository);
         const apartmentRepository = await context.container.getAsync<ApartmentRepository>(DI_TYPES.ApartmentRepository);
         const shopRepository = await context.container.getAsync<ShopRepository>(DI_TYPES.ShopRepository);
         const parkingRepository = await context.container.getAsync<ParkingRepository>(DI_TYPES.ParkingRepository);
         const buildingsRepository = await context.container.getAsync<BuildingsRepository>(DI_TYPES.BuildingsRepository);
+        const entryGenerationFacade = await context.container.getAsync<EntryGenerationFacade>(
+            DI_TYPES.EntryGenerationFacade
+        );
 
         return new ContractService(
             contractRepository,
@@ -1143,11 +1148,14 @@ container.bind<ContractService>(DI_TYPES.ContractService)
             contractFeeRepository,
             contractOtherFeesRepository,
             contractTerminationRepository,
+            contractPatternRepository,
+            currencyRepository,
             installmentRepository,
             apartmentRepository,
             shopRepository,
             parkingRepository,
-            buildingsRepository
+            buildingsRepository,
+            entryGenerationFacade
         );
     })
     .inSingletonScope();
