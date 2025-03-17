@@ -1,6 +1,3 @@
-import { EntriesService } from "../services/entries.service";
-import { MaterialController } from "../controllers/material.controller";
-
 export const DI_TYPES = {
   DataSource: Symbol.for("DataSource"),
   BuildingsRepository: Symbol.for("BuildingsRepository"),

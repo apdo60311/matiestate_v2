@@ -568,22 +568,6 @@ const router = express.Router();
 
     /**
      * @openapi
-     * /contracts/buildings:
-     *   get:
-     *     summary: Get all buildings
-     *     tags: [Contracts, Buildings]
-     *     security:
-     *       - bearerAuth: []
-     *     responses:
-     *       200:
-     *         description: List of buildings
-     *       500:
-     *         description: Server error
-     */
-    router.get("/buildings", contractController.getBuildings);
-
-    /**
-     * @openapi
      * /contracts/building/{buildingId}/properties:
      *   get:
      *     summary: Get all properties in a building

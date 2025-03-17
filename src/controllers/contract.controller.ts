@@ -462,38 +462,6 @@ export class ContractController {
             }
         };
 
-    public getBuildings: RequestHandler<
-        unknown,
-        ResponseModel<Record<string, any>>,
-        unknown,
-        unknown,
-        any
-    > = async (
-        req: CustomRequest<
-            unknown,
-            ResponseModel<Record<string, any>>,
-            unknown,
-            unknown,
-            any
-        >,
-        res: Response<ResponseModel<Record<string, any>>>,
-        next: NextFunction
-    ): Promise<any> => {
-            try {
-                const buildings = await this.contractService.getBuildings();
-                return res.status(200).send({
-                    success: true,
-                    message: "Buildings retrieved successfully",
-                    data: { buildings },
-                });
-            } catch (e: any) {
-                return res.status(500).send({
-                    success: false,
-                    message: e?.message,
-                });
-            }
-        };
-
     public getPropertiesByBuilding: RequestHandler<
         { buildingId: string },
         ResponseModel<Record<string, any>>,
