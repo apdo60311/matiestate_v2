@@ -9,7 +9,7 @@ import { IChequeMainDataBody } from "../types/cheque.types";
 export class ChequeService {
     constructor(
         @inject(DI_TYPES.ChequeRepository)
-        private chequeRepository: ChequeRepository
+        private chequeRepository: ChequeRepository,
     ) { }
 
     // Cheque Methods

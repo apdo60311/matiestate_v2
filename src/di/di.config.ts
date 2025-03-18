@@ -631,7 +631,7 @@ container.bind<ShopController>(DI_TYPES.ShopController)
     })
     .inSingletonScope();
 
-    container.bind<OpCollectionRepository>(DI_TYPES.OpCollectionRepository)
+container.bind<OpCollectionRepository>(DI_TYPES.OpCollectionRepository)
     .toDynamicValue(async (context) => {
         const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
         if (!dataSource.isInitialized) {
@@ -641,7 +641,7 @@ container.bind<ShopController>(DI_TYPES.ShopController)
     })
     .inSingletonScope();
 
-    container.bind<OpDeportationRepository>(DI_TYPES.OpDeportationRepository)
+container.bind<OpDeportationRepository>(DI_TYPES.OpDeportationRepository)
     .toDynamicValue(async (context) => {
         const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
         if (!dataSource.isInitialized) {
@@ -651,7 +651,7 @@ container.bind<ShopController>(DI_TYPES.ShopController)
     })
     .inSingletonScope();
 
-    container.bind<OpPartialCollectionRepository>(DI_TYPES.OpPartialCollectionRepository)
+container.bind<OpPartialCollectionRepository>(DI_TYPES.OpPartialCollectionRepository)
     .toDynamicValue(async (context) => {
         const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
         if (!dataSource.isInitialized) {
@@ -661,7 +661,7 @@ container.bind<ShopController>(DI_TYPES.ShopController)
     })
     .inSingletonScope();
 
-    container.bind<OpReturnRepository>(DI_TYPES.OpReturnRepository)
+container.bind<OpReturnRepository>(DI_TYPES.OpReturnRepository)
     .toDynamicValue(async (context) => {
         const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
         if (!dataSource.isInitialized) {
@@ -671,7 +671,7 @@ container.bind<ShopController>(DI_TYPES.ShopController)
     })
     .inSingletonScope();
 
-    container.bind<OpService>(DI_TYPES.OpService)
+container.bind<OpService>(DI_TYPES.OpService)
     .toDynamicValue(async (context) => {
         const opCollectionRepository = await context.container.getAsync<OpCollectionRepository>(
             DI_TYPES.OpCollectionRepository
@@ -688,12 +688,12 @@ container.bind<ShopController>(DI_TYPES.ShopController)
         const OpReturnRepository = await context.container.getAsync<OpReturnRepository>(
             DI_TYPES.OpReturnRepository
         );
-        
+
         return new OpService(
-          opCollectionRepository,
-          opDeportationRepository,
-          opPartialCollectionRepository,
-          OpReturnRepository
+            opCollectionRepository,
+            opDeportationRepository,
+            opPartialCollectionRepository,
+            OpReturnRepository
         );
     })
     .inSingletonScope();
@@ -1139,6 +1139,10 @@ container.bind<ContractService>(DI_TYPES.ContractService)
             DI_TYPES.EntryGenerationFacade
         );
 
+        const chequeEntryService = await context.container.getAsync<ChequeEntryService>(
+            DI_TYPES.ChequeEntryService
+        );
+
         return new ContractService(
             contractRepository,
             contractTermsRepository,
@@ -1155,6 +1159,7 @@ container.bind<ContractService>(DI_TYPES.ContractService)
             shopRepository,
             parkingRepository,
             buildingsRepository,
+            chequeEntryService,
             entryGenerationFacade
         );
     })
