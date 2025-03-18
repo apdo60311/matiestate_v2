@@ -38,7 +38,7 @@ export class EntryGenerationFacade {
             this.validateInput(entryGenerationData);
             switch (entryGenerationData.type) {
                 case EntryType.CHEQUE:
-                    await this.chequeEntryService.generateChequesFromInstallment(entryGenerationData.data);
+                    await this.chequeEntryService.generateEntryForCheque(entryGenerationData.data);
                     break;
 
                 case EntryType.TERMINATION:

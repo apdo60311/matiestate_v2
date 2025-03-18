@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { EntriesService } from "../entries.service";
 import { DI_TYPES } from "../../di/di.types";
-import { ChequeData, IEntryDataRequestBody, IEntryGridData, IEntryMainData, IInstallmentChequeData } from "../../types/entry.types";
+import { ChequeData, IChequeEntryData, IEntryDataRequestBody, IEntryGridData, IEntryMainData, IInstallmentChequeData } from "../../types/entry.types";
 import { CREATED_FROM_CHQ, CHQ_RECEIVED_CODE, CONNECT_WITH_CONTRACT_CODE } from "../../constants/default.constants";
 import { logger } from "../../utils/logger";
 import { ChequeService } from "../cheque.service";
@@ -45,7 +45,7 @@ export class ChequeEntryService {
                 currency_id: installment.currency_id
             });
 
-            await this.processCheques(cheques, installment_id, pattern, contract_id);
+            await this.processCheques(cheques, installment_id, pattern, contract_id, installment.currency_id);
 
         } catch (error) {
             logger.error(`Error generating cheques from installment ${installment_id}: ${error}`);
@@ -93,7 +93,7 @@ export class ChequeEntryService {
             await this.getAccountReceivable();
     }
 
-    private async processCheques(cheques: any[], installment_id: string, pattern: any, contract_id: string) {
+    private async processCheques(cheques: any[], installment_id: string, pattern: any, contract_id: string, currency_id: string) {
         const prevCheques = await this.getPreviousCheques(installment_id, pattern.code);
 
         for (let i = 0; i < Math.max(cheques.length, prevCheques?.length || 0); i++) {
@@ -101,12 +101,13 @@ export class ChequeEntryService {
                 cheques[i],
                 prevCheques![i],
                 pattern,
-                contract_id
+                contract_id,
+                currency_id
             );
         }
     }
 
-    private async processChequeItem(newCheque: Cheque, prevCheque: Cheque, pattern: ChequePattern, contract_id: string) {
+    private async processChequeItem(newCheque: Cheque, prevCheque: Cheque, pattern: ChequePattern, contract_id: string, currency_id: string) {
         if (JSON.stringify(newCheque) === JSON.stringify(prevCheque)) return;
 
         let chequeId: string | null = prevCheque?.id;
@@ -119,26 +120,40 @@ export class ChequeEntryService {
             await this.deleteCheque(prevCheque);
         }
 
+
         if (chequeId) {
-            await this.generateEntryForCheque(newCheque, chequeId, pattern);
+            const checkEntryData: IChequeEntryData = {
+                cheque_id: chequeId,
+                cheque: {
+                    ...newCheque,
+                    currency_id: currency_id,
+                    date: newCheque.due_date!,
+                    account_id: newCheque.account.id,
+                    observe_account_id: newCheque.observe_account?.id!,
+                    cost_center_id: newCheque.cost_center?.id!,
+                    observe_cost_center_id: newCheque.observe_cost_center?.id!,
+                },
+                pattern
+            };
+            await this.generateEntryForCheque(checkEntryData);
         }
     }
 
-    private async generateEntryForCheque(cheque: any, chequeId: string, pattern: any) {
+    public async generateEntryForCheque(chequeEntryData: IChequeEntryData) {
         const mainData: IEntryMainData = {
-            createdAt: cheque.date,
-            currencyId: cheque.currency_id,
-            currencyVal: cheque.currency_val || 1,
-            note: `Generated Entry From cheque number ${cheque.internal_number || cheque.number || 'no number'} amount ${cheque.amount}`,
-            debit: Math.abs(cheque.amount),
-            credit: Math.abs(cheque.amount),
+            createdAt: chequeEntryData.cheque.date,
+            currencyId: chequeEntryData.cheque.currency_id,
+            currencyVal: chequeEntryData.cheque.currency_val || 1,
+            note: `Generated Entry From cheque number ${chequeEntryData.cheque.internal_number || chequeEntryData.cheque.number || 'no number'} amount ${chequeEntryData.cheque.amount}`,
+            debit: Math.abs(chequeEntryData.cheque.amount),
+            credit: Math.abs(chequeEntryData.cheque.amount),
             difference: 0,
             createdFrom: CREATED_FROM_CHQ,
-            createdFromId: chequeId,
-            createdFromCode: pattern.code
+            createdFromId: chequeEntryData.cheque_id,
+            createdFromCode: chequeEntryData.pattern.code
         };
 
-        const gridData = this.generateGridRows(cheque);
+        const gridData = this.generateGridRows(chequeEntryData.cheque);
 
         const entryRequestData: IEntryDataRequestBody = {
             mainData,

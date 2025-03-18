@@ -1000,7 +1000,10 @@ container.bind<ChequeService>(DI_TYPES.ChequeService)
         const chequeRepository = await context.container.getAsync<ChequeRepository>(
             DI_TYPES.ChequeRepository
         );
-        return new ChequeService(chequeRepository);
+        const entryGenerationFacade = await context.container.getAsync<EntryGenerationFacade>(
+            DI_TYPES.EntryGenerationFacade
+        );
+        return new ChequeService(chequeRepository, entryGenerationFacade);
     })
     .inSingletonScope();
 

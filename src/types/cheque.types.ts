@@ -8,6 +8,7 @@ export interface IChequeMainDataBody {
     currencyId?: string;
     sellerId?: string;
     accountId?: string;
+    observeAccountId?: string;
     patternId?: string;
     tenantId?: string;
     note?: string;
@@ -17,11 +18,13 @@ export interface IChequeMainDataBody {
     currencyVal?: number;
     beneficiaryName?: string;
     costCenterId?: string;
+    observeCostCenterId?: string;
     bankId?: string;
     installmentId?: string;
     apartmentId?: string;
     shopId?: string;
     parkingId?: string;
+    date?: Date;
 }
 
 export interface IChequeBody {

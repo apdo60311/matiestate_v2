@@ -245,7 +245,7 @@ export interface IContractEntryData {
         vat_account_id: string;
         final_price: number;
         price_before_vat: number;
-    
+
 
     };
     currency: {
@@ -257,4 +257,28 @@ export interface IContractEntryData {
         commission_account_id: string;
         commission_from_owner_account_id: string;
     };
+}
+
+
+export interface IChequeEntry {
+    date: Date;
+    currency_id: string;
+    currency_val?: number;
+    internal_number?: string;
+    number?: number;
+    amount: number;
+    account_id: string;
+    observe_account_id: string;
+    cost_center_id: string;
+    observe_cost_center_id: string;
+}
+
+export interface IPatternEntryData {
+    code: number;
+}
+
+export interface IChequeEntryData {
+    cheque_id: string;
+    cheque: IChequeEntry;
+    pattern: IPatternEntryData;
 }
