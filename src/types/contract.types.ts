@@ -139,8 +139,8 @@ export interface IContractBody {
     villa_id?: string;
     contract_pattern_id: string;
     vat_value?: number;
-	vat_account_id?: string;
-	price_before_vat?: number;
+    vat_account_id?: string;
+    price_before_vat?: number;
     terms?: IContractTerms[];
     pictures?: IContractPictures[];
     commission?: IContractCommission;
@@ -150,25 +150,73 @@ export interface IContractBody {
     termination?: IContractTermination;
 }
 
-export interface IInstallmentBody {
+export interface InstallmentData {
     contract_id: string;
-    total_amount: number;
-    gen_entries_type?: number;
-    first_batch: number;
-    payment_date?: Date;
+    total_amount?: number;
+    first_batch?: number;
+    payment_date: Date;
     currency_id: string;
     currency_val?: number;
-    rest_amount: number;
-    bank_id?: string;
-    installments_numbers: number;
-    each_number: number;
-    each_duration: number;
+    rest_amount?: number;
+    bank_id: string | null;
+    installments_numbers?: number;
+    each_number?: number;
+    each_duration?: number;
     first_installment_date: Date;
     begin_number?: number;
     beneficiary_name?: string;
-    tenant_id?: string;
+    id: string;
+    tenant_id: string;
+    has_first_batch: boolean;
 }
 
+export interface InstallmentGridItem {
+    created_at: string;
+    number: string;
+    code: number;
+    amount: number;
+    currency_id: string;
+    seller_id: string | null;
+    account_id: string;
+    beneficiary_name: string | null;
+    cost_center_id: string;
+    note: string | null;
+    due_date: Date;
+    end_due_date: Date;
+    without_due_date: boolean;
+    bank_id: string | null;
+    observe_account_id: string;
+    observe_cost_center_id: string;
+    note1: string;
+    note2: string;
+    deport_status: boolean;
+    collection_status: boolean;
+    partial_collection_status: boolean;
+    return_status: boolean;
+    deposit_status: boolean;
+    id: string;
+    connect_with: number;
+    connect_with_id: string;
+    feedback: boolean;
+    gen_entries: boolean;
+    currency_val: number;
+    obverse_account_note: string | null;
+    installment_id: string;
+    is_deleted: boolean;
+    is_archived: boolean;
+    apartment_id: string | null;
+    shop_id: string | null;
+    parking_id: string | null;
+    tenant_id: string;
+    cheque_pattern_id: string;
+    internal_number: number;
+    customer_id: string | null;
+}
+
+export interface InstallmentBody {
+    installment: InstallmentData;
+    installment_grid: InstallmentGridItem[];
+}
 
 export enum ContractStatus {
     Valid = 1,

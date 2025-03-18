@@ -16,7 +16,7 @@ import { ContractFee } from "../entities/ContractFee.entity";
 import { ContractOtherFees } from "../entities/ContractOtherFees.entity";
 import { ContractTermination } from "../entities/ContractTermination.entity";
 import { Installment } from "../entities/Installment.entity";
-import { ContractStatus, IContractBody, IInstallmentBody } from "../types/contract.types";
+import { ContractStatus, IContractBody, InstallmentBody } from "../types/contract.types";
 import { logger } from "../utils/logger";
 import { ApartmentRepository } from "../repositories/apartment/apartment.repository";
 import { ShopRepository } from "../repositories/shop/shop.repository";
@@ -26,10 +26,12 @@ import { ContractCommissionRepository } from "../repositories/contract/contract-
 import { InstallmentRepository } from "../repositories/installment.repository";
 import e from "express";
 import { EntryGenerationFacade } from "./entry-services/entry-services-facade";
-import { EntryType, IContractEntryData, IEntryGenerationData } from "../types/entry.types";
+import { EntryType, IContractEntryData, IEntryGenerationData, IInstallmentChequeData } from "../types/entry.types";
 import { ContractPatternRepository } from "../repositories/patterns/contract-pattern.repository";
 import { CurrencyRepository } from "../repositories/currency.repository";
 import { DEFAULT_CURRENCY_CODE, DEFAULT_CURRENCY_RATE } from "../constants/default.constants";
+import { ChequeEntryService } from "./entry-services/cheque-entry.service";
+import data from "../config/env";
 
 @injectable()
 export class ContractService {
@@ -64,6 +66,8 @@ export class ContractService {
         private parkingRepository: ParkingRepository,
         @inject(DI_TYPES.BuildingsRepository)
         private buildingsRepository: BuildingsRepository,
+        @inject(DI_TYPES.ChequeEntryService)
+        private chequeEntryService: ChequeEntryService,
         @inject(DI_TYPES.EntryGenerationFacade)
         private entryGenerationFacade: EntryGenerationFacade,
     ) { }
@@ -159,7 +163,7 @@ export class ContractService {
                 },
                 currency: {
                     currency_id: currency?.id!,
-                    currency_val:DEFAULT_CURRENCY_RATE,
+                    currency_val: DEFAULT_CURRENCY_RATE,
                 },
                 commission: {
                     commission_percentage: data.commission?.commission_percentage!,
@@ -298,9 +302,35 @@ export class ContractService {
         return await this.contractTerminationRepository.getTerminationByContractId(contractId);
     }
 
-    async createInstallment(data: IInstallmentBody): Promise<string | null> {
+    async createInstallment(data: InstallmentBody): Promise<string | null> {
         try {
-            return await this.installmentRepository.createInstallment(data);
+            const installmentId = await this.installmentRepository.createInstallment(data.installment);
+
+
+            const currency = await this.currencyRepository.getCurrencyByCode(DEFAULT_CURRENCY_CODE);
+
+
+            const chequesData: IInstallmentChequeData = {
+                installment: {
+                    currency_id: data.installment_grid.at(0)?.cost_center_id || currency?.id!
+                },
+                installment_grid: data.installment_grid,
+                installment_id: installmentId!,
+                contract_id: data.installment.contract_id,
+                cost_center_id: data.installment_grid.at(0)?.cost_center_id
+
+            }
+
+            await this.chequeEntryService.generateChequesFromInstallment(chequesData);
+
+
+            if (!installmentId) {
+                logger.error(`Failed to create installment.`);
+                return null;
+            }
+
+            logger.info(`Installment created successfully with ID: ${installmentId}`);
+            return installmentId;
         } catch (error) {
             logger.error(`Error in createInstallment: ${error}`);
             return null;
