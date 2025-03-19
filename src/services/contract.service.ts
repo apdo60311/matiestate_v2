@@ -32,6 +32,8 @@ import { CurrencyRepository } from "../repositories/currency.repository";
 import { DEFAULT_CURRENCY_CODE, DEFAULT_CURRENCY_RATE } from "../constants/default.constants";
 import { ChequeEntryService } from "./entry-services/cheque-entry.service";
 import data from "../config/env";
+import { VoucherService } from "./voucher.service";
+import { IVoucherBody } from "@/types/voucher.types";
 
 @injectable()
 export class ContractService {
@@ -68,6 +70,8 @@ export class ContractService {
         private buildingsRepository: BuildingsRepository,
         @inject(DI_TYPES.ChequeEntryService)
         private chequeEntryService: ChequeEntryService,
+        @inject(DI_TYPES.VoucherService)
+        private voucherService: VoucherService,
         @inject(DI_TYPES.EntryGenerationFacade)
         private entryGenerationFacade: EntryGenerationFacade,
     ) { }
@@ -312,7 +316,7 @@ export class ContractService {
 
             const chequesData: IInstallmentChequeData = {
                 installment: {
-                    currency_id: data.installment_grid.at(0)?.cost_center_id || currency?.id!
+                    currency_id: data.installment.currency_id || currency?.id!
                 },
                 installment_grid: data.installment_grid,
                 installment_id: installmentId!,
@@ -320,14 +324,43 @@ export class ContractService {
                 cost_center_id: data.installment_grid.at(0)?.cost_center_id
 
             }
+            const voucherData: IVoucherBody = {
+                mainData: {
+                    number: data.installment.begin_number,
+                    voucherType: VoucherType.PAYMENT_VOUCHER,
+                    currencyId: currency?.id!,
+                    // sellerId: ,
+                    // accountId: ,
+                    // patternId: ,
+                    // tenantId: ,
+                    // note: ,
+                    // createdAt: ,
+                    // code: ,
+                    totalAmount: data.installment.total_amount,
+                    currencyVal: data.installment.currency_val,
+                    // debit: ,
+                    credit: data.installment.first_batch,
+                    // feedback: ,
+                    // debitAmount: ,
+                    // creditAmount: ,
+                    // debitTotal: ,
+                    // creditTotal: ,
+                    // connectWith: ,
+                    // connectWithId: ,
+                    // isDeleted: ,
 
-            await this.chequeEntryService.generateChequesFromInstallment(chequesData);
-
+                },
+                gridData: [],
+                pictures: [],
+            }
 
             if (!installmentId) {
                 logger.error(`Failed to create installment.`);
                 return null;
             }
+
+            await this.chequeEntryService.generateChequesFromInstallment(chequesData);
+            await this.voucherService.createVoucherWithDetails(voucherData)
 
             logger.info(`Installment created successfully with ID: ${installmentId}`);
             return installmentId;

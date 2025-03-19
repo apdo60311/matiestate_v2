@@ -1146,6 +1146,10 @@ container.bind<ContractService>(DI_TYPES.ContractService)
             DI_TYPES.ChequeEntryService
         );
 
+        const voucherService = await context.container.getAsync<VoucherService>(
+            DI_TYPES.VoucherService
+        );
+
         return new ContractService(
             contractRepository,
             contractTermsRepository,
@@ -1163,6 +1167,7 @@ container.bind<ContractService>(DI_TYPES.ContractService)
             parkingRepository,
             buildingsRepository,
             chequeEntryService,
+            voucherService,
             entryGenerationFacade
         );
     })
