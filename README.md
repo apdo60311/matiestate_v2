@@ -27,7 +27,7 @@ Before you begin, ensure you have met the following requirements:
 - npm or yarn package manager
 
 
-## 🏗️ Project Structure
+## 📂 Project Structure
 
 - **Configuration & Environment**  
   - Environment variables are defined in [`.env`](.env)  
