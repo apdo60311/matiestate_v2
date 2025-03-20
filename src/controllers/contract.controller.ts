@@ -6,7 +6,7 @@ import ResponseModel from "../types/response.types";
 import { ContractService } from "../services/contract.service";
 import { Contract } from "../entities/Contract.entity";
 import { Installment } from "../entities/Installment.entity";
-import { IContractBody, IInstallmentBody } from "../types/contract.types";
+import { IContractBody, InstallmentBody } from "../types/contract.types";
 
 @injectable()
 export class ContractController {
@@ -249,14 +249,14 @@ export class ContractController {
     public createInstallment: RequestHandler<
         unknown,
         ResponseModel<Record<string, any>>,
-        IInstallmentBody,
+        InstallmentBody,
         unknown,
         any
     > = async (
         req: CustomRequest<
             unknown,
             ResponseModel<Record<string, any>>,
-            IInstallmentBody,
+            InstallmentBody,
             unknown,
             any
         >,

@@ -10,7 +10,8 @@ import { VoucherPictures } from "../entities/VoucherPictures.entity";
 import { VoucherPattern } from "../entities/VoucherPattern.entity";
 import { IVoucherBody, IVoucherEntry, IVoucherGridDataBody, IVoucherMainDataBody, IVoucherPicturesBody } from "../types/voucher.types";
 import { VoucherEntryService } from "./entry-services/voucher-entry.service";
-import { EntryGenerationFacade, EntryType } from "./entry-services/entry-services-facade";
+import { EntryGenerationFacade } from "./entry-services/entry-services-facade";
+import { EntryType } from "../types/entry.types";
 
 @injectable()
 export class VoucherService {
