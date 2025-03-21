@@ -116,6 +116,12 @@ import { OpCollectionRepository } from "../repositories/op/op-collection.reposit
 import { OpDeportationRepository } from "../repositories/op/op-deportation.repository";
 import { OpPartialCollectionRepository } from "../repositories/op/op-partial-collection.repository";
 import { OpReturnRepository } from "../repositories/op/op-return.repository";
+import { BillEntryService } from "../services/entry-services/bill-entry.service";
+import { BillService } from "../services/bill.service";
+import { BillDiscountsDetailsRepository } from "../repositories/bill/bill-discount-details.repository";
+import { BillMaterialDetailsRepository } from "../repositories/bill/bill-material-details.repository";
+import { BillRepository } from "../repositories/bill/bill.repository";
+import { BillController } from "../controllers/bill.controller";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -1022,6 +1028,7 @@ container.bind<TerminationFinesEntryService>(DI_TYPES.TerminationFinesEntryServi
 container.bind<FeesEntryService>(DI_TYPES.FeesEntryService).to(FeesEntryService);
 container.bind<ContractEntryService>(DI_TYPES.ContractEntryService).to(ContractEntryService);
 container.bind<VoucherEntryService>(DI_TYPES.VoucherEntryService).to(VoucherEntryService);
+container.bind<BillEntryService>(DI_TYPES.BillEntryService).to(BillEntryService);
 // container.bind<EntryGenerationFacade>(DI_TYPES.EntryGenerationFacade).to(EntryGenerationFacade);
 
 
@@ -1046,13 +1053,18 @@ container.bind<EntryGenerationFacade>(DI_TYPES.EntryGenerationFacade)
             DI_TYPES.VoucherEntryService
         );
 
+        const billEntryService = await context.container.getAsync<BillEntryService>(
+            DI_TYPES.BillEntryService
+        );
+
         return new EntryGenerationFacade(
             chequeEntryService,
             terminationEntryService,
             terminationFinesEntryService,
             feesEntryService,
             contractEntryService,
-            voucherEntryService
+            voucherEntryService,
+            billEntryService,
         );
     })
     .inSingletonScope();
@@ -1177,5 +1189,61 @@ container.bind<ContractController>(DI_TYPES.ContractController)
     .toDynamicValue(async (context) => {
         const service = await context.container.getAsync<ContractService>(DI_TYPES.ContractService);
         return new ContractController(service);
+    })
+    .inSingletonScope();
+
+
+container.bind<BillRepository>(DI_TYPES.BillRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new BillRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<BillMaterialDetailsRepository>(DI_TYPES.BillMaterialDetailsRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new BillMaterialDetailsRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<BillDiscountsDetailsRepository>(DI_TYPES.BillDiscountsDetailsRepository)
+    .toDynamicValue(async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new BillDiscountsDetailsRepository(dataSource);
+    })
+    .inSingletonScope();
+
+container.bind<BillService>(DI_TYPES.BillService)
+    .toDynamicValue(async (context) => {
+        const billRepository = await context.container.getAsync<BillRepository>(
+            DI_TYPES.BillRepository
+        );
+        const materialDetailsRepository = await context.container.getAsync<BillMaterialDetailsRepository>(
+            DI_TYPES.BillMaterialDetailsRepository
+        );
+        const discountDetailsRepository = await context.container.getAsync<BillDiscountsDetailsRepository>(
+            DI_TYPES.BillDiscountsDetailsRepository
+        );
+
+        const entryGenerationFacade = await context.container.getAsync<EntryGenerationFacade>(
+            DI_TYPES.EntryGenerationFacade
+        );
+
+        return new BillService(
+            billRepository,
+            materialDetailsRepository,
+            discountDetailsRepository,
+            entryGenerationFacade
+        );
+    })
+    .inSingletonScope();
+
+    container.bind<BillController>(DI_TYPES.BillController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<BillService>(
+            DI_TYPES.BillService
+        );
+        return new BillController(service);
     })
     .inSingletonScope();

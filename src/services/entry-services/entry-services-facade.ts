@@ -8,6 +8,7 @@ import { TerminationFinesEntryService } from "./termination-fines-entry.service"
 import { VoucherEntryService } from "./voucher-entry.service";
 import { EntryType, IEntryGenerationData } from "../../types/entry.types";
 import { DI_TYPES } from "../../di/di.types";
+import { BillEntryService } from "./bill-entry.service";
 
 
 @injectable()
@@ -29,7 +30,10 @@ export class EntryGenerationFacade {
         private readonly contractEntryService: ContractEntryService,
 
         @inject(DI_TYPES.VoucherEntryService)
-        private readonly voucherEntryService: VoucherEntryService
+        private readonly voucherEntryService: VoucherEntryService,
+        
+        @inject(DI_TYPES.BillEntryService)
+        private readonly billEntryService: BillEntryService,
     ) { }
 
     async generateEntry(entryGenerationData: IEntryGenerationData): Promise<boolean> {
@@ -59,6 +63,8 @@ export class EntryGenerationFacade {
                 case EntryType.VOUCHER:
                     await this.voucherEntryService.generateEntry(entryGenerationData.data);
                     break;
+                case EntryType.BILL:
+                    await this.billEntryService.generateEntry(entryGenerationData.data);
                 default:
                     throw new Error(`Unhandled entry type: ${entryGenerationData.type}`);
             }

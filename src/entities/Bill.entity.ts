@@ -124,6 +124,24 @@ export class Bill {
   @Column({ type: "uuid" })
   bill_pattern_id!: string;
 
+  @Column({ type: "int" })
+  code!: number;
+
+  @Column({ type: "uuid" })
+  vat_account_id!: string;
+
+  @Column({ type: "float4", nullable: true })
+  extras?: number;
+
+  @Column({ type: "float4", nullable: true })
+  vat_amount?: number;
+
+  @Column({ type: "float4" })
+  subtotal!: number;
+
+  @Column({ type: "uuid", nullable: true })
+  customer_id?: string;
+
   @ManyToOne(() => Tenant, { onDelete: "CASCADE" })
   @JoinColumn({ name: "tenant_id" })
   tenant!: Tenant;

@@ -15,7 +15,7 @@ export class BillEntryService {
      * Generates an entry from bill data, creating both main entry and grid rows.
      * @param data - The bill entry data containing values, pattern, and creation details.
      */
-    async generateEntryFromBill(data: IBillEntryData): Promise<void> {
+    async generateEntry(data: IBillEntryData): Promise<void> {
         try {
             const { values, pattern, created_from, created_from_id, created_from_code } = data;
             const bill = values.bill;

@@ -118,6 +118,7 @@ export const DI_TYPES = {
   ContractEntryService: Symbol.for('ContractEntryService'),
   VoucherEntryService: Symbol.for('VoucherEntryService'),
   EntryGenerationFacade: Symbol.for('EntryGenerationFacade'),
+  BillEntryService: Symbol.for('BillEntryService'),
 
   OpCollectionRepository: Symbol.for('OpCollectionRepository'),
   OpReturnRepository: Symbol.for('OpReturnRepository'),
@@ -137,4 +138,10 @@ export const DI_TYPES = {
   InstallmentRepository: Symbol.for('InstallmentRepository'),
   ContractService: Symbol.for('ContractService'),
   ContractController: Symbol.for('ContractController'),
+
+  BillRepository: Symbol.for('BillRepository'),
+  BillMaterialDetailsRepository: Symbol.for('BillMaterialDetailsRepository'),
+  BillDiscountsDetailsRepository: Symbol.for('BillDiscountsDetailsRepository'), 
+  BillService: Symbol.for('BillService'),
+  BillController: Symbol.for('BillController')
 };

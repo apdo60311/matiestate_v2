@@ -65,7 +65,7 @@ export interface IBillEntryData {
             currency_id?: string;
             currency_val?: number;
             note?: string;
-            bill_date?: string;
+            bill_date?: Date;
             subtotal?: number;
             total?: number;
             discounts?: number;
@@ -74,7 +74,7 @@ export interface IBillEntryData {
             customer_account_id: string;
             material_account_id: string;
             cost_center_id: string;
-            payment_method: string;
+            payment_method: number;
             vat_account_id?: string;
             bill_discounts_details: Array<{
                 discount?: number;
@@ -87,7 +87,7 @@ export interface IBillEntryData {
         };
     };
     pattern: {
-        bill_type: string;
+        bill_type: number;
         cash_account_id: string;
         discount_account_id: string;
         extra_account_id: string;
@@ -212,7 +212,8 @@ export enum EntryType {
     TERMINATION_FINES = "termination_fines",
     FEES = "fees",
     CONTRACT = "contract",
-    VOUCHER = "voucher"
+    VOUCHER = "voucher",
+    BILL = "bill"
 }
 
 export interface IEntryGenerationData {
