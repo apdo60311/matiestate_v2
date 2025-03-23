@@ -3,7 +3,7 @@ import { BuildingsRepository } from "../repositories/buildings.repository";
 import { injectable, inject } from "inversify";
 import { Building } from "../entities/Building.entity";
 import { IBuildingDetailsBody, IBuildingsBody, IBuildingDetailsResponse, IPropertyValues } from "../types/buildings.types";
-import { AccountRepository } from "../repositories/account.repository";
+import { AccountRepository } from "../repositories/account/account.repository";
 import { Account } from "../entities/Account.entity";
 import { CostCenterRepository } from "../repositories/cost-center.repository";
 import { ICreateBuildingReturnData } from "../interfaces/buildings-service.interfaces";

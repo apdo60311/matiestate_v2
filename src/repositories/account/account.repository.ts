@@ -1,6 +1,6 @@
-import { logger } from "../utils/logger";
-import { DI_TYPES } from "../di/di.types";
-import { Account } from "../entities/Account.entity";
+import { logger } from "../../utils/logger";
+import { DI_TYPES } from "../../di/di.types";
+import { Account } from "../../entities/Account.entity";
 import { inject, injectable } from "inversify";
 import { DataSource, Repository } from "typeorm"
 

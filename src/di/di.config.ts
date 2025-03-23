@@ -6,7 +6,7 @@ import { BuildingsRepository } from "../repositories/buildings.repository";
 import { BuildingsService } from "../services/buildings.service";
 import { BuildingsController } from "../controllers/buildings.controller";
 import { CostCenterRepository } from "../repositories/cost-center.repository";
-import { AccountRepository } from "../repositories/account.repository";
+import { AccountRepository } from "../repositories/account/account.repository";
 import { ReservationPropertyService } from "../services/reservation-property.service";
 import { ReservationPropertyController } from "../controllers/reservation-property.controller";
 import { ReservationPropertyRepository } from "../repositories/reservation-property.repository";

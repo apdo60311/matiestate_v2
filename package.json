@@ -10,6 +10,7 @@
     "test": "jest",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "docker":"chmod +x docker-dev.sh && sudo ./docker-dev.sh start"
   },
   "author": "",
