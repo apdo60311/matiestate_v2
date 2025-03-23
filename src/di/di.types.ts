@@ -4,7 +4,10 @@ export const DI_TYPES = {
   BuildingsService: Symbol.for("BuildingsService"),
   BuildingsController: Symbol.for("BuildingsController"),
   CostCenterRepository: Symbol.for("CostCenterRepository"),
+
   AccountRepository: Symbol.for("AccountRepository"),
+  AccountAssemblyRepository: Symbol.for("AccountAssemblyRepository"),
+  AccountDistributiveRepository: Symbol.for("AccountDistributiveRepository"),
 
   ReservationPropertyRepository: Symbol.for("ReservationPropertyRepository"),
   ReservationPropertyService: Symbol.for("ReservationPropertyService"),
@@ -141,7 +144,7 @@ export const DI_TYPES = {
 
   BillRepository: Symbol.for('BillRepository'),
   BillMaterialDetailsRepository: Symbol.for('BillMaterialDetailsRepository'),
-  BillDiscountsDetailsRepository: Symbol.for('BillDiscountsDetailsRepository'), 
+  BillDiscountsDetailsRepository: Symbol.for('BillDiscountsDetailsRepository'),
   BillService: Symbol.for('BillService'),
   BillController: Symbol.for('BillController')
 };

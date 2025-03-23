@@ -8,8 +8,8 @@ export const USER_SUPERVISOR_CODE = 3;
 export const USER_WORKER_CODE = 4;
 
 export const MAIN_USERS_CODE = {
-    [USER_CUSTOMER_CODE]: 121,
-    [USER_SUPPLIER_CODE]: 221,
+    USER_CUSTOMER_CODE: 121,
+    USER_SUPPLIER_CODE: 221,
 };
 
 // Lack reasons

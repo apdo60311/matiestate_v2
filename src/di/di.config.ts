@@ -122,6 +122,8 @@ import { BillDiscountsDetailsRepository } from "../repositories/bill/bill-discou
 import { BillMaterialDetailsRepository } from "../repositories/bill/bill-material-details.repository";
 import { BillRepository } from "../repositories/bill/bill.repository";
 import { BillController } from "../controllers/bill.controller";
+import { AccountAssemblyRepository } from "../repositories/account/account-assembly.repository";
+import { AccountDistributiveRepository } from "../repositories/account/account-distributive.repository";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -1239,7 +1241,7 @@ container.bind<BillService>(DI_TYPES.BillService)
     })
     .inSingletonScope();
 
-    container.bind<BillController>(DI_TYPES.BillController)
+container.bind<BillController>(DI_TYPES.BillController)
     .toDynamicValue(async (context) => {
         const service = await context.container.getAsync<BillService>(
             DI_TYPES.BillService
@@ -1247,3 +1249,19 @@ container.bind<BillService>(DI_TYPES.BillService)
         return new BillController(service);
     })
     .inSingletonScope();
+
+
+container.bind<AccountAssemblyRepository>(DI_TYPES.AccountAssemblyRepository).toDynamicValue(
+    async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new AccountAssemblyRepository(dataSource);
+    }
+)
+
+
+container.bind<AccountDistributiveRepository>(DI_TYPES.AccountDistributiveRepository).toDynamicValue(
+    async (context) => {
+        const dataSource = await context.container.getAsync<DataSource>(DI_TYPES.DataSource);
+        return new AccountDistributiveRepository(dataSource);
+    }
+);

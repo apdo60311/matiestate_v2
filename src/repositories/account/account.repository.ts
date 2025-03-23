@@ -55,7 +55,20 @@ export class AccountRepository extends Repository<Account> {
             return await this.findOneBy({ code });
         } catch (error) {
             logger.error(`Error while fetching Account. ${error}`);
-            return null;   
+            return null;
+        }
+    }
+
+    async getAccountsByParrentId(id: string): Promise<Account[] | null> {
+        try {
+            return await this.find({
+                where: {
+                    parent_id: id
+                }
+            });
+        } catch (error) {
+            logger.error(`Error while fetching Account. ${error}`);
+            return null;
         }
     }
 
