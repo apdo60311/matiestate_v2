@@ -124,6 +124,8 @@ import { BillRepository } from "../repositories/bill/bill.repository";
 import { BillController } from "../controllers/bill.controller";
 import { AccountAssemblyRepository } from "../repositories/account/account-assembly.repository";
 import { AccountDistributiveRepository } from "../repositories/account/account-distributive.repository";
+import { AccountController } from "../controllers/account.controller";
+import { AccountService } from "../services/account.service";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -1265,3 +1267,32 @@ container.bind<AccountDistributiveRepository>(DI_TYPES.AccountDistributiveReposi
         return new AccountDistributiveRepository(dataSource);
     }
 );
+
+container.bind<AccountService>(DI_TYPES.AccountService).toDynamicValue(
+    async (context) => {
+        const AccountRepository = await context.container.getAsync<AccountRepository>(
+            DI_TYPES.AccountRepository
+        );
+        const accountAssemblyRepository = await context.container.getAsync<AccountAssemblyRepository>(
+            DI_TYPES.AccountAssemblyRepository
+        );
+        const accountDistributiveRepository = await context.container.getAsync<AccountDistributiveRepository>(
+            DI_TYPES.AccountDistributiveRepository
+        );
+        return new AccountService(
+            AccountRepository,
+            accountAssemblyRepository,
+            accountDistributiveRepository
+        );
+    }
+
+);
+container.bind<AccountController>(DI_TYPES.AccountController)
+    .toDynamicValue(async (context) => {
+        const service = await context.container.getAsync<AccountService>(
+            DI_TYPES.AccountService
+        );
+        return new AccountController(service);
+    })
+    .inSingletonScope();
+

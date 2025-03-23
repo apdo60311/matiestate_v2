@@ -8,6 +8,8 @@ export const DI_TYPES = {
   AccountRepository: Symbol.for("AccountRepository"),
   AccountAssemblyRepository: Symbol.for("AccountAssemblyRepository"),
   AccountDistributiveRepository: Symbol.for("AccountDistributiveRepository"),
+  AccountService: Symbol.for("AccountService"),
+  AccountController: Symbol.for("AccountController"),
 
   ReservationPropertyRepository: Symbol.for("ReservationPropertyRepository"),
   ReservationPropertyService: Symbol.for("ReservationPropertyService"),

@@ -30,6 +30,7 @@ import voucherRoutes from './routes/voucher.routes';
 import chequeRoutes from './routes/cheque.routes';
 import opRoutes from './routes/op.routes';
 import billRoutes from './routes/bill.routes';
+import accountRoutes from './routes/account.routes';
 
 const app = express();
 
@@ -70,6 +71,7 @@ v1ClientRouter.use('/vouchers', voucherRoutes);
 v1ClientRouter.use('/cheques', chequeRoutes);
 v1ClientRouter.use('/op', opRoutes);
 v1ClientRouter.use('/bill', billRoutes);
+v1ClientRouter.use('/accounts', accountRoutes);
 
 v1Router.use('/client', v1ClientRouter);
 

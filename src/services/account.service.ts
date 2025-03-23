@@ -12,7 +12,7 @@ import {
     IAccountDistributiveBody,
     IAccountResponse
 } from "../types/account.type";
-import { MAIN_USERS_CODE, USER_CUSTOMER_CODE } from "@/constants/default.constants";
+import { MAIN_USERS_CODE, USER_CUSTOMER_CODE } from "../constants/default.constants";
 
 @injectable()
 export class AccountService {
