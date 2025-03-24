@@ -18,6 +18,6 @@ export interface User {
 
 
 */
-export interface CustomRequest<P,R,B,Q,L extends Record<string, any>> extends Request<P,R,B,Q,L> {
+export interface CustomRequest<P, R, B, Q, L extends Record<string, any>> extends Request<P, R, B, Q, L> {
   user?: User;
 }

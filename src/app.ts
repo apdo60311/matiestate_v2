@@ -31,6 +31,7 @@ import chequeRoutes from './routes/cheque.routes';
 import opRoutes from './routes/op.routes';
 import billRoutes from './routes/bill.routes';
 import accountRoutes from './routes/account.routes';
+import { RateLimiting } from './config/rate-limiting.config';
 
 const app = express();
 
@@ -40,6 +41,9 @@ app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// apply rate limitng
+app.use((RateLimiting));
 
 const v1Router = express.Router();
 
