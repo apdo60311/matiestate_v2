@@ -3,7 +3,7 @@ import { container } from "../di/di.config";
 import { DI_TYPES } from "../di/di.types";
 import { BankController } from "../controllers/bank.controller";
 import { validateDto } from "../middlewares/validation.middleware";
-import { CreateBankDto } from "../dtos/create-bank.dto";
+import { CreateBankDto } from "../dtos/create/bank.dtos";
 import { createUserSelectorMiddleware as auth } from "../middlewares/auth";
 
 const router = express.Router();

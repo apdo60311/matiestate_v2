@@ -3,8 +3,8 @@ import { container } from "../di/di.config";
 import { DI_TYPES } from "../di/di.types";
 import { ContractController } from "../controllers/contract.controller";
 import { validateDto } from "../middlewares/validation.middleware";
-import { CreateContractDto } from "../dtos/create-contract.dto";
-import { CreateInstallmentDto } from "../dtos/create-installment.dto";
+import { CreateContractDto } from "../dtos/create/contract.dtos";
+import { CreateInstallmentDto } from "../dtos/create/installment.dtos";
 
 const router = express.Router();
 

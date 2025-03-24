@@ -11,7 +11,7 @@ import {
     IAccountAssemblyBody,
     IAccountDistributiveBody,
     IAccountResponse
-} from "../types/account.type";
+} from "../types/account.types";
 import { MAIN_USERS_CODE, USER_CUSTOMER_CODE } from "../constants/default.constants";
 
 @injectable()

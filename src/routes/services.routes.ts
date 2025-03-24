@@ -3,13 +3,13 @@ import * as ServicesController from "../controllers/services.controller";
 import {
     createUserSelectorMiddleware as auth,
 } from "../middlewares/auth";
-import { IRoute } from "@/types/router.type";
+import { IRoute } from "@/types/router.types";
 
 const mainRouter = express.Router();
 
 const workerRouter = express.Router();
 
-const workerRoutes : IRoute[] = [
+const workerRoutes: IRoute[] = [
     {
         path: '/:service_id',
         method: 'get',
@@ -19,7 +19,7 @@ const workerRoutes : IRoute[] = [
 
 workerRoutes.forEach(route => workerRouter[route.method](route.path, auth, route.handler));
 
-mainRouter.get("/statistics",auth, ServicesController.getServicesStatisticsController);
+mainRouter.get("/statistics", auth, ServicesController.getServicesStatisticsController);
 mainRouter.get("/", auth, ServicesController.getServiceByIdController);
 
 mainRouter.use('/worker', workerRouter);

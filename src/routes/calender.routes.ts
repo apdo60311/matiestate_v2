@@ -1,14 +1,14 @@
 import express from "express";
-import { createUserSelectorMiddleware as auth} from "../middlewares/auth";
-import { IRoute } from "@/types/router.type";
+import { createUserSelectorMiddleware as auth } from "../middlewares/auth";
+import { IRoute } from "@/types/router.types";
 import { getCalenderByCategoryAndBuildingId } from "@/controllers/calender.controller";
 
 const mainRouter = express.Router();
 
 const calenderRoutes: IRoute[] = [
     {
-        path:"/",
-        method:"get",
+        path: "/",
+        method: "get",
         middlewares: [auth],
         handler: getCalenderByCategoryAndBuildingId
     }

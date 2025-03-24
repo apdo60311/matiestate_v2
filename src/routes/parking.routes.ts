@@ -3,7 +3,7 @@ import { container } from "../di/di.config";
 import { DI_TYPES } from "../di/di.types";
 import { ParkingController } from "../controllers/parking.controller";
 import { validateDto } from "../middlewares/validation.middleware";
-import { CreateParkingDto } from "../dtos/create-parking.dto";
+import { CreateParkingDto } from "../dtos/create/parking.dtos";
 import { createUserSelectorMiddleware as auth } from "../middlewares/auth";
 
 const router = express.Router();
@@ -13,59 +13,59 @@ const router = express.Router();
         DI_TYPES.ParkingController
     );
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateParkingDto:
- *       type: object
- *       required:
- *         - building_id
- *         - parking_no
- *         - x_index
- *         - y_index
- *       properties:
- *         building_id:
- *           type: string
- *           format: uuid
- *         parking_no:
- *           type: string
- *         floor_no:
- *           type: string
- *         description:
- *           type: string
- *         x_index:
- *           type: number
- *         y_index:
- *           type: number
- *         area:
- *           type: number
- *         area_unit:
- *           type: string
- *         view:
- *           type: string
- *         parking_kind:
- *           type: number
- *         has_lawsuit:
- *           type: boolean
- *         property_type:
- *           type: number
- *         hex:
- *           type: string
- *         row_index:
- *           type: number
- *         pictures:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/CreateParkingPicturesDto'
- *         rental_price:
- *           $ref: '#/components/schemas/CreateParkingRentalPriceDto'
- *         selling_price:
- *           $ref: '#/components/schemas/CreateParkingSellingPriceDto'
- *
- *     UpdateParkingDto:
- *       $ref: '#/components/schemas/CreateParkingDto'
- */
+    /**
+     * @openapi
+     * components:
+     *   schemas:
+     *     CreateParkingDto:
+     *       type: object
+     *       required:
+     *         - building_id
+     *         - parking_no
+     *         - x_index
+     *         - y_index
+     *       properties:
+     *         building_id:
+     *           type: string
+     *           format: uuid
+     *         parking_no:
+     *           type: string
+     *         floor_no:
+     *           type: string
+     *         description:
+     *           type: string
+     *         x_index:
+     *           type: number
+     *         y_index:
+     *           type: number
+     *         area:
+     *           type: number
+     *         area_unit:
+     *           type: string
+     *         view:
+     *           type: string
+     *         parking_kind:
+     *           type: number
+     *         has_lawsuit:
+     *           type: boolean
+     *         property_type:
+     *           type: number
+     *         hex:
+     *           type: string
+     *         row_index:
+     *           type: number
+     *         pictures:
+     *           type: array
+     *           items:
+     *             $ref: '#/components/schemas/CreateParkingPicturesDto'
+     *         rental_price:
+     *           $ref: '#/components/schemas/CreateParkingRentalPriceDto'
+     *         selling_price:
+     *           $ref: '#/components/schemas/CreateParkingSellingPriceDto'
+     *
+     *     UpdateParkingDto:
+     *       $ref: '#/components/schemas/CreateParkingDto'
+     */
     /**
      * @openapi
      * /parkings:

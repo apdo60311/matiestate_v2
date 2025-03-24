@@ -1,5 +1,5 @@
 import express from 'express';
-import { IRoute } from "@/types/router.type";
+import { IRoute } from "@/types/router.types";
 import { CompanyController, ManagerController, PackageController, StatisticsController, TenantController } from '../controllers/admin.controller';
 import { isManagerPreHandler, isSuperAdminPreHandler } from '@/middlewares/auth';
 
@@ -12,7 +12,7 @@ const managerRouter = express.Router();
 const statisticsRouter = express.Router();
 
 
-const companyRoutes : IRoute[] = [
+const companyRoutes: IRoute[] = [
     {
         path: '/',
         method: 'post',
@@ -158,7 +158,7 @@ const managerRoutes: IRoute[] = [
 managerRoutes.forEach(route => managerRouter[route.method](route.path, ...(route.middlewares || []), route.handler));
 
 
-const statisticsRoutes : IRoute[] = [
+const statisticsRoutes: IRoute[] = [
     {
         path: '/count',
         method: 'get',

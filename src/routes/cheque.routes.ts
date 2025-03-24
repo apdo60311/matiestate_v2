@@ -7,7 +7,7 @@ import { createUserSelectorMiddleware as auth } from "../middlewares/auth";
 import {
   CreateChequeRequestDto,
   UpdateChequeRequestDto,
-} from "../dtos/create-cheque.dto";
+} from "../dtos/create/cheque.dtos";
 
 const router = express.Router();
 

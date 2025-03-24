@@ -4,21 +4,21 @@ import {
     createUserSelectorMiddleware as auth,
     isCustomerPreHandler,
 } from "../middlewares/auth";
-import { IRoute } from "@/types/router.type";
+import { IRoute } from "@/types/router.types";
 
 
 const mainRouter = express.Router();
 
 const serviceRouter = express.Router();
 
-const serviceRoutes : IRoute[] = [
+const serviceRoutes: IRoute[] = [
     {
         path: "/book",
         method: "post",
         handler: CustomerController.customerBookService,
     },
     {
-        path:"/update-date",
+        path: "/update-date",
         method: "put",
         handler: CustomerController.customerUpdateServiceDate
     }
@@ -45,7 +45,7 @@ const contractRoutes: IRoute[] = [
     },
 ];
 
-contractRoutes.forEach(route => mainRouter[route.method](route.path,auth, isCustomerPreHandler ,route.handler));
+contractRoutes.forEach(route => mainRouter[route.method](route.path, auth, isCustomerPreHandler, route.handler));
 
 
 const requestEvacuationRoutes: IRoute[] = [
@@ -67,9 +67,9 @@ const requestEvacuationRoutes: IRoute[] = [
     },
 ]
 
-requestEvacuationRoutes.forEach(route => mainRouter[route.method](route.path,auth, isCustomerPreHandler, route.handler));
+requestEvacuationRoutes.forEach(route => mainRouter[route.method](route.path, auth, isCustomerPreHandler, route.handler));
 
-const unitRoutes : IRoute[] = [
+const unitRoutes: IRoute[] = [
     {
         path: "/unit/contract",
         method: "get",
@@ -82,7 +82,7 @@ const unitRoutes : IRoute[] = [
     },
 ];
 
-unitRoutes.forEach(route => mainRouter[route.method](route.path,auth, route.handler));
+unitRoutes.forEach(route => mainRouter[route.method](route.path, auth, route.handler));
 
 const otherRoutes: IRoute[] = [
     {
@@ -105,7 +105,7 @@ const otherRoutes: IRoute[] = [
 
 ];
 
-otherRoutes.forEach(route => mainRouter[route.method](route.path,auth, route.handler));
+otherRoutes.forEach(route => mainRouter[route.method](route.path, auth, route.handler));
 
 
 mainRouter.use('/service', serviceRouter);

@@ -5,7 +5,7 @@ import { AccountService } from "../services/account.service";
 import { CustomRequest } from "../types/request.types";
 import ResponseModel from "../types/response.types";
 import { logger } from "../utils/logger";
-import { IAccountBody, IAccountResponse, IAccountAssemblyBody, IAccountDistributiveBody } from "../types/account.type";
+import { IAccountBody, IAccountResponse, IAccountAssemblyBody, IAccountDistributiveBody } from "../types/account.types";
 import { AccountDistributive } from "../entities/AccountDistributive.entity";
 import { AccountAssembly } from "../entities/AccountAssembly.entity";
 

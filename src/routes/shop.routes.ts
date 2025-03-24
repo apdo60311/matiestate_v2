@@ -3,7 +3,7 @@ import { container } from "../di/di.config";
 import { DI_TYPES } from "../di/di.types";
 import { ShopController } from "../controllers/shop.controller";
 import { validateDto } from "../middlewares/validation.middleware";
-import { CreateShopDto } from "../dtos/create-shop.dto";
+import { CreateShopDto } from "../dtos/create/shop.dtos";
 import { createUserSelectorMiddleware as auth } from "../middlewares/auth";
 
 const router = express.Router();
@@ -14,34 +14,34 @@ const router = express.Router();
     );
 
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateShopDto:
- *       type: object
- *       required:
- *         - shop_no
- *         - building_id
- *       properties:
- *         shop_no:
- *           type: string
- *         building_id:
- *           type: string
- *           format: uuid
- *         floor_no:
- *           type: string
- *         description:
- *           type: string
- *         area:
- *           type: number
- *         area_unit:
- *           type: string
- *         view:
- *           type: string
- *         shop_kind:
- *           type: number
- */
+    /**
+     * @openapi
+     * components:
+     *   schemas:
+     *     CreateShopDto:
+     *       type: object
+     *       required:
+     *         - shop_no
+     *         - building_id
+     *       properties:
+     *         shop_no:
+     *           type: string
+     *         building_id:
+     *           type: string
+     *           format: uuid
+     *         floor_no:
+     *           type: string
+     *         description:
+     *           type: string
+     *         area:
+     *           type: number
+     *         area_unit:
+     *           type: string
+     *         view:
+     *           type: string
+     *         shop_kind:
+     *           type: number
+     */
     /**
      * @openapi
      * /shops:

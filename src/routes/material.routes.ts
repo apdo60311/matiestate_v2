@@ -5,7 +5,7 @@ import { MaterialController } from "../controllers/material.controller";
 import { validateDto } from "../middlewares/validation.middleware";
 import { IMaterialRequestBody } from "../types/material.types";
 import { createUserSelectorMiddleware as auth } from "../middlewares/auth";
-import { MaterialDto, MaterialRequestDto } from "../dtos/create-material.dto";
+import { MaterialDto, MaterialRequestDto } from "../dtos/create/material.dtos";
 
 const router = express.Router();
 

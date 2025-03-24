@@ -3,7 +3,7 @@ import { container } from "../di/di.config";
 import { DI_TYPES } from "../di/di.types";
 import { SellerController } from "../controllers/seller.controller";
 import { validateDto } from "../middlewares/validation.middleware";
-import { CreateSellerDto } from "../dtos/create-seller.dto";
+import { CreateSellerDto } from "../dtos/create/seller.dtos";
 import { createUserSelectorMiddleware as auth } from "../middlewares/auth";
 
 const router = express.Router();
@@ -13,28 +13,28 @@ const router = express.Router();
         DI_TYPES.SellerController
     );
 
-/**
- * @openapi
- * components:
- *   schemas:
- *     CreateSellerDto:
- *       type: object
- *       required:
- *         - name
- *       properties:
- *         name:
- *           type: string
- *         phone:
- *           type: string
- *         email:
- *           type: string
- *           format: email
- *         address:
- *           type: string
- *         tenant_id:
- *           type: string
- *           format: uuid
- */
+    /**
+     * @openapi
+     * components:
+     *   schemas:
+     *     CreateSellerDto:
+     *       type: object
+     *       required:
+     *         - name
+     *       properties:
+     *         name:
+     *           type: string
+     *         phone:
+     *           type: string
+     *         email:
+     *           type: string
+     *           format: email
+     *         address:
+     *           type: string
+     *         tenant_id:
+     *           type: string
+     *           format: uuid
+     */
     /**
      * @openapi
      * /sellers:

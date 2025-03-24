@@ -3,7 +3,7 @@ import { container } from "../di/di.config";
 import { DI_TYPES } from "../di/di.types";
 import { ReservationPropertyController } from "../controllers/reservation-property.controller";
 import { validateDto } from "../middlewares/validation.middleware";
-import { CreateReservationPropertyDto } from "../dtos/create-reservation-property.dto";
+import { CreateReservationPropertyDto } from "../dtos/create/reservation-property.dtos";
 
 const router = express.Router();
 
@@ -24,7 +24,7 @@ const router = express.Router();
      *       500:
      *         description: Server error
      */
-    router.post("/", validateDto(CreateReservationPropertyDto),reservationPropertyController.create);
+    router.post("/", validateDto(CreateReservationPropertyDto), reservationPropertyController.create);
 
     /**
      * @openapi

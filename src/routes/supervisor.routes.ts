@@ -4,7 +4,7 @@ import {
     createUserSelectorMiddleware as auth,
     isSupervisorPreHandler,
 } from "../middlewares/auth";
-import { IRoute } from "@/types/router.type";
+import { IRoute } from "@/types/router.types";
 
 const mainRouter = express.Router();
 
@@ -13,8 +13,8 @@ const serviceRouter = express.Router();
 
 const serviceRoutes: IRoute[] = [
     {
-        path:'/status',
-        method:'post',
+        path: '/status',
+        method: 'post',
         handler: SupervisorController.supervisorChangeServiceStatus
     },
     {
@@ -37,7 +37,7 @@ const serviceRoutes: IRoute[] = [
         method: 'delete',
         handler: SupervisorController.supervisorRemoveProblem
     },
-    
+
 ];
 
 serviceRoutes.forEach(route => serviceRouter[route.method](route.path, auth, isSupervisorPreHandler, route.handler));
@@ -59,7 +59,7 @@ const propertyPreparingRoutes: IRoute[] = [
 
 propertyPreparingRoutes.forEach(route => propertyPreparingRouter[route.method](route.path, auth, isSupervisorPreHandler, route.handler));
 
-const otherRoutes : IRoute[] = [
+const otherRoutes: IRoute[] = [
     {
         path: '/materials/accept',
         method: 'post',

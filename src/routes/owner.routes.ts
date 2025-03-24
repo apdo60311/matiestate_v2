@@ -3,7 +3,7 @@ import { container } from "../di/di.config";
 import { DI_TYPES } from "../di/di.types";
 import { OwnerController } from "../controllers/owner.controller";
 import { validateDto } from "../middlewares/validation.middleware";
-import { CreateOwnerDto, CreateOwnerExpenseDetailDto, CreateOwnerExpenseDto } from "../dtos/create-owner.dto";
+import { CreateOwnerDto, CreateOwnerExpenseDetailDto, CreateOwnerExpenseDto } from "../dtos/create/owner.dtos";
 import { createUserSelectorMiddleware as auth } from "../middlewares/auth";
 
 const router = express.Router();
@@ -217,7 +217,7 @@ const router = express.Router();
      *       500:
      *         description: Server error
      */
-    router.post("/expenses", validateDto(CreateOwnerExpenseDto),ownerController.createExpense);
+    router.post("/expenses", validateDto(CreateOwnerExpenseDto), ownerController.createExpense);
 
     /**
      * @openapi
@@ -241,7 +241,7 @@ const router = express.Router();
      */
     router.get("/:ownerId/expenses", ownerController.getExpenses);
 
-    
+
     /**
      * @openapi
      * /owners/expenses:

@@ -3,7 +3,7 @@ import { container } from "../di/di.config";
 import { DI_TYPES } from "../di/di.types";
 import { LessorController } from "../controllers/lessor.controller";
 import { validateDto } from "../middlewares/validation.middleware";
-import { CreateLessorDto } from "../dtos/create-lessor.dto";
+import { CreateLessorDto } from "../dtos/create/lessor.dtos";
 import { createUserSelectorMiddleware as auth } from "../middlewares/auth";
 
 const router = express.Router();

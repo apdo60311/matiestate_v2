@@ -10,7 +10,7 @@ import {
   CreateChequePatternDto,
   CreateContractPatternDto,
   CreateVoucherPatternDto,
-} from "../dtos/create-patterns.dto";
+} from "../dtos/create/patterns.dtos";
 
 const router = express.Router();
 
@@ -145,7 +145,7 @@ const router = express.Router();
    */
   router.get("/cheque/:id", patternController.getChequePatternById);
 
-  
+
   /**
    * @openapi
    * /patterns/cheque:

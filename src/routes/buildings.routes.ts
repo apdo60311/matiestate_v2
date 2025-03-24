@@ -3,8 +3,8 @@ import { BuildingsController } from "../controllers/buildings.controller";
 import express from "express";
 import { DI_TYPES } from "../di/di.types";
 import { validateDto } from "../middlewares/validation.middleware";
-import { CreateBuildingDto } from "../dtos/create-building.dto";
-import { CreateBuildingDetailsDto } from "../dtos/create-building-details.dto";
+import { CreateBuildingDto } from "../dtos/create/building.dtos";
+import { CreateBuildingDetailsDto } from "../dtos/create/building-details.dtos";
 
 /**
  * @swagger
@@ -314,27 +314,27 @@ const router = express.Router();
  *       500:
  *         description: Error creating building details
  */
-router.post("/details/:id", buildingsController.createDetails);
-/**
- * @openapi
- * /buildings/{id}/details:
- *   get:
- *     summary: Get building details
- *     tags: [Buildings]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The building ID
- *     responses:
- *       200:
- *         description: Building details retrieved successfully
- *       500:
- *         description: Error retrieving building details
- */
-router.get("/details/:id", buildingsController.getDetails);
+  router.post("/details/:id", buildingsController.createDetails);
+  /**
+   * @openapi
+   * /buildings/{id}/details:
+   *   get:
+   *     summary: Get building details
+   *     tags: [Buildings]
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *         description: The building ID
+   *     responses:
+   *       200:
+   *         description: Building details retrieved successfully
+   *       500:
+   *         description: Error retrieving building details
+   */
+  router.get("/details/:id", buildingsController.getDetails);
 
 
 })();

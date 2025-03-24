@@ -4,7 +4,7 @@ import { DI_TYPES } from "../di/di.types";
 import { CustomRequest } from "../types/request.types";
 import ResponseModel from "../types/response.types";
 import { OpService } from "../services/op.service";
-import { CreateOpCollectionDto, CreateOpDeportationDto, CreateOpPartialCollectionDto, CreateOpReturnDto } from "../dtos/create-op.dto";
+import { CreateOpCollectionDto, CreateOpDeportationDto, CreateOpPartialCollectionDto, CreateOpReturnDto } from "../dtos/create/op.dtos";
 
 @injectable()
 export class OpController {

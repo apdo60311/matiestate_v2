@@ -7,7 +7,7 @@ import { EntriesController } from "../controllers/entry.controller";
 import {
   CreateEntryRequestDto,
   UpdateEntryRequestDto,
-} from "../dtos/create-entry.dto";
+} from "../dtos/create/entry.dtos";
 
 const router = express.Router();
 
