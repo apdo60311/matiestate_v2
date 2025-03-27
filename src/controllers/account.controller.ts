@@ -246,4 +246,27 @@ export class AccountController {
             });
         }
     };
+
+    public getLeafAccounts: RequestHandler<
+        unknown,
+        ResponseModel<{ accounts: IAccountResponse[] }>,
+        unknown,
+        unknown,
+        any
+    > = async (req, res, next): Promise<any> => {
+        try {
+            const accounts = await this.accountService.getLeafAccounts();
+            return res.status(200).send({
+                success: true,
+                message: "Leaf accounts retrieved successfully",
+                data: { accounts }
+            });
+        } catch (error: any) {
+            logger.error(`Error getting leaf accounts: ${error.message}`);
+            return res.status(500).send({
+                success: false,
+                message: error.message
+            });
+        }
+    }
 }

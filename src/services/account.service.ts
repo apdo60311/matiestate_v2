@@ -130,6 +130,14 @@ export class AccountService {
             throw error;
         }
     }
+    async getLeafAccounts(): Promise<IAccountResponse[]> {
+        try {
+            return await this.accountRepository.getLeafAccounts();
+        } catch (error) {
+            logger.error(`Error getting leaf accounts: ${error}`);
+            throw error;
+        }
+    }
 
     // Account Assembly Methods
     async createAccountAssembly(data: IAccountAssemblyBody): Promise<string | null> {

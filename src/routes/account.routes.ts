@@ -242,7 +242,7 @@ const router = express.Router();
      *       500:
      *         description: Server error
      */
-    router.post("/", auth, validateDto(CreateAccountDto), accountController.createAccount);
+    router.post("/", validateDto(CreateAccountDto), accountController.createAccount);
 
     /**
      * @openapi
@@ -274,7 +274,7 @@ const router = express.Router();
      *       500:
      *         description: Server error
      */
-    router.get("/", auth, accountController.getAccounts);
+    router.get("/", accountController.getAccounts);
 
     /**
      * @openapi
@@ -294,7 +294,7 @@ const router = express.Router();
      *       500:
      *         description: Server error
      */
-    router.get("/customers", auth, accountController.getCustomerAccounts);
+    router.get("/customers", accountController.getCustomerAccounts);
 
     /**
      * @openapi
@@ -314,7 +314,7 @@ const router = express.Router();
      *       500:
      *         description: Server error
      */
-    router.get("/suppliers", auth, accountController.getSupplierAccounts);
+    router.get("/suppliers", accountController.getSupplierAccounts);
 
     /**
      * @openapi
@@ -343,7 +343,7 @@ const router = express.Router();
      *       500:
      *         description: Server error
      */
-    router.get("/:id", auth, accountController.getAccountById);
+    router.get("/account/:id", accountController.getAccountById);
 
     /**
      * @openapi
@@ -365,7 +365,7 @@ const router = express.Router();
      *       500:
      *         description: Server error
      */
-    router.post("/assembly", auth, validateDto(CreateAccountAssemblyDto), accountController.createAccountAssembly);
+    router.post("/assembly", validateDto(CreateAccountAssemblyDto), accountController.createAccountAssembly);
 
     /**
      * @openapi
@@ -394,7 +394,7 @@ const router = express.Router();
      *       500:
      *         description: Server error
      */
-    router.get("/assembly/:id", auth, accountController.getAccountAssemblyById);
+    router.get("/assembly/:id", accountController.getAccountAssemblyById);
 
     /**
      * @openapi
@@ -416,7 +416,7 @@ const router = express.Router();
      *       500:
      *         description: Server error
      */
-    router.post("/distributive", auth, validateDto(CreateAccountDistributiveDto), accountController.createAccountDistributive);
+    router.post("/distributive", validateDto(CreateAccountDistributiveDto), accountController.createAccountDistributive);
 
     /**
      * @openapi
@@ -445,7 +445,29 @@ const router = express.Router();
      *       500:
      *         description: Server error
      */
-    router.get("/distributive/:id", auth, accountController.getAccountDistributiveById);
+    router.get("/distributive/:id", accountController.getAccountDistributiveById);
+
+
+
+    /**
+     * @openapi
+     * /accounts/leaf:
+     *   get:
+     *     summary: Get leaf accounts
+     *     tags: [Accounts]
+     *     security:
+     *       - bearerAuth: []
+     *     responses:
+     *       200:
+     *         description: Leaf accounts retrieved successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/AccountsResponse'
+     *       500:
+     *         description: Server error
+     */
+    router.get("/leaf", accountController.getLeafAccounts);
 })();
 
 export default router;

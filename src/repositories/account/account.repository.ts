@@ -71,5 +71,13 @@ export class AccountRepository extends Repository<Account> {
             return null;
         }
     }
+    async getLeafAccounts(): Promise<Account[]> {
+        try {
+            return await this.query(`SELECT * FROM account WHERE id NOT IN (SELECT parent_id FROM account WHERE parent_id IS NOT NULL)`);
+        } catch (error) {
+            logger.error(`Error while fetching Account. ${error}`);
+            return [];
+        }
+    }
 
 }
