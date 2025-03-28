@@ -76,6 +76,7 @@ v1ClientRouter.use('/cheques', chequeRoutes);
 v1ClientRouter.use('/op', opRoutes);
 v1ClientRouter.use('/bill', billRoutes);
 v1ClientRouter.use('/accounts', accountRoutes);
+v1ClientRouter.use('reports', reportRoutes);
 
 v1Router.use('/client', v1ClientRouter);
 

@@ -148,5 +148,10 @@ export const DI_TYPES = {
   BillMaterialDetailsRepository: Symbol.for('BillMaterialDetailsRepository'),
   BillDiscountsDetailsRepository: Symbol.for('BillDiscountsDetailsRepository'),
   BillService: Symbol.for('BillService'),
-  BillController: Symbol.for('BillController')
+  BillController: Symbol.for('BillController'),
+
+
+  ReportGenerationFacade: Symbol.for('ReportGenerationFacade'),
+  BalanceSheetService: Symbol.for('BalanceSheetService'),
+  ReportController: Symbol.for('ReportController'),
 };

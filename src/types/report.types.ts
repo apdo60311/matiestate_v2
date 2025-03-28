@@ -1,11 +1,11 @@
 
 export interface IBalanceSheetReportBody {
   account_id?: string;
-  observe_account_id?: string; 
+  observe_account_id?: string;
   cost_center_id?: string;
   currency_id?: string;
   date_from?: string;
-  date_to?: string; 
+  date_to?: string;
   level?: number;
 }
 
@@ -112,41 +112,41 @@ export interface IContractReportBody {
 
 
 export interface IContractLeasedReportBody {
-    buildings?: any[];
-    columns?: any[];
-    filters?: Record<string, any>;  
+  buildings?: any[];
+  columns?: any[];
+  filters?: Record<string, any>;
 }
 
 export interface IContractSoldReportBody {
-    buildings?: any[];
-    columns?: any[];
-    filters?: Record<string, any>;
+  buildings?: any[];
+  columns?: any[];
+  filters?: Record<string, any>;
 }
 
 
 export interface IUnitVacatedReportBody {
-    contract: any;
-    buildings?: any[];
-    columns?: any[];
-    filters?: Record<string, any>;
+  contract: any;
+  buildings?: any[];
+  columns?: any[];
+  filters?: Record<string, any>;
 }
 
 export interface IUnitReversedReportBody {
-    contract: any;
-    buildings?: any[];
-    columns?: any[];
+  contract: any;
+  buildings?: any[];
+  columns?: any[];
 }
 
 
 export interface ILeasedPropertyReportBody {
-    columns?: any[];
-    filters?: Record<string, any>;
-    property?: any;
+  columns?: any[];
+  filters?: Record<string, any>;
+  property?: any;
 }
 
 export interface IChangesFlatsRentPricingBody {
-    buildings?: any[];
-    filters?: Record<string, any>;
+  buildings?: any[];
+  filters?: Record<string, any>;
 }
 
 export interface IReportRequestBody {
@@ -166,3 +166,83 @@ export interface IGetCustomerReportsQuery {
   category_id?: string;
   unit_id?: string;
 }
+
+
+
+
+
+
+
+
+export interface IBalanceSheetFilter {
+  account_id?: string;
+  observe_account_id?: string;
+  cost_center_id?: string;
+  currency_id?: string;
+  date_from?: Date;
+  date_to?: Date;
+  level?: number;
+}
+
+export interface IAccountHierarchy {
+  account_id: string;
+  account_name: string;
+  parent_id: string | null;
+  final_id: string;
+  final_name: string;
+  internal_number: number;
+  parent_name: string | null;
+  depth: number;
+  hierarchy_path: string[];
+  row_num: number;
+  hierarchy_label: string;
+}
+
+export interface IAccountTotal {
+  account_id: string;
+  account_name: string;
+  parent_id: string | null;
+  parent_name: string | null;
+  final_id: string;
+  final_name: string;
+  internal_number: number;
+  hierarchy_label: string;
+  level: number;
+  total_debit: number;
+  total_credit: number;
+}
+
+export interface IBalanceSheetReportRow {
+  account_id: string;
+  account_name: string;
+  parent_id: string | null;
+  parent_name: string | null;
+  final_id: string;
+  final_name: string;
+  number: number;
+  hierarchy_label: string;
+  level: number;
+  total_debit: number;
+  total_credit: number;
+}
+
+export interface IBalanceSheetReportMetadata {
+  total_debit: number;
+  total_credit: number;
+}
+
+export interface IReportResponse { }
+
+export interface IBalanceSheetReport extends IReportResponse {
+  data: IBalanceSheetReportRow[];
+  metadata: IBalanceSheetReportMetadata;
+}
+
+export interface IReportGenerationData {
+  type: ReportType,
+  filter: IReportFilter,
+}
+export enum ReportType {
+  BALANCE_SHEET = "BALANCE_SHEET",
+}
+export interface IReportFilter { }

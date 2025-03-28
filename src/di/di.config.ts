@@ -126,6 +126,9 @@ import { AccountAssemblyRepository } from "../repositories/account/account-assem
 import { AccountDistributiveRepository } from "../repositories/account/account-distributive.repository";
 import { AccountController } from "../controllers/account.controller";
 import { AccountService } from "../services/account.service";
+import { ReportController } from "../controllers/report.controller";
+import { ReportGenerationFacade } from "../services/report-services/report-service-facade";
+import { BalanceSheetService } from "../services/report-services/balance-sheet.service";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -1296,3 +1299,7 @@ container.bind<AccountController>(DI_TYPES.AccountController)
     })
     .inSingletonScope();
 
+
+container.bind<ReportController>(DI_TYPES.ReportController).to(ReportController);
+container.bind<ReportGenerationFacade>(DI_TYPES.ReportGenerationFacade).to(ReportGenerationFacade);
+container.bind<BalanceSheetService>(DI_TYPES.BalanceSheetService).to(BalanceSheetService);
