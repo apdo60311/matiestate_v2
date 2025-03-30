@@ -152,6 +152,8 @@ export const DI_TYPES = {
 
 
   ReportGenerationFacade: Symbol.for('ReportGenerationFacade'),
-  BalanceSheetService: Symbol.for('BalanceSheetService'),
   ReportController: Symbol.for('ReportController'),
+  BalanceSheetService: Symbol.for('BalanceSheetService'),
+  GeneralLedgerService: Symbol.for('GeneralLedgerService'),
+
 };

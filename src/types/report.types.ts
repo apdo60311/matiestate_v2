@@ -244,5 +244,27 @@ export interface IReportGenerationData {
 }
 export enum ReportType {
   BALANCE_SHEET = "BALANCE_SHEET",
+  GENERAL_LEDGER = "GENERAL_LEDGER",
 }
 export interface IReportFilter { }
+
+export interface IGeneralLedgerFilter extends IReportFilter {
+  account_id?: string;
+  cost_center_id?: string;
+  currency_id?: string;
+  allow_statement_statement?: string;
+  statement_statement_type?: 'contains' | 'not_contains';
+  created_at_from?: Date;
+  created_at_to?: Date;
+  show_credit?: boolean;
+  show_debit?: boolean;
+}
+
+export interface IGeneralLedgerReport {
+  data: any[];
+  metadata: {
+    total_activity: number;
+    pervios_total: number;
+    total: number;
+  };
+}
