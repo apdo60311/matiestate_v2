@@ -130,6 +130,7 @@ import { ReportController } from "../controllers/report.controller";
 import { ReportGenerationFacade } from "../services/report-services/report-service-facade";
 import { BalanceSheetService } from "../services/report-services/balance-sheet.service";
 import { GeneralLedgerService } from "../services/report-services/general-ledger.service";
+import { JournalLedgerService } from "../services/report-services/journal-ledger.service";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -1305,3 +1306,4 @@ container.bind<ReportController>(DI_TYPES.ReportController).to(ReportController)
 container.bind<ReportGenerationFacade>(DI_TYPES.ReportGenerationFacade).to(ReportGenerationFacade);
 container.bind<BalanceSheetService>(DI_TYPES.BalanceSheetService).to(BalanceSheetService);
 container.bind<GeneralLedgerService>(DI_TYPES.GeneralLedgerService).to(GeneralLedgerService);
+container.bind<JournalLedgerService>(DI_TYPES.JournalLedgerService).to(JournalLedgerService);

@@ -245,6 +245,7 @@ export interface IReportGenerationData {
 export enum ReportType {
   BALANCE_SHEET = "BALANCE_SHEET",
   GENERAL_LEDGER = "GENERAL_LEDGER",
+  JOURNAL_LEDGER = 'JOURNAL_LEDGER'
 }
 export interface IReportFilter { }
 
@@ -261,6 +262,46 @@ export interface IGeneralLedgerFilter extends IReportFilter {
 }
 
 export interface IGeneralLedgerReport {
+  data: any[];
+  metadata: {
+    total_activity: number;
+    pervios_total: number;
+    total: number;
+  };
+}
+
+export enum DebitTransactionType {
+  WITHOUT = 'without',
+  LESS_THAN = 'lessThan',
+  MORE_THAN = 'moreThan',
+  EQUAL = 'equal',
+  BETWEEN = 'between',
+  LESS_OR_EQUAL = 'lessOrEqual',
+  LARGEST_OR_EQUAL = 'largestOrEqual'
+}
+
+export interface IJournalLedgerFilter extends IReportFilter {
+  account_id?: string;
+  cost_center_id?: string;
+  currency_id?: string;
+  entry_number_from?: number;
+  entry_number_to?: number;
+  debit_transaction?: DebitTransactionType;
+  debit_amount?: number;
+  debit_amount_from?: number;
+  debit_amount_to?: number;
+  created_at_from?: Date;
+  created_at_to?: Date;
+  show_credit?: boolean;
+  show_debit?: boolean;
+  constract_code?: number;
+  cheque_code?: number;
+  voucher_code?: number;
+  bill_code?: number;
+  operations?: number;
+}
+
+export interface IJournalLedgerReport {
   data: any[];
   metadata: {
     total_activity: number;
