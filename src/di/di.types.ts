@@ -156,4 +156,5 @@ export const DI_TYPES = {
   BalanceSheetService: Symbol.for('BalanceSheetService'),
   GeneralLedgerService: Symbol.for('GeneralLedgerService'),
   JournalLedgerService: Symbol.for('JournalLedgerService'),
+  VacatedContractService: Symbol.for('VacatedContractService'),
 };

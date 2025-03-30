@@ -245,7 +245,8 @@ export interface IReportGenerationData {
 export enum ReportType {
   BALANCE_SHEET = "BALANCE_SHEET",
   GENERAL_LEDGER = "GENERAL_LEDGER",
-  JOURNAL_LEDGER = 'JOURNAL_LEDGER'
+  JOURNAL_LEDGER = 'JOURNAL_LEDGER',
+  UNIT_VACATED_CONTRACT = 'UNIT_VACATED_CONTRACT'
 }
 export interface IReportFilter { }
 
@@ -307,5 +308,39 @@ export interface IJournalLedgerReport {
     total_activity: number;
     pervios_total: number;
     total: number;
+  };
+}
+
+export interface IVacatedContractFilter extends IReportFilter {
+  client_id?: string;
+  date_from?: Date;
+  date_to?: Date;
+  number_of_days?: number;
+  allow_contract_statement?: boolean;
+  contract_statement?: string;
+  contract_statement_type?: number;
+  buildings?: string[];
+  contract_patterns?: number[];
+}
+
+export interface IVacatedContractReport {
+  data: Array<{
+    contract_id: string;
+    end_duration_date: Date;
+    contract_note?: string;
+    apartment_id?: string;
+    apartment_no?: string;
+    shop_id?: string;
+    shop_no?: string;
+    parking_id?: string;
+    parking_no?: string;
+    termination_date?: Date;
+    evacuation_date?: Date;
+    days_left: number;
+  }>;
+  metadata: {
+    total_contracts: number;
+    terminated_contracts: number;
+    expiring_contracts: number;
   };
 }
