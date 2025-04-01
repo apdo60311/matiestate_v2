@@ -4,7 +4,7 @@ FROM node:alpine as compile_time
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm install --prod
 
 COPY . . 
 
