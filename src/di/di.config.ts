@@ -132,6 +132,8 @@ import { BalanceSheetService } from "../services/report-services/balance-sheet.s
 import { GeneralLedgerService } from "../services/report-services/general-ledger.service";
 import { JournalLedgerService } from "../services/report-services/journal-ledger.service";
 import { VacatedContractService } from "../services/report-services/unit-vacated.service";
+import { LeasedReportService } from "../services/report-services/leased-units.service";
+import { UnitReservedReportService } from "../services/report-services/reversed-units.service";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -1309,3 +1311,5 @@ container.bind<BalanceSheetService>(DI_TYPES.BalanceSheetService).to(BalanceShee
 container.bind<GeneralLedgerService>(DI_TYPES.GeneralLedgerService).to(GeneralLedgerService);
 container.bind<JournalLedgerService>(DI_TYPES.JournalLedgerService).to(JournalLedgerService);
 container.bind<VacatedContractService>(DI_TYPES.VacatedContractService).to(VacatedContractService);
+container.bind<LeasedReportService>(DI_TYPES.LeasedReportService).to(LeasedReportService);
+container.bind<UnitReservedReportService>(DI_TYPES.UnitReservedReportService).to(UnitReservedReportService);

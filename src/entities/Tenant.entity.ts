@@ -17,6 +17,9 @@ export class Tenant {
   @PrimaryGeneratedColumn("uuid")
   id: string = uuidv4().toString();
 
+  @Column({ type: "text", nullable: true })
+  name?: string;
+
   @CreateDateColumn({ type: "timestamptz" })
   created_at: Date = new Date(new Date().getTime());
 

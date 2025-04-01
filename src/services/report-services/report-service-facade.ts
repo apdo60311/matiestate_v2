@@ -6,6 +6,8 @@ import { logger } from "../../utils/logger";
 import { GeneralLedgerService } from "./general-ledger.service";
 import { JournalLedgerService } from "./journal-ledger.service";
 import { VacatedContractService } from "./unit-vacated.service";
+import { LeasedReportService } from "./leased-units.service";
+import { UnitReservedReportService } from "./reversed-units.service";
 
 
 @injectable()
@@ -19,6 +21,11 @@ export class ReportGenerationFacade {
         private readonly journalLedgerService: JournalLedgerService,
         @inject(DI_TYPES.VacatedContractService)
         private readonly vacatedContractService: VacatedContractService,
+        @inject(DI_TYPES.LeasedReportService)
+        private readonly leasedReportService: LeasedReportService,
+        @inject(DI_TYPES.UnitReservedReportService)
+        private readonly unitReservedReportService: UnitReservedReportService,
+
 
     ) {
 
@@ -35,6 +42,10 @@ export class ReportGenerationFacade {
                     return await this.journalLedgerService.generateReport(reportGenerationData.filter);
                 case ReportType.UNIT_VACATED_CONTRACT:
                     return await this.vacatedContractService.generateReport(reportGenerationData.filter);
+                case ReportType.LEASED_UNITS:
+                    return await this.leasedReportService.generateReport(reportGenerationData.filter);
+                case ReportType.UNIT_RESERVED:
+                    return await this.unitReservedReportService.generateReport(reportGenerationData.filter);
 
                 default:
                     return null;

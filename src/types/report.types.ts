@@ -246,7 +246,9 @@ export enum ReportType {
   BALANCE_SHEET = "BALANCE_SHEET",
   GENERAL_LEDGER = "GENERAL_LEDGER",
   JOURNAL_LEDGER = 'JOURNAL_LEDGER',
-  UNIT_VACATED_CONTRACT = 'UNIT_VACATED_CONTRACT'
+  UNIT_VACATED_CONTRACT = 'UNIT_VACATED_CONTRACT',
+  LEASED_UNITS = 'LEASED_UNITS',
+  UNIT_RESERVED = 'UNIT_RESERVED',
 }
 export interface IReportFilter { }
 
@@ -342,5 +344,102 @@ export interface IVacatedContractReport {
     total_contracts: number;
     terminated_contracts: number;
     expiring_contracts: number;
+  };
+}
+
+export interface ILeasedReportFilter {
+  show_sold_units?: boolean;
+  allow_contract_statement?: boolean;
+  contract_statement?: string;
+  contract_statement_type?: number;
+  lawsuit_on_contract?: number;
+  rent_form?: number;
+  rent_to?: number;
+  reviewed?: boolean;
+  unreviewed?: boolean;
+  flats?: boolean;
+  shops?: boolean;
+  property_no?: string;
+  area_unit?: string;
+  area_form?: number;
+  area_to?: number;
+  lawsuit_on_unit?: number;
+  blocked_units?: number;
+  property_statement?: string;
+  property_statement_type?: number;
+  description?: string;
+  buildings?: string[];
+  created_at_from?: Date;
+  created_at_to?: Date;
+  show_credit?: boolean;
+  show_debit?: boolean;
+  allow_property_statement?: boolean;
+}
+
+export interface ILeasedReportResponse {
+  data: Array<{
+    contract_id: string;
+    property_id: string;
+    property_no: string;
+    property_type: 'apartment' | 'shop';
+    property_kind: number;
+    area?: number;
+    area_unit?: string;
+    rent_price?: number;
+    selling_price?: number;
+    collected_cheques?: number;
+    received_cash_payments?: number;
+    total_uncollected_amount?: number;
+    total_collected_amount?: number;
+    returned_value?: number;
+    contract_terminated?: boolean;
+    termination_date?: Date;
+  }>;
+  metadata: {
+    total_properties: number;
+    total_apartments: number;
+    total_shops: number;
+    total_collected: number;
+    total_uncollected: number;
+  };
+}
+
+
+export interface IUnitReservedFilter {
+  client_id?: string;
+  booking?: number;
+  unit_type?: number;
+  property_no?: string;
+  allow_booking_date?: boolean;
+  from?: Date;
+  to?: Date;
+  remaining_days?: number;
+  remaining_days_of_number_of_reservation_is_smaller?: number;
+  buildings?: string[];
+}
+
+export interface IUnitReservedReport {
+  data: Array<{
+    id: string;
+    property_type: number;
+    property_id: string;
+    property_no: string;
+    book_date: Date;
+    end_book_date: Date;
+    has_payment: boolean;
+    reservation_expired: boolean;
+    payment_amount: number;
+    currency_val: number;
+    tenant_name: string;
+    cost_center_name: string;
+    currency_name: string;
+    building_name: string;
+    days_remaining: number;
+  }>;
+  metadata: {
+    total_reservations: number;
+    active_reservations: number;
+    expired_reservations: number;
+    total_payment_amount: number;
   };
 }
