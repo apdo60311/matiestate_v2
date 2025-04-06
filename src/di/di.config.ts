@@ -134,6 +134,7 @@ import { JournalLedgerService } from "../services/report-services/journal-ledger
 import { VacatedContractService } from "../services/report-services/unit-vacated.service";
 import { LeasedReportService } from "../services/report-services/leased-units.service";
 import { UnitReservedReportService } from "../services/report-services/reversed-units.service";
+import { SoldUnitsService } from "../services/report-services/sold-units.service";
 
 
 export const container = new Container({ autoBindInjectable: true });
@@ -1313,3 +1314,4 @@ container.bind<JournalLedgerService>(DI_TYPES.JournalLedgerService).to(JournalLe
 container.bind<VacatedContractService>(DI_TYPES.VacatedContractService).to(VacatedContractService);
 container.bind<LeasedReportService>(DI_TYPES.LeasedReportService).to(LeasedReportService);
 container.bind<UnitReservedReportService>(DI_TYPES.UnitReservedReportService).to(UnitReservedReportService);
+container.bind<SoldUnitsService>(DI_TYPES.SoldUnitsService).to(SoldUnitsService);

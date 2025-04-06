@@ -18,6 +18,7 @@ import { Apartment } from "./Apartment.entity";
 import { Shop } from "./Shop.entity";
 import { Parking } from "./Parking.entity";
 import { ChequePattern } from "./ChequePattern.entity";
+import { Contract } from "./Contract.entity";
 
 
 @Entity('cheque')
@@ -154,5 +155,16 @@ export class Cheque {
   @ManyToOne(() => ChequePattern)
   @JoinColumn({ name: 'cheque_pattern_id' })
   pattern!: ChequePattern;
+
+
+  @Column('uuid', { nullable: true })
+  contract_id?: string;
+
+  @ManyToOne(() => Contract, { nullable: true })
+  @JoinColumn({ name: 'contract_id' })
+  contract?: Contract;
+
+  @Column('text', { nullable: true })
+  status?: string;
 }
 

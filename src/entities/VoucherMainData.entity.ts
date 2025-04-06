@@ -11,6 +11,7 @@ import { Account } from "./Account.entity";
 import { Tenant } from "./Tenant.entity";
 import { VoucherPattern } from "./VoucherPattern.entity";
 import { v4 as uuidv4 } from "uuid";
+import { Contract } from "./Contract.entity";
 
 @Entity("voucher_main_data")
 export class VoucherMainData {
@@ -90,4 +91,11 @@ export class VoucherMainData {
 
   @Column({ type: "uuid", name: 'voucher_pattern_id', nullable: true })
   voucherPatternId?: string;
+
+  @Column({ type: "uuid", name: 'contract_id', nullable: true })
+  contract_id?: string;
+
+  @ManyToOne(() => Contract, { onDelete: 'CASCADE', nullable: true })
+  @JoinColumn({ name: 'contract_id' })
+  contract?: Contract;
 }
