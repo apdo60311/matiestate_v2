@@ -249,6 +249,7 @@ export enum ReportType {
   UNIT_VACATED_CONTRACT = 'UNIT_VACATED_CONTRACT',
   LEASED_UNITS = 'LEASED_UNITS',
   UNIT_RESERVED = 'UNIT_RESERVED',
+  SOLD_UNITS = 'SOLD_UNITS',
 }
 export interface IReportFilter { }
 
@@ -441,5 +442,45 @@ export interface IUnitReservedReport {
     active_reservations: number;
     expired_reservations: number;
     total_payment_amount: number;
+  };
+}
+
+export interface ISoldUnitsFilter extends IReportFilter {
+  from?: Date;
+  to?: Date;
+  status?: number;
+  client_id?: string;
+  flats?: boolean;
+  shops?: boolean;
+  area_name?: string;
+  description?: string;
+  area_form?: number;
+  area_to?: number;
+  buildings?: string[];
+}
+
+export interface ISoldUnitsReport {
+  data: Array<{
+    contract_id: string;
+    contract_type: number;
+    issue_date: Date;
+    property_id: string;
+    property_no: string;
+    property_type: 'apartment' | 'shop';
+    area?: number;
+    area_unit?: string;
+    description?: string;
+    area_name?: string;
+    collected_cheques?: number;
+    received_cash_payments?: number;
+    total_uncollected_amount?: number;
+    total_collected_amount?: number;
+  }>;
+  metadata: {
+    total_properties: number;
+    total_apartments: number;
+    total_shops: number;
+    total_collected: number;
+    total_uncollected: number;
   };
 }

@@ -159,4 +159,5 @@ export const DI_TYPES = {
   VacatedContractService: Symbol.for('VacatedContractService'),
   LeasedReportService: Symbol.for('LeasedReportService'),
   UnitReservedReportService: Symbol.for('UnitReservedReportService'),
+  SoldUnitsService: Symbol.for('SoldUnitsService'),
 };
