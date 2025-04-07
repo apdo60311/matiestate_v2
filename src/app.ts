@@ -36,10 +36,15 @@ import { RateLimiting } from './config/rate-limiting.config';
 const app = express();
 
 // Middlewares
-app.use(helmet());
+// app.use(helmet({}));
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:5173'],
+    origin: [
+      'http://localhost:5500',
+      'http://localhost:3000',
+      'http://localhost:8080',
+      'http://localhost:5173',
+    ],
   })
 );
 app.use(morgan('combined'));
