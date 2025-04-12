@@ -32,6 +32,7 @@ import opRoutes from './routes/op.routes';
 import billRoutes from './routes/bill.routes';
 import accountRoutes from './routes/account.routes';
 import { RateLimiting } from './config/rate-limiting.config';
+import config from './config/env';
 
 const app = express();
 
@@ -39,12 +40,14 @@ const app = express();
 // app.use(helmet({}));
 app.use(
   cors({
-    origin: [
-      'http://localhost:5500',
-      'http://localhost:3000',
-      'http://localhost:8080',
-      'http://localhost:5173',
-    ],
+    origin: config.NODE_ENV === 'development'
+      ? '*'
+      : [
+        'http://localhost:5500',
+        'http://localhost:3000',
+        'http://localhost:8080',
+        'http://localhost:5173',
+      ],
   })
 );
 app.use(morgan('combined'));
@@ -85,7 +88,7 @@ v1ClientRouter.use('/cheques', chequeRoutes);
 v1ClientRouter.use('/op', opRoutes);
 v1ClientRouter.use('/bill', billRoutes);
 v1ClientRouter.use('/accounts', accountRoutes);
-v1ClientRouter.use('reports', reportRoutes);
+v1ClientRouter.use('/reports', reportRoutes);
 
 v1Router.use('/client', v1ClientRouter);
 

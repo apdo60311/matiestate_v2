@@ -230,4 +230,37 @@ export class AccountService {
             throw error;
         }
     }
+
+    async getAccountsByFilter(
+        filters: {
+            [key: string]: {
+                value: any;
+                operator?: 'eq' | 'gt' | 'lt' | 'gte' | 'lte' | 'like';
+            } | any;
+        },
+        options: {
+            limit?: number;
+            offset?: number;
+            sortBy?: string;
+            sortOrder?: 'ASC' | 'DESC';
+        } = {}
+    ): Promise<{ accounts: IAccountResponse[]; total: number }> {
+        try {
+            const { limit, offset, sortBy, sortOrder } = options;
+
+            const result = await this.accountRepository.getAccountsByFilter(
+                filters,
+                limit,
+                offset,
+                sortBy,
+                sortOrder
+            );
+
+            return result;
+        } catch (error) {
+            logger.error(`Error getting accounts by filter: ${error}`);
+            throw error;
+        }
+    }
+
 }

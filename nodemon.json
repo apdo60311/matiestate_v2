@@ -1,6 +1,8 @@
 {
-    "watch": ["src"],
-    "ext": ".ts,.js",
-    "ignore": [],
-    "exec": "sudo npm run docker"
-  }
+  "watch": [
+    "src"
+  ],
+  "ext": ".ts,.js",
+  "ignore": [],
+  "exec": "sudo npm run docker"
+}
